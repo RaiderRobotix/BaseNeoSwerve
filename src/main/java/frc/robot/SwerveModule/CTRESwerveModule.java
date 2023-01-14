@@ -105,7 +105,7 @@ public class CTRESwerveModule implements SwerveModule
         mAngleMotor.configFactoryDefault();
         mAngleMotor.configAllSettings(Robot.ctreConfigs.swerveAngleFXConfig);
         mAngleMotor.setInverted(Constants.Swerve.angleMotorInvert);
-        mAngleMotor.setNeutralMode(Constants.Swerve.angleNeutralMode);
+        mAngleMotor.setNeutralMode(Constants.CTRE.angleNeutralMode);
         resetToAbsolute();
     }
 
@@ -113,7 +113,7 @@ public class CTRESwerveModule implements SwerveModule
         mDriveMotor.configFactoryDefault();
         mDriveMotor.configAllSettings(Robot.ctreConfigs.swerveDriveFXConfig);
         mDriveMotor.setInverted(Constants.Swerve.driveMotorInvert);
-        mDriveMotor.setNeutralMode(Constants.Swerve.driveNeutralMode);
+        mDriveMotor.setNeutralMode(Constants.CTRE.driveNeutralMode);
         mDriveMotor.setSelectedSensorPosition(0);
     }
 

@@ -1,6 +1,7 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -10,8 +11,30 @@ import edu.wpi.first.math.util.Units;
 import frc.lib.util.COTSFalconSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
 
-public final class Constants {
+public final class Constants 
+{
     public static final double stickDeadband = 0.1;
+
+    /**
+     * CTRE specific settings
+     */
+    public static final class CTRE
+    {
+        /* Neutral Modes */
+        public static final NeutralMode angleNeutralMode = NeutralMode.Coast;
+        public static final NeutralMode driveNeutralMode = NeutralMode.Brake;
+    }
+
+    /**
+     * REV Robotics specific settings
+     */
+    public static final class REV
+    {
+        public static final IdleMode driveIdleMode = IdleMode.kCoast;
+        public static final IdleMode angleIdleMode = IdleMode.kBrake;
+        
+    }
+
 
     public static final class Swerve {
         public static final int pigeonID = 1;
@@ -84,9 +107,7 @@ public final class Constants {
         /** Radians per Second */
         public static final double maxAngularVelocity = 10.0; //TODO: This must be tuned to specific robot
 
-        /* Neutral Modes */
-        public static final NeutralMode angleNeutralMode = NeutralMode.Coast;
-        public static final NeutralMode driveNeutralMode = NeutralMode.Brake;
+       
 
         /* Module Specific Constants */
         /* Front Left Module - Module 0 */
