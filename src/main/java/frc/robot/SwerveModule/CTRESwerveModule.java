@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.SwerveModule;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -8,14 +8,20 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.lib.math.Conversions;
 import frc.lib.util.CTREModuleState;
 import frc.lib.util.SwerveModuleConstants;
+import frc.robot.Constants;
+import frc.robot.Robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
 
-public class SwerveModule {
+public class CTRESwerveModule implements SwerveModule
+ {
     public int moduleNumber;
+   
+   
+
     private Rotation2d angleOffset;
     private Rotation2d lastAngle;
 
@@ -25,7 +31,7 @@ public class SwerveModule {
 
     SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
 
-    public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants){
+    public CTRESwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants){
         this.moduleNumber = moduleNumber;
         this.angleOffset = moduleConstants.angleOffset;
         
@@ -42,6 +48,14 @@ public class SwerveModule {
         configDriveMotor();
 
         lastAngle = getState().angle;
+    }
+
+    public int getModuleNumber() {
+        return moduleNumber;
+    }
+
+    public void setModuleNumber(int moduleNumber) {
+        this.moduleNumber = moduleNumber;
     }
 
     public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop){
