@@ -148,7 +148,8 @@ public class RevSwerveModule implements SwerveModule
         mAngleMotor.setSmartCurrentLimit(Constants.Swerve.driveContinuousCurrentLimit);
         mDriveMotor.setInverted(Constants.Swerve.driveMotorInvert);
         mDriveMotor.setIdleMode(Constants.REV.driveIdleMode); 
-        mDriveMotor.setSelectedSensorPosition(0);
+        //mDriveMotor.setSelectedSensorPosition(0);
+
     }
 
     public SwerveModuleState getState()
