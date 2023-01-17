@@ -32,6 +32,11 @@ public final class Constants
     {
         public static final IdleMode driveIdleMode = IdleMode.kCoast;
         public static final IdleMode angleIdleMode = IdleMode.kBrake;
+
+        public static final double driveRevToMeters = 5;
+        public static final double driveRpmToMetersPerSecond = driveRevToMeters*60;
+
+        public static final double turnRotationsToDegrees = 1;
         
     }
 
