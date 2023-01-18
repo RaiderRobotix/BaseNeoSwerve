@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
-import frc.robot.SwerveModule.CTRESwerveModule;
+import frc.robot.SwerveModule.RevSwerveModule;
 import frc.robot.SwerveModule.SwerveModule;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -23,18 +23,20 @@ public class Swerve extends SubsystemBase {
     public Pigeon2 gyro;
 
     public Swerve() {
-        gyro = new Pigeon2(Constants.Swerve.pigeonID);
-        gyro.configFactoryDefault();
-        zeroGyro();
+        // TODO fix for real robot
+        //gyro = new Pigeon2(Constants.Swerve.pigeonID);
+        //gyro.configFactoryDefault();
+        //zeroGyro();
 
         mSwerveMods = new SwerveModule[] {
-            new CTRESwerveModule(0, Constants.Swerve.Mod0.constants),
-            new CTRESwerveModule(1, Constants.Swerve.Mod1.constants),
+            // TODO fix for real robot
+            new RevSwerveModule(0, Constants.Swerve.Mod0.constants)//,
+           /* new CTRESwerveModule(1, Constants.Swerve.Mod1.constants),
             new CTRESwerveModule(2, Constants.Swerve.Mod2.constants),
-            new CTRESwerveModule(3, Constants.Swerve.Mod3.constants)
+            new CTRESwerveModule(3, Constants.Swerve.Mod3.constants)*/
         };
 
-        swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
+        //swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
@@ -68,11 +70,12 @@ public class Swerve extends SubsystemBase {
     }    
 
     public Pose2d getPose() {
-        return swerveOdometry.getPoseMeters();
+        //return swerveOdometry.getPoseMeters();
+        return new Pose2d();
     }
 
     public void resetOdometry(Pose2d pose) {
-        swerveOdometry.resetPosition(getYaw(), getModulePositions(), pose);
+        //swerveOdometry.resetPosition(getYaw(), getModulePositions(), pose);
     }
 
     public SwerveModuleState[] getModuleStates(){
@@ -92,7 +95,8 @@ public class Swerve extends SubsystemBase {
     }
 
     public void zeroGyro(){
-        gyro.setYaw(0);
+        // TODO fix for real robot
+       // gyro.setYaw(0);
     }
 
     public Rotation2d getYaw() {
@@ -101,7 +105,8 @@ public class Swerve extends SubsystemBase {
 
     @Override
     public void periodic(){
-        swerveOdometry.update(getYaw(), getModulePositions());  
+        // TODO fix this for real robot
+       // swerveOdometry.update(getYaw(), getModulePositions());  
 
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.getModuleNumber() + " Cancoder", mod.getCanCoder().getDegrees());

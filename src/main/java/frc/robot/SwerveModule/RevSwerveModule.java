@@ -37,7 +37,7 @@ public class RevSwerveModule implements SwerveModule
 
 
 
-    private CANCoder angleEncoder;
+    //private CANCoder angleEncoder;
     private RelativeEncoder relAngleEncoder;
     private RelativeEncoder relDriveEncoder;
 
@@ -48,8 +48,7 @@ public class RevSwerveModule implements SwerveModule
         this.moduleNumber = moduleNumber;
         this.angleOffset = moduleConstants.angleOffset;
         
-
-
+       
         /* Angle Motor Config */
         mAngleMotor = new CANSparkMax(moduleConstants.angleMotorID, MotorType.kBrushless);
         configAngleMotor();
@@ -58,9 +57,11 @@ public class RevSwerveModule implements SwerveModule
         mDriveMotor = new CANSparkMax(moduleConstants.driveMotorID,  MotorType.kBrushless);
         configDriveMotor();
 
-        /* Angle Encoder Config */
-        angleEncoder = new CANCoder(moduleConstants.cancoderID);
+         /* Angle Encoder Config */
+        // TODO fix for real robot
+        // angleEncoder = new CANCoder(moduleConstants.cancoderID);
         configEncoders();
+
 
         lastAngle = getState().angle;
     }
@@ -69,18 +70,22 @@ public class RevSwerveModule implements SwerveModule
     private void configEncoders()
     {     
         // absolute encoder   
-        angleEncoder.configFactoryDefault();
-        angleEncoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
+        // TODO fix for real robot
+        //angleEncoder.configFactoryDefault();
+        //angleEncoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
 
 
         relDriveEncoder = mDriveMotor.getEncoder();
         relDriveEncoder.setPositionConversionFactor(Constants.REV.driveRevToMeters);
         relDriveEncoder.setVelocityConversionFactor(Constants.REV.driveRpmToMetersPerSecond);
-    
+        relDriveEncoder.setPosition(0);
 
         relAngleEncoder = mAngleMotor.getEncoder();
-        relAngleEncoder.setPositionConversionFactor(Constants.REV.driveRevToMeters);
-        relAngleEncoder.setVelocityConversionFactor(Constants.REV.driveRevToMeters / 60);
+        relAngleEncoder.setPositionConversionFactor(Constants.REV.DegreesPerTurnRotation);
+        // in degrees/sec
+        relAngleEncoder.setVelocityConversionFactor(Constants.REV.DegreesPerTurnRotation / 60);
+        // TODO might need fixing for real robot
+        relAngleEncoder.setPosition(0);
         
     }
 
@@ -111,7 +116,7 @@ public class RevSwerveModule implements SwerveModule
         mDriveMotor.setInverted(Constants.Swerve.driveMotorInvert);
         mDriveMotor.setIdleMode(Constants.REV.driveIdleMode); 
        
-        relDriveEncoder.setPosition(0);
+  
        
     }
 
@@ -137,8 +142,8 @@ public class RevSwerveModule implements SwerveModule
             return;
         }
  
-        double velocity = Conversions.MPSToFalcon(desiredState.speedMetersPerSecond, Constants.Swerve.wheelCircumference, Constants.Swerve.driveGearRatio);
-
+       // double velocity = Conversions.MPSToFalcon(desiredState.speedMetersPerSecond, Constants.Swerve.wheelCircumference, Constants.Swerve.driveGearRatio);
+        double velocity = relDriveEncoder.getVelocity();
         SparkMaxPIDController controller = mDriveMotor.getPIDController();
         controller.setReference(velocity, ControlType.kVelocity);
         
@@ -146,7 +151,8 @@ public class RevSwerveModule implements SwerveModule
 
     private void setAngle(SwerveModuleState desiredState)
     {
-        Rotation2d angle = (Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * 0.01)) ? lastAngle : desiredState.angle; //Prevent rotating module if speed is less then 1%. Prevents Jittering.
+        Rotation2d angle = (Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * 0.01)) 
+        ? lastAngle : desiredState.angle; //Prevent rotating module if speed is less then 1%. Prevents Jittering.
         
         SparkMaxPIDController controller = mAngleMotor.getPIDController();
         controller.setReference(angle.getDegrees(), ControlType.kPosition);
@@ -160,7 +166,9 @@ public class RevSwerveModule implements SwerveModule
 
     public Rotation2d getCanCoder()
     {
-        return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition());
+        // TODO fix for real robot
+        //return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition());
+        return getAngle();
     }
 
     public int getModuleNumber() 
@@ -175,9 +183,9 @@ public class RevSwerveModule implements SwerveModule
 
     private void resetToAbsolute()
     {
-        double absolutePosition = Conversions.degreesToFalcon(getCanCoder().getDegrees() - angleOffset.getDegrees(), Constants.Swerve.angleGearRatio);
-       
-        relAngleEncoder.setPosition(absolutePosition);
+        // TODO Reinstate for real robot
+        //double absolutePosition =getCanCoder().getDegrees() - angleOffset.getDegrees();
+        //relAngleEncoder.setPosition(absolutePosition);
     }
 
   
@@ -185,7 +193,7 @@ public class RevSwerveModule implements SwerveModule
     public SwerveModuleState getState()
     {
         return new SwerveModuleState(
-            Conversions.falconToMPS(relDriveEncoder.getVelocity(), Constants.Swerve.wheelCircumference, Constants.Swerve.driveGearRatio), 
+            relDriveEncoder.getVelocity(),
             getAngle()
         ); 
     }
@@ -193,7 +201,7 @@ public class RevSwerveModule implements SwerveModule
     public SwerveModulePosition getPosition()
     {
         return new SwerveModulePosition(
-            Conversions.falconToMeters(relDriveEncoder.getPosition(), Constants.Swerve.wheelCircumference, Constants.Swerve.driveGearRatio), 
+            relDriveEncoder.getPosition(), 
             getAngle()
         );
     }
