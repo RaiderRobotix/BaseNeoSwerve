@@ -23,17 +23,17 @@ public class Swerve extends SubsystemBase {
     public Pigeon2 gyro;
 
     public Swerve() {
-        // TODO fix for real robot
-        //gyro = new Pigeon2(Constants.Swerve.pigeonID);
-        //gyro.configFactoryDefault();
-        //zeroGyro();
+        
+        gyro = new Pigeon2(Constants.Swerve.pigeonID);
+        gyro.configFactoryDefault();
+        zeroGyro();
 
         mSwerveMods = new SwerveModule[] {
-            // TODO fix for real robot
-            new RevSwerveModule(0, Constants.Swerve.Mod0.constants)//,
-           /* new CTRESwerveModule(1, Constants.Swerve.Mod1.constants),
-            new CTRESwerveModule(2, Constants.Swerve.Mod2.constants),
-            new CTRESwerveModule(3, Constants.Swerve.Mod3.constants)*/
+           
+            new RevSwerveModule(0, Constants.Swerve.Mod0.constants),
+           new RevSwerveModule(1, Constants.Swerve.Mod1.constants),
+            new RevSwerveModule(2, Constants.Swerve.Mod2.constants),
+            new RevSwerveModule(3, Constants.Swerve.Mod3.constants)
         };
 
         //swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
@@ -94,19 +94,22 @@ public class Swerve extends SubsystemBase {
         return positions;
     }
 
-    public void zeroGyro(){
-        // TODO fix for real robot
-       // gyro.setYaw(0);
+    public void zeroGyro()
+    {
+      
+        gyro.setYaw(0);
     }
 
-    public Rotation2d getYaw() {
+    public Rotation2d getYaw() 
+    {
         return (Constants.Swerve.invertGyro) ? Rotation2d.fromDegrees(360 - gyro.getYaw()) : Rotation2d.fromDegrees(gyro.getYaw());
     }
 
     @Override
-    public void periodic(){
-        // TODO fix this for real robot
-       // swerveOdometry.update(getYaw(), getModulePositions());  
+    public void periodic()
+    {
+        
+        swerveOdometry.update(getYaw(), getModulePositions());  
 
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.getModuleNumber() + " Cancoder", mod.getCanCoder().getDegrees());

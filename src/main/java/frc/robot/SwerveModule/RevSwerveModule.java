@@ -37,7 +37,7 @@ public class RevSwerveModule implements SwerveModule
 
 
 
-    //private CANCoder angleEncoder;
+    private CANCoder angleEncoder;
     private RelativeEncoder relAngleEncoder;
     private RelativeEncoder relDriveEncoder;
 
@@ -58,8 +58,8 @@ public class RevSwerveModule implements SwerveModule
         configDriveMotor();
 
          /* Angle Encoder Config */
-        // TODO fix for real robot
-        // angleEncoder = new CANCoder(moduleConstants.cancoderID);
+    
+        angleEncoder = new CANCoder(moduleConstants.cancoderID);
         configEncoders();
 
 
@@ -70,9 +70,9 @@ public class RevSwerveModule implements SwerveModule
     private void configEncoders()
     {     
         // absolute encoder   
-        // TODO fix for real robot
-        //angleEncoder.configFactoryDefault();
-        //angleEncoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
+      
+        angleEncoder.configFactoryDefault();
+        angleEncoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
 
 
         relDriveEncoder = mDriveMotor.getEncoder();
@@ -85,7 +85,7 @@ public class RevSwerveModule implements SwerveModule
         // in degrees/sec
         relAngleEncoder.setVelocityConversionFactor(Constants.REV.DegreesPerTurnRotation / 60);
         // TODO might need fixing for real robot
-        relAngleEncoder.setPosition(0);
+        //relAngleEncoder.setPosition(0);
         
     }
 
@@ -124,6 +124,7 @@ public class RevSwerveModule implements SwerveModule
 
     public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop)
     {
+        
         
         /* This is a custom optimize function, since default WPILib optimize assumes continuous controller which CTRE and Rev onboard is not */
         // CTREModuleState actually works for any type of motor.
@@ -166,9 +167,9 @@ public class RevSwerveModule implements SwerveModule
 
     public Rotation2d getCanCoder()
     {
-        // TODO fix for real robot
-        //return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition());
-        return getAngle();
+        
+        return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition());
+        //return getAngle();
     }
 
     public int getModuleNumber() 
@@ -183,9 +184,9 @@ public class RevSwerveModule implements SwerveModule
 
     private void resetToAbsolute()
     {
-        // TODO Reinstate for real robot
-        //double absolutePosition =getCanCoder().getDegrees() - angleOffset.getDegrees();
-        //relAngleEncoder.setPosition(absolutePosition);
+    
+        double absolutePosition =getCanCoder().getDegrees() - angleOffset.getDegrees();
+        relAngleEncoder.setPosition(absolutePosition);
     }
 
   

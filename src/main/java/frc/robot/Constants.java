@@ -33,22 +33,26 @@ public final class Constants
         public static final IdleMode driveIdleMode = IdleMode.kCoast;
         public static final IdleMode angleIdleMode = IdleMode.kBrake;
 
-        // TODO fix for real robot
+
+        
+     
 
         // meters per rotation
-        public static final double driveRevToMeters = 5;
+        public static final double driveRevToMeters =  Swerve.wheelCircumference / Swerve.driveGearRatio;
 
 
         public static final double driveRpmToMetersPerSecond = driveRevToMeters / 60;
 
         // the number of degrees that a single rotation of the turn motor turns the wheel.
-        public static final double DegreesPerTurnRotation = 360;
+        public static final double DegreesPerTurnRotation = 360/Swerve.angleGearRatio;
         
     }
 
 
-    public static final class Swerve {
-        public static final int pigeonID = 1;
+    public static final class Swerve 
+    {
+        
+        public static final int pigeonID = 9;
         public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
 
         public static final COTSFalconSwerveConstants chosenModule =  //TODO: This must be tuned to specific robot
@@ -123,9 +127,9 @@ public final class Constants
         /* Module Specific Constants */
         /* Front Left Module - Module 0 */
         public static final class Mod0 { 
-            // TODO Fic for real robot
-            public static final int driveMotorID = 1;//7;
-            public static final int angleMotorID = 2;//8;
+            
+            public static final int driveMotorID = 7;
+            public static final int angleMotorID = 8;
             public static final int canCoderID = 14;
             public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0); //Rotation2d.fromDegrees(37.7);
             public static final SwerveModuleConstants constants = 
