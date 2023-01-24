@@ -172,6 +172,17 @@ public final class Constants
         public static final int intakeMotorID = 9;
     }
 
+    public static final class Arm
+    {
+        public static final int shoulderMotorID = 10;
+        public static final int shoulderFollowMotorID = 11;
+        public static final int elbowMotorID = 12;
+        public static final int elbowFollowMotorID = 13;
+        public static final int wristMotorID = 14;
+
+        public static final int extenderChannel = 1;
+    }
+
     public static final class AutoConstants { //TODO: The below constants are used in the example auto, and must be tuned to specific robot
         public static final double kMaxSpeedMetersPerSecond = 3;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
