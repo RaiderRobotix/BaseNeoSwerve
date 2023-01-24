@@ -73,7 +73,7 @@ public class RevSwerveModule implements SwerveModule
       
         angleEncoder.configFactoryDefault();
         angleEncoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
-
+        
 
         relDriveEncoder = mDriveMotor.getEncoder();
         relDriveEncoder.setPositionConversionFactor(Constants.REV.driveRevToMeters);
@@ -86,7 +86,7 @@ public class RevSwerveModule implements SwerveModule
         relAngleEncoder.setVelocityConversionFactor(Constants.REV.DegreesPerTurnRotation / 60);
         // TODO might need fixing for real robot
         //relAngleEncoder.setPosition(0);
-        
+        resetToAbsolute();
     }
 
     private void configAngleMotor()
@@ -101,7 +101,7 @@ public class RevSwerveModule implements SwerveModule
 
         mAngleMotor.setInverted(Constants.Swerve.angleMotorInvert);
         mAngleMotor.setIdleMode(Constants.REV.angleIdleMode);
-        resetToAbsolute();
+       
     }
 
     private void configDriveMotor()
