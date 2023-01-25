@@ -14,6 +14,10 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -37,6 +41,14 @@ public class Swerve extends SubsystemBase {
         };
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
+
+        ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
+
+
+        addDashboardEntries(tab.getLayout("Odo", BuiltInLayouts.kList)
+             .withSize(2, 4)
+             .withPosition(0, 0), swerveOdometry.getPoseMeters());
+             
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
@@ -117,4 +129,16 @@ public class Swerve extends SubsystemBase {
             SmartDashboard.putNumber("Mod " + mod.getModuleNumber() + " Velocity", mod.getState().speedMetersPerSecond);    
         }
     }
+
+    // slight witchcraft
+    private void addDashboardEntries(
+        ShuffleboardContainer container,
+        Pose2d pose
+        ) 
+        {
+            container.addNumber("Pos X", () -> pose.getX());
+            container.addNumber("Pos Y",()-> pose.getY());
+            container.addNumber("Angle", ()->pose.getRotation().getDegrees());
+        }
+
 }
