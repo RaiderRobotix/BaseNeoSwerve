@@ -169,16 +169,16 @@ public final class Constants
 
     public static final class Intake
     {
-        public static final int intakeMotorID = 9;
+        public static final int intakeMotorID = 10;
     }
 
     public static final class Arm
     {
-        public static final int shoulderMotorID = 10;
-        public static final int shoulderFollowMotorID = 11;
-        public static final int elbowMotorID = 12;
-        public static final int elbowFollowMotorID = 13;
-        public static final int wristMotorID = 14;
+        public static final int shoulderMotorID = 11;
+        public static final int shoulderFollowMotorID = 12;
+        public static final int elbowMotorID = 13;
+        public static final int elbowFollowMotorID = 14;
+        public static final int wristMotorID = 15;
 
         public static final int extenderChannel = 1;
     }
