@@ -83,7 +83,7 @@ public final class Constants
         public static final boolean canCoderInvert = chosenModule.canCoderInvert;
 
         /* Swerve Current Limiting */
-        public static final int angleContinuousCurrentLimit = 25;
+        public static final int angleContinuousCurrentLimit = 20;
         public static final int anglePeakCurrentLimit = 40;
         public static final double anglePeakCurrentDuration = 0.1;
         public static final boolean angleEnableCurrentLimit = true;
@@ -102,7 +102,7 @@ public final class Constants
         public static final double angleKP = 1.0;
         public static final double angleKI = 0;
         public static final double angleKD = .1;
-        public static final double angleKF = chosenModule.angleKF;
+        public static final double angleKF = 0;//chosenModule.angleKF;
 
         /* Drive Motor PID Values */
         public static final double driveKP = 0.05; //TODO: This must be tuned to specific robot
