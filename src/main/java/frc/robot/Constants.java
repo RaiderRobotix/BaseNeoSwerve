@@ -174,11 +174,11 @@ public final class Constants
 
     public static final class Arm
     {
-        public static final int shoulderMotorID = 11;
-        public static final int shoulderFollowMotorID = 12;
-        public static final int elbowMotorID = 13;
-        public static final int elbowFollowMotorID = 14;
-        public static final int wristMotorID = 15;
+        public static final int shoulderMotorID = 15;
+        public static final int shoulderFollowMotorID = 16;
+        public static final int elbowMotorID = 17;
+        public static final int elbowFollowMotorID = 18;
+        public static final int wristMotorID = 19;
 
         public static final int extenderChannel = 1;
     }
