@@ -169,7 +169,7 @@ public final class Constants
 
     public static final class Intake
     {
-        public static final int intakeMotorID = 10;
+        public static final int intakeMotorID = 9;
     }
 
     public static final class Arm
