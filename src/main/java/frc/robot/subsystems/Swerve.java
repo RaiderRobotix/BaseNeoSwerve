@@ -21,12 +21,18 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Swerve extends SubsystemBase {
+public class Swerve extends SubsystemBase
+ {
+
+
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
 
-    public Swerve() {
+
+
+    public Swerve() 
+    {
         
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
         gyro.configFactoryDefault();
@@ -51,7 +57,8 @@ public class Swerve extends SubsystemBase {
              
     }
 
-    public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
+    public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) 
+    {
         SwerveModuleState[] swerveModuleStates =
             Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
@@ -67,13 +74,18 @@ public class Swerve extends SubsystemBase {
                                 );
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
 
-        for(SwerveModule mod : mSwerveMods){
+        for(SwerveModule mod : mSwerveMods)
+        {
             mod.setDesiredState(swerveModuleStates[mod.getModuleNumber()], isOpenLoop);
         }
+
     }    
 
+
+
     /* Used by SwerveControllerCommand in Auto */
-    public void setModuleStates(SwerveModuleState[] desiredStates) {
+    public void setModuleStates(SwerveModuleState[] desiredStates) 
+    {
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
         
         for(SwerveModule mod : mSwerveMods){
@@ -81,26 +93,33 @@ public class Swerve extends SubsystemBase {
         }
     }    
 
-    public Pose2d getPose() {
-        //return swerveOdometry.getPoseMeters();
-        return new Pose2d();
+    public Pose2d getPose() 
+    {
+        return swerveOdometry.getPoseMeters();
+        
     }
 
-    public void resetOdometry(Pose2d pose) {
-        //swerveOdometry.resetPosition(getYaw(), getModulePositions(), pose);
+    public void resetOdometry(Pose2d pose) 
+    {
+        swerveOdometry.resetPosition(getYaw(), getModulePositions(), pose);
     }
 
-    public SwerveModuleState[] getModuleStates(){
+    public SwerveModuleState[] getModuleStates()
+    {
         SwerveModuleState[] states = new SwerveModuleState[4];
-        for(SwerveModule mod : mSwerveMods){
+
+        for(SwerveModule mod : mSwerveMods)
+        {
             states[mod.getModuleNumber()] = mod.getState();
         }
         return states;
     }
 
-    public SwerveModulePosition[] getModulePositions(){
+    public SwerveModulePosition[] getModulePositions()
+    {
         SwerveModulePosition[] positions = new SwerveModulePosition[4];
-        for(SwerveModule mod : mSwerveMods){
+        for(SwerveModule mod : mSwerveMods)
+        {
             positions[mod.getModuleNumber()] = mod.getPosition();
         }
         return positions;
@@ -123,7 +142,9 @@ public class Swerve extends SubsystemBase {
         
         swerveOdometry.update(getYaw(), getModulePositions());  
 
-        for(SwerveModule mod : mSwerveMods){
+        for(SwerveModule mod : mSwerveMods)
+        {
+            
             SmartDashboard.putNumber("Mod " + mod.getModuleNumber() + " Cancoder", mod.getCanCoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.getModuleNumber() + " Integrated", mod.getPosition().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.getModuleNumber() + " Velocity", mod.getState().speedMetersPerSecond);    
@@ -131,10 +152,7 @@ public class Swerve extends SubsystemBase {
     }
 
     // slight witchcraft
-    private void addDashboardEntries(
-        ShuffleboardContainer container,
-        Pose2d pose
-        ) 
+    private void addDashboardEntries(ShuffleboardContainer container, Pose2d pose) 
         {
             container.addNumber("Pos X", () -> pose.getX());
             container.addNumber("Pos Y",()-> pose.getY());

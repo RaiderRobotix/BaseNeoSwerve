@@ -5,17 +5,15 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 
-import frc.lib.math.Conversions;
 import frc.lib.util.CTREModuleState;
 import frc.lib.util.SwerveModuleConstants;
 import frc.robot.Constants;
 import frc.robot.Robot;
-import frc.robot.Constants.Swerve;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
+
+
 import com.ctre.phoenix.sensors.CANCoder;
+import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
@@ -29,7 +27,7 @@ public class RevSwerveModule implements SwerveModule
  {
     public int moduleNumber;
     private Rotation2d angleOffset;
-    private Rotation2d lastAngle;
+   // private Rotation2d lastAngle;
 
     private CANSparkMax mAngleMotor;
     private CANSparkMax mDriveMotor;
@@ -41,7 +39,8 @@ public class RevSwerveModule implements SwerveModule
     private RelativeEncoder relAngleEncoder;
     private RelativeEncoder relDriveEncoder;
 
-    SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
+
+    //SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
 
     public RevSwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants)
     {
@@ -63,7 +62,7 @@ public class RevSwerveModule implements SwerveModule
         configEncoders();
 
 
-        lastAngle = getState().angle;
+       // lastAngle = getState().angle;
     }
 
 
@@ -98,10 +97,11 @@ public class RevSwerveModule implements SwerveModule
         controller.setD(Constants.Swerve.angleKD,0);
         controller.setFF(Constants.Swerve.angleKF,0);
         mAngleMotor.setSmartCurrentLimit(Constants.Swerve.angleContinuousCurrentLimit);
-        System.out.println(controller.getP()+"!!!!!!!!!!!!!!!1");
-
+       
         mAngleMotor.setInverted(Constants.Swerve.angleMotorInvert);
         mAngleMotor.setIdleMode(Constants.REV.angleIdleMode);
+
+        mAngleMotor.burnFlash(); 
        
     }
 
@@ -116,6 +116,7 @@ public class RevSwerveModule implements SwerveModule
         mAngleMotor.setSmartCurrentLimit(Constants.Swerve.driveContinuousCurrentLimit);
         mDriveMotor.setInverted(Constants.Swerve.driveMotorInvert);
         mDriveMotor.setIdleMode(Constants.REV.driveIdleMode); 
+        mDriveMotor.burnFlash();
        
   
        
@@ -144,21 +145,53 @@ public class RevSwerveModule implements SwerveModule
             return;
         }
  
-       // double velocity = Conversions.MPSToFalcon(desiredState.speedMetersPerSecond, Constants.Swerve.wheelCircumference, Constants.Swerve.driveGearRatio);
         double velocity = relDriveEncoder.getVelocity();
         SparkMaxPIDController controller = mDriveMotor.getPIDController();
-        controller.setReference(velocity, ControlType.kVelocity);
+        controller.setReference(velocity, ControlType.kVelocity, 0);
         
     }
 
     private void setAngle(SwerveModuleState desiredState)
     {
-        Rotation2d angle = (Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * 0.01)) 
-        ? lastAngle : desiredState.angle; //Prevent rotating module if speed is less then 1%. Prevents Jittering.
+        if(Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * 0.01)) 
+        {
+            mAngleMotor.stopMotor();
+            return;
+
+        }
+        Rotation2d angle = desiredState.angle; 
+        //Prevent rotating module if speed is less then 1%. Prevents Jittering.
         
         SparkMaxPIDController controller = mAngleMotor.getPIDController();
-        controller.setReference(angle.getDegrees(), ControlType.kPosition);
-        lastAngle = angle;
+        double degReference = AdjustReferenceAngle( angleEncoder.getAbsolutePosition(), angle.getDegrees()  ); 
+        controller.setReference (degReference, ControlType.kPosition, 0);
+        
+    }
+
+    private double AdjustReferenceAngle(double currentAngle, double referenceDegrees)
+    {
+
+        // Get the current angle in radians
+        double currentAngleRadiansMod = currentAngle % 360;
+        if (currentAngleRadiansMod < 0.0) {
+            currentAngleRadiansMod += 360;
+        }
+
+        double toReturn = referenceDegrees;
+
+        // if the difference between current and goal angle is more than half a rotation clockwise...
+        if (referenceDegrees - currentAngleRadiansMod > 180) 
+        {
+            //
+            toReturn -= 360;
+        } 
+        else if (referenceDegrees - currentAngleRadiansMod < -180)
+        {
+            toReturn += 360;
+        }
+
+        return toReturn;
+     
     }
 
     private Rotation2d getAngle()
