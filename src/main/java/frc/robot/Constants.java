@@ -170,6 +170,17 @@ public final class Constants
     public static final class Intake
     {
         public static final int intakeMotorID = 9;
+        public static final int undertakeMotorID = 21;
+        public static final int undertakeFollowMotorID = 22;
+
+        public static final int intakeArmsUpChannel = 4;
+        public static final int intakeArmsDownChannel = 5;
+
+        public static final int presenterUpChannel = 6;
+        public static final int presenterDownChannel = 7;
+
+        public static final int vaccumForwardChannel = 8;
+        public static final int vaccumReverseChannel = 9;
     }
 
     public static final class Arm

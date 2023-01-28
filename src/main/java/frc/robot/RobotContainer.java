@@ -90,7 +90,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        intakeButton.whileTrue(new TeleopIntake(s_Intake)).whileFalse(new TeleopIntake(s_Intake));//TODO Idk if this is what works
+        intakeButton.onTrue(new TeleopIntake(s_Intake));//.whileFalse(new TeleopIntake(s_Intake));//Idk if this is what works
     }
 
     /**
