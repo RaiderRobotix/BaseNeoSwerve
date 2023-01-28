@@ -96,6 +96,7 @@ public class RevSwerveModule implements SwerveModule
         controller.setI(Constants.Swerve.angleKI,0);
         controller.setD(Constants.Swerve.angleKD,0);
         controller.setFF(Constants.Swerve.angleKF,0);
+        controller.setOutputRange(-.9, .9);
         mAngleMotor.setSmartCurrentLimit(Constants.Swerve.angleContinuousCurrentLimit);
        
         mAngleMotor.setInverted(Constants.Swerve.angleMotorInvert);
@@ -113,6 +114,7 @@ public class RevSwerveModule implements SwerveModule
         controller.setI(Constants.Swerve.driveKI,0);
         controller.setD(Constants.Swerve.driveKD,0);
         controller.setFF(Constants.Swerve.driveKF,0);
+        controller.setOutputRange(-.9, .9);
         mAngleMotor.setSmartCurrentLimit(Constants.Swerve.driveContinuousCurrentLimit);
         mDriveMotor.setInverted(Constants.Swerve.driveMotorInvert);
         mDriveMotor.setIdleMode(Constants.REV.driveIdleMode); 

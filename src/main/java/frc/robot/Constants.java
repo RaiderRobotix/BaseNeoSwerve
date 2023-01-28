@@ -30,7 +30,7 @@ public final class Constants
      */
     public static final class REV
     {
-        public static final IdleMode driveIdleMode = IdleMode.kBrake;
+        public static final IdleMode driveIdleMode = IdleMode.kCoast;
         public static final IdleMode angleIdleMode = IdleMode.kBrake;
 
 
@@ -180,7 +180,10 @@ public final class Constants
         public static final int elbowFollowMotorID = 18;
         public static final int wristMotorID = 19;
 
-        public static final int extenderChannel = 1;
+        public static final int forwardExtenderChannel = 0;
+        public static final int reverseExtenderChannel = 1;
+        public static int forwardClawChannel = 2;
+        public static int reverseClawChannel = 3;
     }
 
     public static final class AutoConstants { //TODO: The below constants are used in the example auto, and must be tuned to specific robot
