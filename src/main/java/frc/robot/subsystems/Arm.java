@@ -24,13 +24,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Arm extends SubsystemBase
 {
     //motors
-    private CANSparkMax shoulder;
-    private CANSparkMax shoulderFollow;
-    private CANSparkMax elbow;
-    private CANSparkMax elbowFollow;
-    private CANSparkMax wrist;
+    private CANSparkMax J1;
+    private CANSparkMax J1Follow;
+    private CANSparkMax J2;
+    private CANSparkMax J2Follow;
+    private CANSparkMax J3;
     private DoubleSolenoid extender;
     private DoubleSolenoid claw;
+
+    private ArmPose currentPose;
 
     public Arm()
     {
@@ -39,27 +41,27 @@ public class Arm extends SubsystemBase
 
         
         
-        CANSparkMax[] motors = {shoulder, shoulderFollow, elbow, elbowFollow, wrist};
-        shoulder = new CANSparkMax(Constants.Arm.shoulderMotorID, MotorType.kBrushless);
+        CANSparkMax[] motors = {J1, J1Follow, J2, J2Follow, J3};
+        J1 = new CANSparkMax(Constants.Arm.J1MotorID, MotorType.kBrushless);
         
-        shoulder.getEncoder().setPositionConversionFactor((1.0/144)*360);
+        J1.getEncoder().setPositionConversionFactor((1.0/144)*360);
 
-        shoulderFollow = new CANSparkMax(Constants.Arm.shoulderFollowMotorID, MotorType.kBrushless);
-        elbow = new CANSparkMax(Constants.Arm.elbowMotorID, MotorType.kBrushless);
+        J1Follow = new CANSparkMax(Constants.Arm.J1FollowMotorID, MotorType.kBrushless);
+        J2 = new CANSparkMax(Constants.Arm.J2MotorID, MotorType.kBrushless);
       
-        elbow.getEncoder().setPositionConversionFactor((1.0/100)*360);
+        J2.getEncoder().setPositionConversionFactor((1.0/100)*360);
 
-        elbowFollow = new CANSparkMax(Constants.Arm.elbowFollowMotorID, MotorType.kBrushless);
-        wrist = new CANSparkMax(Constants.Arm.wristMotorID, MotorType.kBrushless);
-        shoulder.getEncoder().setPositionConversionFactor((1.0/30)*360);
+        J2Follow = new CANSparkMax(Constants.Arm.J2FollowMotorID, MotorType.kBrushless);
+        J3 = new CANSparkMax(Constants.Arm.J3MotorID, MotorType.kBrushless);
+        J1.getEncoder().setPositionConversionFactor((1.0/30)*360);
 
         extender = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.Arm.forwardExtenderChannel, Constants.Arm.reverseExtenderChannel);
         setExtender(false);
         claw = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.Arm.forwardClawChannel, Constants.Arm.reverseClawChannel);
         setClaw(false);
 
-        shoulderFollow.follow(shoulder);
-        elbowFollow.follow(elbow);
+        J1Follow.follow(J1);
+        J2Follow.follow(J2);
 
         initializeMotors(motors);
 
@@ -68,9 +70,11 @@ public class Arm extends SubsystemBase
         ShuffleboardTab tab = Shuffleboard.getTab("Arm");
 
 
-        tab.add("shoulder", shoulder.getEncoder());
-        tab.add("elbow", elbow.getEncoder());
-        tab.add("wrist", wrist.getEncoder());
+        tab.add("J1", J1.getEncoder());
+        tab.add("J2", J2.getEncoder());
+        tab.add("J3", J3.getEncoder());
+
+        currentPose = null;
         
              
              
@@ -96,7 +100,7 @@ public class Arm extends SubsystemBase
         }
     }
 
-    public void setClaw(boolean extended)
+    private void setClaw(boolean extended)
     {
         if(extended)
         {
@@ -113,7 +117,7 @@ public class Arm extends SubsystemBase
     }
 
     
-    public void setExtender(boolean extended)
+    private void setExtender(boolean extended)
     {
         if(extended)
         {
@@ -130,17 +134,21 @@ public class Arm extends SubsystemBase
     }
 
     // in revolutions
-    public void setArmPosition(double shoulderRef, double elbowRef, double wristRef )
+    private void setArmPosition(double J1Ref, double J2Ref, double J3Ref )
     {
-         shoulder.getPIDController().setReference(shoulderRef, ControlType.kPosition);
-         wrist.getPIDController().setReference(wristRef, ControlType.kPosition);
-         elbow.getPIDController().setReference(elbowRef, ControlType.kPosition);
+         J1.getPIDController().setReference(J1Ref, ControlType.kPosition);
+         J3.getPIDController().setReference(J3Ref, ControlType.kPosition);
+         J2.getPIDController().setReference(J2Ref, ControlType.kPosition);
     }
 
 
     public void adoptPose(ArmPose pose)
     {
-        setArmPosition(pose.getShoulder(),pose.getElbow(), pose.getWrist());
+        if(currentPose!=null && !pose.getAllowedTransitions().contains(currentPose) )
+        {
+            System.out.println("Invalid pose occured.");
+        }
+        setArmPosition(pose.getJ1(),pose.getJ2(), pose.getJ3());
         setExtender(pose.getExtender());
         setClaw(pose.getClaw());
     }

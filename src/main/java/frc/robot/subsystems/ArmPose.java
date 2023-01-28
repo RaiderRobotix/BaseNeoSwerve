@@ -4,23 +4,23 @@ import java.util.ArrayList;
 
 public class ArmPose
 {
-    private double shoulderDegrees;
-    private double elbowDegrees;
-    private double wristDegrees;
+    private double J1Degrees;
+    private double J2Degrees;
+    private double J3Degrees;
 
     private boolean armExtended;
     private boolean clawContracted;
 
     private ArrayList<ArmPose> allowedTransitions;
 
-    public ArmPose(double shoulderdeg, double elbowdeg, double wristdeg, boolean armOut, boolean clawClosed)
+    public ArmPose(double J1deg, double J2deg, double J3deg, boolean armOut, boolean clawClosed)
     {
 
         allowedTransitions = new ArrayList<ArmPose>();
 
-        shoulderDegrees = shoulderdeg;
-        elbowDegrees = elbowdeg;
-        wristDegrees = wristdeg;
+        J1Degrees = J1deg;
+        J2Degrees = J2deg;
+        J3Degrees = J3deg;
 
         armExtended = armOut;
         clawContracted = clawClosed;
@@ -29,20 +29,20 @@ public class ArmPose
     }
 
 
-    public double getShoulder()
+    public double getJ1()
     {
-        return shoulderDegrees;
+        return J1Degrees;
 
     }
 
-    public double getElbow()
+    public double getJ2()
     {
-        return elbowDegrees;
+        return J2Degrees;
     }
 
-    public double getWrist()
+    public double getJ3()
     {
-        return wristDegrees;
+        return J3Degrees;
     }
 
     public boolean getClaw()
