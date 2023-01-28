@@ -181,6 +181,8 @@ public final class Constants
 
         public static final int vaccumForwardChannel = 8;
         public static final int vaccumReverseChannel = 9;
+
+        public static final int sensorChannel = 0;
     }
 
     public static final class Arm
