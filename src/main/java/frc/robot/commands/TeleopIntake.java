@@ -23,7 +23,7 @@ public class TeleopIntake extends CommandBase
     @Override
     public void execute()
     {
-        
+        INTAKE.runIntake();
     }
 
     @Override
