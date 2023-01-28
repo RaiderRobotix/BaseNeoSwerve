@@ -6,26 +6,36 @@ import frc.robot.subsystems.Intake;
 public class TeleopIntake extends CommandBase
 {
     final private Intake INTAKE;
+    private boolean finished = false;
 
     public TeleopIntake(Intake subsystem)
     {
         INTAKE = subsystem;
-        addRequirements(subsystem);
+        addRequirements(INTAKE);
     }
 
     @Override
-    public void initialize() {}
+    public void initialize() 
+    {
+        INTAKE.startIntake();
+    }
 
     @Override
     public void execute()
     {
-        INTAKE.setIntakeMotor(1);
+        
     }
 
     @Override
     public void end(boolean inturrupted)
     {
-        INTAKE.setIntakeMotor(0);
+        INTAKE.stopIntake();
+    }
+
+    @Override
+    public boolean isFinished()
+    {
+        return finished;
     }
 
 }
