@@ -36,12 +36,14 @@ public class RobotContainer {
     private final Trigger robotCentric;
 
     private final Trigger intakeButton;
+    private final Trigger homeArm;
     
     /*private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);*/
 
     /* Subsystems */
     private final Swerve s_Swerve;
+    private final Arm s_Arm;
     private final Intake s_Intake;
 
 
@@ -61,10 +63,12 @@ public class RobotContainer {
         robotCentric = new Trigger(()-> driver.getRawButton(2));
 
         intakeButton = new Trigger(()-> driver.getRawButton(4));
+        homeArm = new Trigger(()-> driver.getRawButton(3));
 
         /* Subsystems */
         s_Swerve = new Swerve();
         s_Intake = new Intake();
+        s_Arm = new Arm();
             
 
         s_Swerve.setDefaultCommand(
@@ -91,6 +95,7 @@ public class RobotContainer {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         intakeButton.onTrue(new TeleopIntake(s_Intake));//.whileFalse(new TeleopIntake(s_Intake));//Idk if this is what works
+        homeArm.onTrue(new ArmCommand(s_Arm, ArmPoses.home) );
     }
 
     /**

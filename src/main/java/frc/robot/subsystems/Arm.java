@@ -146,11 +146,27 @@ public class Arm extends SubsystemBase
     {
         if(currentPose!=null && !pose.getAllowedTransitions().contains(currentPose) )
         {
-            System.out.println("Invalid pose occured.");
+            System.out.println("Invalid pose transition.");
         }
         setArmPosition(pose.getJ1(),pose.getJ2(), pose.getJ3());
         setExtender(pose.getExtender());
         setClaw(pose.getClaw());
+    }
+
+
+    public boolean isAtPose(ArmPose pose)
+    {
+        double tolerance = .1;
+        return isWithin(pose.getJ1(), J1.getEncoder().getPosition(), tolerance)
+            && isWithin(pose.getJ2(), J2.getEncoder().getPosition(), tolerance)
+            && isWithin(pose.getJ3(), J3.getEncoder().getPosition(), tolerance)
+            && pose.getClaw() == getClaw()
+            && pose.getExtender() == getExtender();
+    }
+
+    private boolean isWithin(double a, double b, double within)
+    {
+        return Math.abs(a-b)<within;
     }
 
     
