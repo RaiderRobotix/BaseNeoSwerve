@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class Intake extends SubsystemBase
 {
+    private IntakeState intakeState;
     private final double SPEED = 0.5;
     //motors
     private CANSparkMax intakeMotor;
@@ -65,6 +66,7 @@ public class Intake extends SubsystemBase
         intakeMotor.set(0);
         undertakeMotor.set(0);
         intakeArms.set(Value.kReverse);
+        presenter.set(Value.kReverse);
     }
 
     public void setPresenter(boolean extended)
@@ -77,14 +79,19 @@ public class Intake extends SubsystemBase
         presenter.set(Value.kReverse);
     }
 
-    public void setVaccum(Value state)
+    public void setVaccum(boolean on)
     {
-        vaccum.set(state);
+        if(on)
+        {
+            vaccum.set(Value.kForward);
+            return;
+        }
+        vaccum.set(Value.kReverse);
     }
 
     public boolean getSensorValue()
     {
-        return sensor.get();
+        return !sensor.get();
     }
 
     public void outtake()
@@ -94,4 +101,23 @@ public class Intake extends SubsystemBase
         setPresenter(true);
     }
     
+    public IntakeState getState()
+    {
+        return intakeState;
+    }
+
+    public void collectPiece()
+    {
+        if(intakeState == IntakeState.wantsCone)
+        {
+            intakeState = IntakeState.getCone;
+            return;
+        }
+        if(intakeState == IntakeState.wantsCube)
+        {
+            intakeState = IntakeState.getCube;
+            return;
+        }
+    }
+
 }

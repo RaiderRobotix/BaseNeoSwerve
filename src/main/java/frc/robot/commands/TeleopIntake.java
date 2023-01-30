@@ -2,9 +2,11 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakeState;
 
 public class TeleopIntake extends CommandBase
 {
+
     final private Intake INTAKE;
     private boolean finished = false;
 
@@ -17,13 +19,23 @@ public class TeleopIntake extends CommandBase
     @Override
     public void initialize() 
     {
-        INTAKE.startIntake();
+        if(INTAKE.getState() == IntakeState.wantsCone || INTAKE.getState() == IntakeState.wantsCube) 
+        {
+            INTAKE.startIntake();//only run if needs a piece
+        }
+        else
+        {
+            finished = true;
+        }
     }
-
     @Override
     public void execute()
     {
-        
+        if(INTAKE.getSensorValue())
+        {
+            INTAKE.collectPiece();
+            finished = true;
+        }
     }
 
     @Override
