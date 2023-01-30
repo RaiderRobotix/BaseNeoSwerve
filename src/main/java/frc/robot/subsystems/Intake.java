@@ -15,19 +15,9 @@ import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-enum IntakeState
-{
-    empty,
-    wantsCone,
-    wantsCube,
-    hasCone,
-    hasCube
-}
-
 public class Intake extends SubsystemBase
 {
     private final double SPEED = 0.5;
-    private IntakeState intakeState;
     //motors
     private CANSparkMax intakeMotor;
     private CANSparkMax undertakeMotor;
@@ -42,9 +32,7 @@ public class Intake extends SubsystemBase
     private DigitalInput sensor;
 
     public Intake()
-    {
-        intakeState = IntakeState.empty;
-
+        {
         intakeMotor = new CANSparkMax(Constants.Intake.intakeMotorID, MotorType.kBrushless);
         undertakeMotor = new CANSparkMax(Constants.Intake.undertakeMotorID, MotorType.kBrushless);
         undertakeFollowMotor = new CANSparkMax(Constants.Intake.undertakeFollowMotorID, MotorType.kBrushless);
@@ -70,35 +58,6 @@ public class Intake extends SubsystemBase
         undertakeMotor.set(SPEED);
         intakeArms.set(Value.kForward);
         presenter.set(Value.kForward);
-    }
-
-    public void runIntake()
-    {
-        switch(intakeState)
-        {
-            case empty:
-                break;
-            case wantsCone:
-                if(getSensorValue()) intakeState = IntakeState.hasCone;
-                break;
-            case wantsCube:
-                if(getSensorValue()) intakeState = IntakeState.hasCube;
-                break;
-            case hasCone:
-                //new WaitCommand(1);
-                stopIntake();
-                break;
-            case hasCube:
-                //new WaitCommand(1);
-                stopIntake();
-                break;
-        }
-    }
-
-    //useless as of now
-    public void turnArmsOff()
-    {
-        intakeArms.set(Value.kOff);
     }
 
     public void stopIntake()
@@ -128,14 +87,11 @@ public class Intake extends SubsystemBase
         return sensor.get();
     }
 
-    public IntakeState getIntakeState()
+    public void outtake()
     {
-        return intakeState;
-    }
-
-    public void setIntakeState(IntakeState state)
-    {
-        intakeState = state;
+        intakeMotor.set(-SPEED);
+        undertakeMotor.set(-SPEED);
+        setPresenter(true);
     }
     
 }

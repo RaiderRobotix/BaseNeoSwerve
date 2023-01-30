@@ -3,12 +3,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
-public class TeleopIntake extends CommandBase
+public class TeleopOuttake extends CommandBase
 {
     final private Intake INTAKE;
     private boolean finished = false;
 
-    public TeleopIntake(Intake subsystem)
+    public TeleopOuttake(Intake subsystem)
     {
         INTAKE = subsystem;
         addRequirements(INTAKE);
@@ -17,7 +17,7 @@ public class TeleopIntake extends CommandBase
     @Override
     public void initialize() 
     {
-        INTAKE.startIntake();
+        INTAKE.outtake();
     }
 
     @Override
@@ -37,5 +37,4 @@ public class TeleopIntake extends CommandBase
     {
         return finished;
     }
-
 }
