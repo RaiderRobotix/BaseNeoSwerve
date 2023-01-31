@@ -73,6 +73,11 @@ public class Arm extends SubsystemBase
         tab.add("J1", J1.getEncoder());
         tab.add("J2", J2.getEncoder());
         tab.add("J3", J3.getEncoder());
+        tab.add("J1 Current", J1.getOutputCurrent());
+        tab.add("J2 Current", J2.getOutputCurrent());
+        tab.add("J3 Current", J3.getOutputCurrent());
+
+
 
         currentPose = null;
         
