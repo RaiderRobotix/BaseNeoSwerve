@@ -49,13 +49,11 @@ public class TeleopIntake extends CommandBase
         
         INTAKE.stopIntake();
 
-        // TODO remove the false when arm is tested
-        if(!inturrupted && false)
+     
+        if(!inturrupted)
         {
-            // TODO set correct arm pose
-            CommandBase c = new ArmCommand(ARM, ArmPoses.home);
-            // 
-            new PresentPiece(INTAKE, ARM, c);
+            //TODO uncomment once arm poses are correct and junk
+            new PresentPiece(INTAKE, ARM);
         }
     }
 
