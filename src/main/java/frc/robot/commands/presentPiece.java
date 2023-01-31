@@ -33,13 +33,13 @@ public class PresentPiece extends CommandBase
          * @param arm
          * @param waitOn a command which must finish executing before the intake will present.
          */
-        public PresentPiece(Intake intake, Arm arm, CommandBase waitOn)
+        public PresentPiece(Intake intake, Arm arm)
         {
             INTAKE = intake;
             ARM = arm;
             addRequirements(INTAKE);
 
-            subordinateCommand = waitOn;
+            subordinateCommand = null;
             
             stateMachine = new StateMachine(this::begin);
             stateMachine.execute();
@@ -85,7 +85,9 @@ public class PresentPiece extends CommandBase
 
         private LinkableState begin()
         {
-            
+            // TODO set correct arm pose
+            subordinateCommand = new ArmCommand(ARM, ArmPoses.home);
+
              // cones do not need to execute the prePresent stage, since they do not deal with the vaccum.
             if(INTAKE.getState() == IntakeState.getCube)
             {

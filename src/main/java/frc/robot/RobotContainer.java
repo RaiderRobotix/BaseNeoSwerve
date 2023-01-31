@@ -49,7 +49,8 @@ public class RobotContainer {
     /* Subsystems */
     private final Swerve s_Swerve;
     private final Arm s_Arm;
-    private final Intake s_Intake;
+    // TODO uncomment once intake exists
+    //private final Intake s_Intake;
 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -74,9 +75,12 @@ public class RobotContainer {
 
         coneButton = new Trigger(()-> operator.getRawButton(1));
         cubeButton = new Trigger(()-> operator.getRawButton(2));
+       
+       
         /* Subsystems */
         s_Swerve = new Swerve();
-        s_Intake = new Intake();
+        // TODO Uncomment once intake exists.
+        //s_Intake = new Intake();
         s_Arm = new Arm();
             
 
@@ -103,11 +107,12 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        intakeButton.onTrue(new TeleopIntake(s_Intake, s_Arm));
-        outtakeButton.onTrue(new TeleopOuttake(s_Intake));
+        // TODO uncomment once intake... exists.
+        //intakeButton.onTrue(new TeleopIntake(s_Intake, s_Arm));
+        //outtakeButton.onTrue(new TeleopOuttake(s_Intake));
 
-        coneButton.onTrue(new InstantCommand(() -> s_Intake.wantsCone()));
-        cubeButton.onTrue(new InstantCommand(() -> s_Intake.wantsCube()));
+        //coneButton.onTrue(new InstantCommand(() -> s_Intake.wantsCone()));
+        //cubeButton.onTrue(new InstantCommand(() -> s_Intake.wantsCube()));
 
         homeArm.onTrue(new ArmCommand(s_Arm, ArmPoses.home) );
     }
