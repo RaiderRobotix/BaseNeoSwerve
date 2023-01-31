@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class Intake extends SubsystemBase
 {
@@ -118,6 +117,21 @@ public class Intake extends SubsystemBase
             intakeState = IntakeState.getCube;
             return;
         }
+    }
+
+    public void wantsCone()
+    {
+        if(canWant()) intakeState = IntakeState.wantsCone;
+    }
+
+    public void wantsCube()
+    {
+        if(canWant()) intakeState = IntakeState.wantsCube;
+    }
+
+    public boolean canWant()//you must ask permission to have free will
+    {
+        return !(intakeState == IntakeState.getCone || intakeState == IntakeState.getCube);
     }
 
 }
