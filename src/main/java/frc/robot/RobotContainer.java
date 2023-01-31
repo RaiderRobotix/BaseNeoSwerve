@@ -21,6 +21,7 @@ public class RobotContainer {
     /* Controllers */
     private final Joystick driver;
     private final Joystick rotater;
+    private final XboxController operator;
 
     /* Drive Controls */
     private final int translationAxis;
@@ -38,6 +39,9 @@ public class RobotContainer {
     private final Trigger intakeButton;
     private final Trigger outtakeButton;
     private final Trigger homeArm;
+
+    private final Trigger coneButton;
+    private final Trigger cubeButton;
     
     /*private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);*/
@@ -53,6 +57,7 @@ public class RobotContainer {
         /* Controllers */
         driver = new Joystick(0);
         rotater = new Joystick(1);
+        operator = new XboxController(2);
 
         /* Drive Controls */
         translationAxis = Joystick.AxisType.kY.value;
@@ -67,6 +72,8 @@ public class RobotContainer {
         outtakeButton = new Trigger(()-> driver.getRawButton(5));
         homeArm = new Trigger(()-> driver.getRawButton(3));
 
+        coneButton = new Trigger(()-> operator.getRawButton(1));
+        cubeButton = new Trigger(()-> operator.getRawButton(2));
         /* Subsystems */
         s_Swerve = new Swerve();
         s_Intake = new Intake();
@@ -98,6 +105,9 @@ public class RobotContainer {
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         intakeButton.onTrue(new TeleopIntake(s_Intake));
         outtakeButton.onTrue(new TeleopOuttake(s_Intake));
+
+        coneButton.onTrue(new InstantCommand(() -> s_Intake.wantsCone()));
+        cubeButton.onTrue(new InstantCommand(() -> s_Intake.wantsCube()));
 
         homeArm.onTrue(new ArmCommand(s_Arm, ArmPoses.home) );
     }
