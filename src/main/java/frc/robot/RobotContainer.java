@@ -103,7 +103,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        intakeButton.onTrue(new TeleopIntake(s_Intake));
+        intakeButton.onTrue(new TeleopIntake(s_Intake, s_Arm));
         outtakeButton.onTrue(new TeleopOuttake(s_Intake));
 
         coneButton.onTrue(new InstantCommand(() -> s_Intake.wantsCone()));

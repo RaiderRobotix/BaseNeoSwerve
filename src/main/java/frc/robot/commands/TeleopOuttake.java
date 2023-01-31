@@ -30,6 +30,7 @@ public class TeleopOuttake extends CommandBase
     public void end(boolean inturrupted)
     {
         INTAKE.stopIntake();
+        
     }
 
     @Override

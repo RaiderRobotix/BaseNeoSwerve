@@ -1,6 +1,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.ArmPoses;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeState;
 
@@ -8,11 +10,14 @@ public class TeleopIntake extends CommandBase
 {
 
     final private Intake INTAKE;
+    private final Arm ARM;
     private boolean finished = false;
 
-    public TeleopIntake(Intake subsystem)
+    public TeleopIntake(Intake intake, Arm arm)
     {
-        INTAKE = subsystem;
+        INTAKE = intake;
+        ARM = arm;
+        
         addRequirements(INTAKE);
     }
 
@@ -33,7 +38,7 @@ public class TeleopIntake extends CommandBase
     {
         if(INTAKE.getSensorValue())
         {
-            INTAKE.collectPiece();
+            INTAKE.notifyPieceObtained();
             finished = true;
         }
     }
@@ -41,7 +46,17 @@ public class TeleopIntake extends CommandBase
     @Override
     public void end(boolean inturrupted)
     {
+        
         INTAKE.stopIntake();
+
+        // TODO remove the false when arm is tested
+        if(!inturrupted && false)
+        {
+            // TODO set correct arm pose
+            CommandBase c = new ArmCommand(ARM, ArmPoses.home);
+            // 
+            new PresentPiece(INTAKE, ARM, c);
+        }
     }
 
     @Override

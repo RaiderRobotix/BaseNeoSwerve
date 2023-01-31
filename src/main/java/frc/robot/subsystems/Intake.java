@@ -32,7 +32,8 @@ public class Intake extends SubsystemBase
     private DigitalInput sensor;
 
     public Intake()
-        {
+    {
+        // initialize intake motors
         intakeMotor = new CANSparkMax(Constants.Intake.intakeMotorID, MotorType.kBrushless);
         undertakeMotor = new CANSparkMax(Constants.Intake.undertakeMotorID, MotorType.kBrushless);
         undertakeFollowMotor = new CANSparkMax(Constants.Intake.undertakeFollowMotorID, MotorType.kBrushless);
@@ -45,6 +46,7 @@ public class Intake extends SubsystemBase
 
         undertakeFollowMotor.follow(undertakeMotor);
 
+        // initialize solinoids.
         intakeArms = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.Intake.intakeArmsDownChannel, Constants.Intake.intakeArmsUpChannel);
         presenter = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.Intake.presenterUpChannel, Constants.Intake.presenterDownChannel);
         vaccum = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.Intake.vaccumForwardChannel, Constants.Intake.vaccumReverseChannel);
@@ -105,7 +107,7 @@ public class Intake extends SubsystemBase
         return intakeState;
     }
 
-    public void collectPiece()
+    public void notifyPieceObtained()
     {
         if(intakeState == IntakeState.wantsCone)
         {
