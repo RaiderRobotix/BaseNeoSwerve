@@ -1,6 +1,7 @@
 package frc.lib.util.States;
 
-import java.util.ArrayList;
+
+import edu.wpi.first.wpilibj2.command.Command;
 
 
 
@@ -9,14 +10,15 @@ public class StateMachine
   
     private LinkableState current;
 
-
     public StateMachine(LinkableState initial)
     {
        
         current = initial;
+       
 
     }
 
+    
 
     // returns whether the stateMachine is finished running.
     public boolean execute()
@@ -29,5 +31,19 @@ public class StateMachine
         current = current.run();
         return current == null;
     }
+
+ 
+
+    public LinkableState waitForCommand(Command waitingOn, LinkableState after)
+    {
+
+        if(waitingOn.isFinished())
+        {
+            return after;
+        }
+
+        return ()->{return waitForCommand(waitingOn, after);};
+    }
+    
 
 }
