@@ -35,7 +35,7 @@ public final class Constants
 
 
         
-     
+        public static final boolean doAngleAdjustment = false;
 
         // meters per rotation
         public static final double driveRevToMeters =  Swerve.wheelCircumference / Swerve.driveGearRatio;

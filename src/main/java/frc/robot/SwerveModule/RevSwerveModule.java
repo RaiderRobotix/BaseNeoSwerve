@@ -165,7 +165,14 @@ public class RevSwerveModule implements SwerveModule
         //Prevent rotating module if speed is less then 1%. Prevents Jittering.
         
         SparkMaxPIDController controller = mAngleMotor.getPIDController();
-        double degReference = AdjustReferenceAngle( angleEncoder.getAbsolutePosition(), angle.getDegrees()  ); 
+        
+        double degReference = angle.getDegrees();
+        if(Constants.REV.doAngleAdjustment)
+        {
+            degReference = AdjustReferenceAngle( angleEncoder.getAbsolutePosition(), angle.getDegrees()  ); 
+        }
+       
+        
         controller.setReference (degReference, ControlType.kPosition, 0);
         
     }
