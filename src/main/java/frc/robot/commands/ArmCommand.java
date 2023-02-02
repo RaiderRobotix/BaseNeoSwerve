@@ -18,7 +18,7 @@ public class ArmCommand extends CommandBase
     }
 
     @Override
-    public void initialize() 
+    public void initialize()    
     {
        arm.adoptPose(pose);
     }

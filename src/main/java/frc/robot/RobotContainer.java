@@ -48,7 +48,7 @@ public class RobotContainer {
 
     /* Subsystems */
     private final Swerve s_Swerve;
-    private final Arm s_Arm;
+    //private final Arm s_Arm;
     // TODO uncomment once intake exists
     //private final Intake s_Intake;
 
@@ -81,7 +81,7 @@ public class RobotContainer {
         s_Swerve = new Swerve();
         // TODO Uncomment once intake exists.
         //s_Intake = new Intake();
-        s_Arm = new Arm();
+        //s_Arm = new Arm();
             
 
         s_Swerve.setDefaultCommand(
@@ -114,7 +114,7 @@ public class RobotContainer {
         //coneButton.onTrue(new InstantCommand(() -> s_Intake.wantsCone()));
         //cubeButton.onTrue(new InstantCommand(() -> s_Intake.wantsCube()));
 
-        homeArm.onTrue(new ArmCommand(s_Arm, ArmPoses.home) );
+        //homeArm.onTrue(new ArmCommand(s_Arm, ArmPoses.home) );
     }
 
     /**
