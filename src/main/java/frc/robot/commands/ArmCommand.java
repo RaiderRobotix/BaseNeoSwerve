@@ -12,7 +12,7 @@ public class ArmCommand extends CommandBase
 
     public ArmCommand(Arm arm, ArmPose pose)
     {
-        System.out.println("commanded");
+       
         this.arm = arm;
         this.pose = pose;
         addRequirements(arm);

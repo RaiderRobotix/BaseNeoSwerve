@@ -201,7 +201,7 @@ public class Arm extends SubsystemBase
         }
 
         
-        if(currentPose!=null && (!pose.getAllowedTransitions().contains(currentPose) && currentPose!=pose))
+        if(currentPose!=null && (!pose.isAllowedTransition(currentPose) && currentPose!=pose))
         {
             System.out.println("Invalid pose transition.");
         }
