@@ -68,9 +68,14 @@ public class ArmPose
         }
     }
 
-    public ArrayList<ArmPose> getAllowedTransitions()
+    public boolean isAllowedTransition(ArmPose pose)
     {
-        return new ArrayList<ArmPose>(allowedTransitions);
+        if(allowedTransitions.size()==0)
+        {
+            return true;
+        }
+
+        return allowedTransitions.contains(pose);
     }
 
 
