@@ -38,53 +38,53 @@ public class ArmPoses
 
         // General
         poseList[Poses.Home.ordinal()] = 
-            new ArmPose(0, 0, 0, false, false);
+            new ArmPose(0, 0, 0,  false);
       
         poseList[Poses.PouncePreScore.ordinal()] = 
-            new ArmPose(0, 0, 0, false, false);
+            new ArmPose(0, 0, 0,  false);
 
         poseList[Poses.Travel.ordinal()] = 
-            new ArmPose(0, 0, 0, false, false);
+            new ArmPose(0, 0, 0,  false);
 
         poseList[Poses.PickFromSubstation.ordinal()] = 
-            new ArmPose(0, 0, 0, false, false);
+            new ArmPose(0, 0, 0,  false);
       
         poseList[Poses.PickDriveUpWindow.ordinal()] = 
-            new ArmPose(0, 0, 0, false, false);
+            new ArmPose(0, 0, 0,  false);
 
         poseList[Poses.PounceDriveUpWindow.ordinal()] = 
-            new ArmPose(0, 0, 0, false, false);
+            new ArmPose(0, 0, 0,  false);
 
 
         // Cone
         poseList[Poses.FloorPickCone.ordinal()] = 
-            new ArmPose(0, 0, 0, false, false);
+            new ArmPose(0, 0, 0,  false);
 
         
         poseList[Poses.ConeScoreL1.ordinal()] = 
-            new ArmPose(0, 0, 0, false, false);
+            new ArmPose(0, 0, 0,  false);
       
         poseList[Poses.ConeScoreL2.ordinal()] = 
-            new ArmPose(0, 0, 0, false, false);
+            new ArmPose(0, 0, 0,  false);
 
         poseList[Poses.ConeScoreL3.ordinal()] = 
-            new ArmPose(0, 0, 0, false, false);
+            new ArmPose(0, 0, 0,  false);
 
 
 
         // Cube
         poseList[Poses.FloorPickCube.ordinal()] = 
-            new ArmPose(0, 0, 0, false, false);
+            new ArmPose(0, 0, 0,  false);
         
 
         poseList[Poses.CubeScoreL1.ordinal()] = 
-            new ArmPose(0, 0, 0, false, false);
+            new ArmPose(0, 0, 0,  false);
       
         poseList[Poses.CubeScoreL2.ordinal()] = 
-            new ArmPose(0, 0, 0, false, false);
+            new ArmPose(0, 0, 0,  false);
 
         poseList[Poses.CubeScoreL3.ordinal()] = 
-            new ArmPose(0, 0, 0, false, false);
+            new ArmPose(0, 0, 0,  false);
           
         
     }

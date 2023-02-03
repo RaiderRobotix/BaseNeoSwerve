@@ -209,7 +209,7 @@ public class Arm extends SubsystemBase
         
         //System.out.println("working?");
         setArmPosition(pose.getJ1(),pose.getJ2(), pose.getJ3());
-        setExtender(pose.getExtender());
+       
         setClaw(pose.getClaw());
     }
 
@@ -221,7 +221,7 @@ public class Arm extends SubsystemBase
             && isWithin(pose.getJ2(), J2.getEncoder().getPosition(), tolerance)
             && isWithin(pose.getJ3(), J3.getEncoder().getPosition(), tolerance);
           //  && pose.getClaw() == getClaw();
-           // && pose.getExtender() == getExtender();
+         
     }
 
     private boolean isWithin(double a, double b, double within)

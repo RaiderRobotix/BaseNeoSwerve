@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.lib.util.States.LinkableState;
 import frc.lib.util.States.StateMachine;
 import frc.robot.ArmPoses;
+import frc.robot.ArmPoses.Poses;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeState;
@@ -86,7 +87,7 @@ public class PresentPiece extends CommandBase
         private LinkableState begin()
         {
             // TODO set correct arm pose
-            subordinateCommand = new ArmCommand(ARM, ArmPoses.home);
+           // subordinateCommand = new ArmCommand(ARM, Poses.Home);
 
              // cones do not need to execute the prePresent stage, since they do not deal with the vaccum.
             if(INTAKE.getState() == IntakeState.getCube)
@@ -135,7 +136,7 @@ public class PresentPiece extends CommandBase
             INTAKE.setPresenter(true);
 
             // TODO set correct arm pose
-            subordinateCommand = new ArmCommand(ARM, ArmPoses.home);
+            //subordinateCommand = new ArmCommand(ARM, armPoses.getArmPose(Poses.Home));
 
             //TODO minimize time
             if(timer.hasElapsed(.5))
