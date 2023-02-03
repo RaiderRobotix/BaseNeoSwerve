@@ -99,10 +99,10 @@ public final class Constants
         public static final double closedLoopRamp = 0.0;
 
         /* Angle Motor PID Values */
-        public static final double angleKP = 1;
+        public static final double angleKP = .15;
         public static final double angleKI = 0;
-        public static final double angleKD = .1;
-        public static final double angleKF = chosenModule.angleKF;
+        public static final double angleKD = 0;
+        public static final double angleKF = 0;
 
         /* Drive Motor PID Values */
         public static final double driveKP = 0.05; //TODO: This must be tuned to specific robot

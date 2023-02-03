@@ -39,6 +39,8 @@ public class RobotContainer {
     private final Trigger intakeButton;
     private final Trigger outtakeButton;
     private final Trigger homeArm;
+    private final Trigger testArm;
+    private final Trigger test2Arm;
 
     private final Trigger coneButton;
     private final Trigger cubeButton;
@@ -48,7 +50,7 @@ public class RobotContainer {
 
     /* Subsystems */
     private final Swerve s_Swerve;
-    //private final Arm s_Arm;
+    private final Arm s_Arm;
     // TODO uncomment once intake exists
     //private final Intake s_Intake;
 
@@ -71,7 +73,11 @@ public class RobotContainer {
 
         intakeButton = new Trigger(()-> driver.getRawButton(4));
         outtakeButton = new Trigger(()-> driver.getRawButton(5));
-        homeArm = new Trigger(()-> driver.getRawButton(3));
+        homeArm = new Trigger(()-> { return rotater.getRawButton(4); });
+        testArm = new Trigger(()-> { return rotater.getRawButton(5);});
+        test2Arm = new Trigger(()-> { return rotater.getRawButton(3);});
+
+        
 
         coneButton = new Trigger(()-> operator.getRawButton(1));
         cubeButton = new Trigger(()-> operator.getRawButton(2));
@@ -81,8 +87,9 @@ public class RobotContainer {
         s_Swerve = new Swerve();
         // TODO Uncomment once intake exists.
         //s_Intake = new Intake();
-        //s_Arm = new Arm();
+        s_Arm = new Arm(ArmPoses.home);
             
+        ArmPoses.setup();
 
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
@@ -96,6 +103,7 @@ public class RobotContainer {
 
         // Configure the button bindings
         configureButtonBindings();
+        
     }
 
     /**
@@ -114,7 +122,9 @@ public class RobotContainer {
         //coneButton.onTrue(new InstantCommand(() -> s_Intake.wantsCone()));
         //cubeButton.onTrue(new InstantCommand(() -> s_Intake.wantsCube()));
 
-        //homeArm.onTrue(new ArmCommand(s_Arm, ArmPoses.home) );
+        homeArm.onTrue(new ArmCommand(s_Arm, ArmPoses.home) );
+        testArm.onTrue(new ArmCommand(s_Arm, ArmPoses.test) );
+        test2Arm.onTrue(new ArmCommand(s_Arm, ArmPoses.test2) );
     }
 
     /**
