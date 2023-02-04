@@ -81,10 +81,9 @@ public class RobotContainer
         outtakeButton = new Trigger(()-> driver.getRawButton(5));
   
 
-        
 
-        coneButton = new Trigger(()-> operator.getRawButton(1));
-        cubeButton = new Trigger(()-> operator.getRawButton(2));
+        coneButton = new Trigger(()-> operator.getRawButton(2));
+        cubeButton = new Trigger(()-> operator.getRawButton(3));
        
        
         /* Subsystems */
@@ -116,9 +115,13 @@ public class RobotContainer
      * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
-    private void configureButtonBindings() {
+    private void configureButtonBindings() 
+    {
+        
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+        new Trigger(()-> rotater.getRawButton(1)).whileTrue(new InstantCommand(()->s_Swerve.lockWheels()));
+
         // TODO uncomment once intake... exists.
         //intakeButton.onTrue(new TeleopIntake(s_Intake, s_Arm));
         //outtakeButton.onTrue(new TeleopOuttake(s_Intake));
@@ -164,6 +167,8 @@ public class RobotContainer
         Trigger home = new Trigger(() -> operator.getStartButton());
         home.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.Home)) );
 
+        Trigger travel = new Trigger(() -> operator.getBackButton());
+        travel.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.Travel)) );
        
 
       

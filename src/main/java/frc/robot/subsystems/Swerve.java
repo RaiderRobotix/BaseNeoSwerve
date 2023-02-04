@@ -136,6 +136,23 @@ public class Swerve extends SubsystemBase
         return (Constants.Swerve.invertGyro) ? Rotation2d.fromDegrees(360 - gyro.getYaw()) : Rotation2d.fromDegrees(gyro.getYaw());
     }
 
+    public void lockWheels()
+    {
+        // 0,3  1,2
+        SwerveModuleState sms = new SwerveModuleState(0, Rotation2d.fromDegrees(45));
+    
+
+        mSwerveMods[0].setDesiredState(sms, false);
+        mSwerveMods[3].setDesiredState(sms, false);
+
+
+        sms = new SwerveModuleState(0, Rotation2d.fromDegrees(-45));
+
+        mSwerveMods[1].setDesiredState(sms, false);
+        mSwerveMods[2].setDesiredState(sms, false);
+        
+    }
+
     @Override
     public void periodic()
     {

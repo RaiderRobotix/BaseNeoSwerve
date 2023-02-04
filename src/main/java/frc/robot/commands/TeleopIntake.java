@@ -53,7 +53,7 @@ public class TeleopIntake extends CommandBase
         if(!inturrupted)
         {
             //TODO uncomment once arm poses are correct and junk
-            new PresentPiece(INTAKE, ARM);
+           // new PresentPiece(INTAKE, ARM);
         }
     }
 
