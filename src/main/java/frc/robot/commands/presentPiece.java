@@ -19,6 +19,7 @@ public class PresentPiece extends CommandBase
         // doing this definitely feels like I'm subverting the purpose of the command system,
         // but I'm very happy with the state machine thing I made and wanted to use it more.
         private final Arm ARM;
+        private ArmPoses poses;
         private CommandBase subordinateCommand;
 
        
@@ -34,11 +35,12 @@ public class PresentPiece extends CommandBase
          * @param arm
          * @param waitOn a command which must finish executing before the intake will present.
          */
-        public PresentPiece(Intake intake, Arm arm)
+        public PresentPiece(Intake intake, Arm arm, ArmPoses poses)
         {
             INTAKE = intake;
             ARM = arm;
             addRequirements(INTAKE);
+            this.poses = poses;
 
             subordinateCommand = null;
             
@@ -87,7 +89,7 @@ public class PresentPiece extends CommandBase
         private LinkableState begin()
         {
             // TODO set correct arm pose
-           // subordinateCommand = new ArmCommand(ARM, Poses.Home);
+            subordinateCommand = new ArmCommand(ARM, poses.getArmPose(Poses.FloorPickCone));
 
              // cones do not need to execute the prePresent stage, since they do not deal with the vaccum.
             if(INTAKE.getState() == IntakeState.getCube)
@@ -136,7 +138,7 @@ public class PresentPiece extends CommandBase
             INTAKE.setPresenter(true);
 
             // TODO set correct arm pose
-            //subordinateCommand = new ArmCommand(ARM, armPoses.getArmPose(Poses.Home));
+            ARM.setClaw(true);
 
             //TODO minimize time
             if(timer.hasElapsed(.5))

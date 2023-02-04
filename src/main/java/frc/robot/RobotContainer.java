@@ -18,7 +18,8 @@ import frc.robot.subsystems.*;
  * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
  * subsystems, commands, and button mappings) should be declared here.
  */
-public class RobotContainer {
+public class RobotContainer 
+{
     /* Controllers */
     private final Joystick driver;
     private final Joystick rotater;
@@ -45,12 +46,10 @@ public class RobotContainer {
     private final Trigger cubeButton;
     private final Trigger coneButton;
     
-    /*private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
-    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);*/
 
     /* Subsystems */
     private final Swerve s_Swerve;
-    //private final Arm s_Arm;
+    private final Arm s_Arm;
     private ArmPoses poses;
     // TODO uncomment once intake exists
     //private final Intake s_Intake;
@@ -92,7 +91,7 @@ public class RobotContainer {
         s_Swerve = new Swerve();
         // TODO Uncomment once intake exists.
         //s_Intake = new Intake();
-        //s_Arm = new Arm(poses.getArmPose(Poses.Home));
+        s_Arm = new Arm(poses.getArmPose(Poses.Home));
             
    
 
@@ -128,7 +127,7 @@ public class RobotContainer {
         //cubeButton.onTrue(new InstantCommand(() -> s_Intake.wantsCube()));
 
         // Button board (this is terrible)
-        /*Trigger pounce = new Trigger(()->buttonBoard.getRawButton(1));
+        Trigger pounce = new Trigger(()->buttonBoard.getRawButton(1));
         pounce.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.PouncePreScore)) );
        
         
@@ -163,7 +162,7 @@ public class RobotContainer {
         // Xbox controller
 
         Trigger home = new Trigger(() -> operator.getStartButton());
-        home.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.Home)) );*/
+        home.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.Home)) );
 
        
 

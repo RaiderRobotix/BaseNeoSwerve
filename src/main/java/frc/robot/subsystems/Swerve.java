@@ -149,14 +149,18 @@ public class Swerve extends SubsystemBase
             SmartDashboard.putNumber("Mod " + mod.getModuleNumber() + " Integrated", mod.getPosition().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.getModuleNumber() + " Velocity", mod.getState().speedMetersPerSecond);    
         }
+        Pose2d pose = swerveOdometry.getPoseMeters();
+        SmartDashboard.putNumber("Odo Pos X", pose.getX());
+        SmartDashboard.putNumber("Odo Pos Y", pose.getY());
+        SmartDashboard.putNumber("Odo Angle", pose.getRotation().getDegrees());
     }
 
     // slight witchcra%ft
     private void addDashboardEntries(ShuffleboardContainer container, Pose2d pose) 
-        {
-            container.addNumber("Pos X", () -> pose.getX());
-            container.addNumber("Pos Y",()-> pose.getY());
-            container.addNumber("Angle", ()->pose.getRotation().getDegrees());
-        }
+    {
+        container.addNumber("Pos X", () -> pose.getX());
+        container.addNumber("Pos Y",()-> pose.getY());
+        container.addNumber("Angle", ()->pose.getRotation().getDegrees());
+    }
 
 }

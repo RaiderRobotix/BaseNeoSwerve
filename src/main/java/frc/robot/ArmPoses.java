@@ -28,9 +28,6 @@ public class ArmPoses
 
     private ArmPose[] poseList;
 
-    public ArmPose test;
-    public ArmPose test2;
-
     public ArmPoses()
     {
         poseList = new ArmPose[Poses.values().length];

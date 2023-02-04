@@ -11,13 +11,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -149,7 +143,7 @@ public class Arm extends SubsystemBase
         }
     }
 
-    private void setClaw(boolean extended)
+    public void setClaw(boolean extended)
     {
         /*if(extended)
         {
@@ -204,6 +198,7 @@ public class Arm extends SubsystemBase
         if(currentPose!=null && (!pose.isAllowedTransition(currentPose) && currentPose!=pose))
         {
             System.out.println("Invalid pose transition.");
+            return;
         }
         currentPose = pose;
         

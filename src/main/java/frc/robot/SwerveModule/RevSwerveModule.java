@@ -167,41 +167,14 @@ public class RevSwerveModule implements SwerveModule
         SparkMaxPIDController controller = mAngleMotor.getPIDController();
         
         double degReference = angle.getDegrees();
-        if(Constants.REV.doAngleAdjustment)
-        {
-            degReference = AdjustReferenceAngle( angleEncoder.getAbsolutePosition(), angle.getDegrees()  ); 
-        }
+     
        
         
         controller.setReference (degReference, ControlType.kPosition, 0);
         
     }
 
-    private double AdjustReferenceAngle(double currentAngle, double referenceDegrees)
-    {
-
-        // Get the current angle in radians
-        double currentAngleRadiansMod = currentAngle % 360;
-        if (currentAngleRadiansMod < 0.0) {
-            currentAngleRadiansMod += 360;
-        }
-
-        double toReturn = referenceDegrees;
-
-        // if the difference between current and goal angle is more than half a rotation clockwise...
-        if (referenceDegrees - currentAngleRadiansMod > 180) 
-        {
-            //
-            toReturn -= 360;
-        } 
-        else if (referenceDegrees - currentAngleRadiansMod < -180)
-        {
-            toReturn += 360;
-        }
-
-        return toReturn;
-     
-    }
+   
 
     private Rotation2d getAngle()
     {
