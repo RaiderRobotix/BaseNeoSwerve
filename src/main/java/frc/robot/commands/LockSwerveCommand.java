@@ -1,13 +1,9 @@
 
-    package frc.robot.commands;
+package frc.robot.commands;
 
 import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.ArmPoses;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.IntakeState;
 import frc.robot.subsystems.Swerve;
 
 public class LockSwerveCommand extends CommandBase
@@ -22,13 +18,14 @@ public class LockSwerveCommand extends CommandBase
     {
         SWERVE = swerve;
         this.isDone = isFinished;
-        System.out.println("llocckking?");
         addRequirements(SWERVE);
     }
 
     @Override
     public void initialize() 
     {
+        System.out.println("llocckking?");
+
        SWERVE.lockWheels();
     }
     @Override
@@ -45,8 +42,7 @@ public class LockSwerveCommand extends CommandBase
      
         if(!inturrupted)
         {
-            //TODO uncomment once arm poses are correct and junk
-           // new PresentPiece(INTAKE, ARM);
+           
         }
     }
 

@@ -125,7 +125,7 @@ public class RobotContainer {
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
 
         Trigger lockSwerve = new Trigger(() -> rotater.getRawButton(1));
-        lockSwerve.onTrue(new LockSwerveCommand(s_Swerve, lockSwerve));
+        lockSwerve.whileTrue(new LockSwerveCommand(s_Swerve, lockSwerve));
 
         // TODO uncomment once intake... exists.
         // intakeButton.onTrue(new TeleopIntake(s_Intake, s_Arm));
@@ -174,8 +174,7 @@ public class RobotContainer {
         travel.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.Travel)));
 
         Trigger resetOdometrey = new Trigger(()-> rotater.getRawButton(2));
-        resetOdometrey.onTrue(new InstantCommand(()-> {s_Swerve.resetOdometry(new Pose2d());}));
-        //this is already disgusting but might need to be even more so??
+        resetOdometrey.onTrue(new InstantCommand(()-> {s_Swerve.resetOdometry(new Pose2d(   /*wow*/));}));//this is normal
 
     }
 
