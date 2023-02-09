@@ -72,19 +72,24 @@ public class RevSwerveModule implements SwerveModule
       
         angleEncoder.configFactoryDefault();
         angleEncoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
-        
-
+       
         relDriveEncoder = mDriveMotor.getEncoder();
-        relDriveEncoder.setPositionConversionFactor(Constants.REV.driveRevToMeters);
-        relDriveEncoder.setVelocityConversionFactor(Constants.REV.driveRpmToMetersPerSecond);
         relDriveEncoder.setPosition(0);
 
+         
+        relDriveEncoder.setPositionConversionFactor(Constants.REV.driveRevToMeters);
+        relDriveEncoder.setVelocityConversionFactor(Constants.REV.driveRpmToMetersPerSecond);
+
+        
         relAngleEncoder = mAngleMotor.getEncoder();
         relAngleEncoder.setPositionConversionFactor(Constants.REV.DegreesPerTurnRotation);
         // in degrees/sec
         relAngleEncoder.setVelocityConversionFactor(Constants.REV.DegreesPerTurnRotation / 60);
         // TODO might need fixing for real robot
         //relAngleEncoder.setPosition(0);
+
+        mDriveMotor.burnFlash();
+        mAngleMotor.burnFlash();
         resetToAbsolute();
     }
 
@@ -102,7 +107,7 @@ public class RevSwerveModule implements SwerveModule
         mAngleMotor.setInverted(Constants.Swerve.angleMotorInvert);
         mAngleMotor.setIdleMode(Constants.REV.angleIdleMode);
 
-        mAngleMotor.burnFlash(); 
+        
        
     }
 
@@ -115,10 +120,10 @@ public class RevSwerveModule implements SwerveModule
         controller.setD(Constants.Swerve.driveKD,0);
         controller.setFF(Constants.Swerve.driveKF,0);
         controller.setOutputRange(-.9, .9);
-        mAngleMotor.setSmartCurrentLimit(Constants.Swerve.driveContinuousCurrentLimit);
+        mDriveMotor.setSmartCurrentLimit(Constants.Swerve.driveContinuousCurrentLimit);
         mDriveMotor.setInverted(Constants.Swerve.driveMotorInvert);
         mDriveMotor.setIdleMode(Constants.REV.driveIdleMode); 
-        mDriveMotor.burnFlash();
+    
        
   
        

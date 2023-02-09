@@ -38,10 +38,10 @@ public final class Constants
         public static final boolean doAngleAdjustment = false;
 
         // meters per rotation
-        public static final double driveRevToMeters =  Swerve.wheelCircumference / Swerve.driveGearRatio;
+        public static final double driveRevToMeters =  Swerve.wheelCircumference / (Swerve.driveGearRatio );
 
 
-        public static final double driveRpmToMetersPerSecond = driveRevToMeters / 60;
+        public static final double driveRpmToMetersPerSecond = driveRevToMeters /60 ;
 
         // the number of degrees that a single rotation of the turn motor turns the wheel.
         public static final double DegreesPerTurnRotation = 360/Swerve.angleGearRatio;
@@ -105,7 +105,7 @@ public final class Constants
         public static final double angleKF = 0;
 
         /* Drive Motor PID Values */
-        public static final double driveKP = 0.2; //TODO: This must be tuned to specific robot
+        public static final double driveKP = 0.5; //TODO: This must be tuned to specific robot
         public static final double driveKI = 0.0;
         public static final double driveKD = 0.0;
         public static final double driveKF = 0.0;
