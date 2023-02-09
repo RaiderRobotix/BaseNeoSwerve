@@ -152,7 +152,7 @@ public class RevSwerveModule implements SwerveModule
             return;
         }
  
-        double velocity = relDriveEncoder.getVelocity();
+        double velocity = desiredState.speedMetersPerSecond;
         SparkMaxPIDController controller = mDriveMotor.getPIDController();
         controller.setReference(velocity, ControlType.kVelocity, 0);
         
