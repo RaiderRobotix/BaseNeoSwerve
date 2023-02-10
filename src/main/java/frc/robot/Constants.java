@@ -41,7 +41,7 @@ public final class Constants
         public static final double driveRevToMeters =  Swerve.wheelCircumference / (Swerve.driveGearRatio );
 
 
-        public static final double driveRpmToMetersPerSecond = driveRevToMeters /60 ;
+        public static final double driveRpmToMetersPerSecond = driveRevToMeters/60 ;
 
         // the number of degrees that a single rotation of the turn motor turns the wheel.
         public static final double DegreesPerTurnRotation = 360/Swerve.angleGearRatio;
@@ -99,13 +99,13 @@ public final class Constants
         public static final double closedLoopRamp = 0.0;
 
         /* Angle Motor PID Values */
-        public static final double angleKP = .15;
+        public static final double angleKP = .1;
         public static final double angleKI = 0;
         public static final double angleKD = 0;
         public static final double angleKF = 0;
 
         /* Drive Motor PID Values */
-        public static final double driveKP = 0.5; //TODO: This must be tuned to specific robot
+        public static final double driveKP = 0.1; //TODO: This must be tuned to specific robot
         public static final double driveKI = 0.0;
         public static final double driveKD = 0.0;
         public static final double driveKF = 0.0;
@@ -205,8 +205,8 @@ public final class Constants
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
     
-        public static final double kPXController = 1;
-        public static final double kPYController = 1;
+        public static final double kPXController = -6;
+        public static final double kPYController = -6;
         public static final double kPThetaController = 1;
     
         /* Constraint for the motion profilied robot angle controller */

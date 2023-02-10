@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.ArmPoses.Poses;
-import frc.robot.autos.*;
+import frc.robot.autos.Auto1;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -185,6 +185,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return new exampleAuto(s_Swerve);
+        return new Auto1(s_Swerve, s_Arm);
     }
 }

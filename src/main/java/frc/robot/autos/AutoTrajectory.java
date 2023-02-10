@@ -3,6 +3,7 @@ package frc.robot.autos;
 import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -17,27 +18,30 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 
-public class exampleAuto extends SequentialCommandGroup 
+public class AutoTrajectory extends SequentialCommandGroup 
 {
 
-    public exampleAuto(Swerve s_Swerve)
+    public AutoTrajectory(Swerve s_Swerve, Trajectory trajectory)
     {
-        TrajectoryConfig config =
-            new TrajectoryConfig(
-                    Constants.AutoConstants.kMaxSpeedMetersPerSecond,
-                    Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-                .setKinematics(Constants.Swerve.swerveKinematics);
+      
 
         // An example trajectory to follow.  All units in meters.
-        Trajectory exampleTrajectory =
+       /*  Trajectory exampleTrajectory =
             TrajectoryGenerator.generateTrajectory(
                 // Start at the origin facing the +X direction
                 new Pose2d(0, 0, new Rotation2d(0)),
-                // Pass through these two interior waypoints, making an 's' curve path
-                List.of(new Translation2d(.5, .5), new Translation2d(1, -.5)),
+                // Pass through these meny interior waypoints, making an too sirkle curve path
+                List.of(new Translation2d(1,0),
+                    new Translation2d(1, 1), 
+                    new Translation2d(0, 1),
+                    new Translation2d(0, 0),
+                    new Translation2d(1,0),
+                    new Translation2d(1, 1), 
+                    new Translation2d(0, 1)),
+                 //new ArrayList<Translation2d>(),
                 // End 3 meters straight ahead of where we started, facing forward
-                new Pose2d(1.5, 0, new Rotation2d(0)),
-                config);
+                new Pose2d(0, 0, new Rotation2d(0)),
+                config);*/
 
         var thetaController =
             new ProfiledPIDController(
@@ -46,7 +50,7 @@ public class exampleAuto extends SequentialCommandGroup
 
         SwerveControllerCommand swerveControllerCommand =
             new SwerveControllerCommand(
-                exampleTrajectory,
+                trajectory,
                 s_Swerve::getPose,
                 Constants.Swerve.swerveKinematics,
                 new PIDController(Constants.AutoConstants.kPXController, 0, 0),
@@ -57,7 +61,7 @@ public class exampleAuto extends SequentialCommandGroup
 
 
         addCommands(
-            new InstantCommand(() -> s_Swerve.resetOdometry(exampleTrajectory.getInitialPose())),
+            new InstantCommand(() -> s_Swerve.resetOdometry(trajectory.getInitialPose())),
             swerveControllerCommand
         );
     }

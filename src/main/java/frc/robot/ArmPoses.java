@@ -47,10 +47,10 @@ public class ArmPoses
             new ArmPose(0, 83, 0,  false);
       
         poseList[Poses.PickDriveUpWindow.ordinal()] = 
-            new ArmPose(0, -105, 0,  false);
+            new ArmPose(0, -90, 0,  false);
 
         poseList[Poses.PounceDriveUpWindow.ordinal()] = 
-            new ArmPose(0, 105, 0,  false);
+            new ArmPose(0, 90, 0,  false);
 
 
         // Cone
@@ -65,7 +65,7 @@ public class ArmPoses
             new ArmPose(0, 78, 0,  false);
 
         poseList[Poses.ConeScoreL3.ordinal()] = 
-            new ArmPose( -7, 105, 0,  false);
+            new ArmPose( -7, 90, 0,  false);
 
 
 
@@ -81,7 +81,7 @@ public class ArmPoses
             new ArmPose(0, 78, 0,  false);
 
         poseList[Poses.CubeScoreL3.ordinal()] = 
-            new ArmPose(-7, 105, 0,  false);
+            new ArmPose(-7, 95, 0,  false);
           
         
     }

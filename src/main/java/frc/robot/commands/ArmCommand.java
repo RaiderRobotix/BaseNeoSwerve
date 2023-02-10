@@ -8,14 +8,13 @@ public class ArmCommand extends CommandBase
 {
     private Arm arm;
     private ArmPose pose;
-    private boolean finished = false;
 
-    public ArmCommand(Arm arm, ArmPose pose)
+    public ArmCommand(Arm s_Arm, ArmPose pose)
     {
        
-        this.arm = arm;
+        this.arm = s_Arm;
         this.pose = pose;
-        addRequirements(arm);
+        addRequirements(s_Arm);
     }
 
     @Override
@@ -33,12 +32,16 @@ public class ArmCommand extends CommandBase
     @Override
     public void end(boolean inturrupted)
     {
-        
+        if(! inturrupted)
+        {
+        System.out.println("good arming "+inturrupted);
+        }
     }
 
     @Override
     public boolean isFinished()
     {
+        System.out.println(arm.isAtPose(pose));
         return arm.isAtPose(pose);
     }
 }

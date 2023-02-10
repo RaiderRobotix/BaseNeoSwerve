@@ -87,7 +87,7 @@ public class Swerve extends SubsystemBase
     public void setModuleStates(SwerveModuleState[] desiredStates) 
     {
 
-        System.out.println("setting module states: "+desiredStates[0]);
+       // System.out.println("setting module states: "+desiredStates[0]);
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
         
         for(SwerveModule mod : mSwerveMods){
@@ -97,7 +97,12 @@ public class Swerve extends SubsystemBase
 
     public Pose2d getPose() 
     {
-        return swerveOdometry.getPoseMeters();
+        double x = swerveOdometry.getPoseMeters().getX();
+        double y = swerveOdometry.getPoseMeters().getY();
+        Rotation2d rot = swerveOdometry.getPoseMeters().getRotation();
+
+        return new Pose2d(-x,-y, rot);
+
         
     }
 
@@ -168,8 +173,9 @@ public class Swerve extends SubsystemBase
             SmartDashboard.putNumber("Mod " + mod.getModuleNumber() + " Integrated", mod.getPosition().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.getModuleNumber() + " Velocity", mod.getState().speedMetersPerSecond);    
         }
-        Pose2d pose = swerveOdometry.getPoseMeters();
+        Pose2d pose = getPose();
         
+    
         SmartDashboard.putNumber("Odo Pos X", pose.getX());
         SmartDashboard.putNumber("Odo Pos Y", pose.getY());
         SmartDashboard.putNumber("Odo Angle", pose.getRotation().getDegrees());

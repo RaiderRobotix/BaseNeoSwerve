@@ -114,7 +114,7 @@ public class RevSwerveModule implements SwerveModule
     private void configDriveMotor()
     {        
         mDriveMotor.restoreFactoryDefaults();
-        SparkMaxPIDController controller = mAngleMotor.getPIDController();
+        SparkMaxPIDController controller = mDriveMotor.getPIDController();
         controller.setP(Constants.Swerve.driveKP,0);
         controller.setI(Constants.Swerve.driveKI,0);
         controller.setD(Constants.Swerve.driveKD,0);
@@ -153,6 +153,7 @@ public class RevSwerveModule implements SwerveModule
         }
  
         double velocity = desiredState.speedMetersPerSecond;
+        System.out.println("desired vel: "+velocity);
         SparkMaxPIDController controller = mDriveMotor.getPIDController();
         controller.setReference(velocity, ControlType.kVelocity, 0);
         

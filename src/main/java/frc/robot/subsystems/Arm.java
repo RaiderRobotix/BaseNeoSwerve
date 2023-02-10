@@ -1,6 +1,9 @@
 package frc.robot.subsystems;
 
+import frc.robot.ArmPoses;
 import frc.robot.Constants;
+import frc.robot.ArmPoses.Poses;
+
 import java.net.CacheRequest;
 import java.util.concurrent.CancellationException;
 
@@ -30,13 +33,14 @@ public class Arm extends SubsystemBase
 
     private ArmPose currentPose;
 
+    private ArmPoses poses;
     // pose should be all zeros
     public Arm(ArmPose pose)
     {
 
         // TODO set soft limits for arm motors (I would appreciate the robot not exploding)
 
-        
+        poses = new ArmPoses();
         currentPose = pose;
         
         J1 = new CANSparkMax(Constants.Arm.J1MotorID, MotorType.kBrushless);
@@ -102,6 +106,11 @@ public class Arm extends SubsystemBase
              
              
 
+    }
+
+    public ArmPose getPose(Poses p)
+    {
+        return poses.getArmPose(p);
     }
 
     @Override
@@ -211,16 +220,18 @@ public class Arm extends SubsystemBase
 
     public boolean isAtPose(ArmPose pose)
     {
-        double tolerance = .1;
+
+        double tolerance = 4;
         return isWithin(pose.getJ1(), J1.getEncoder().getPosition(), tolerance)
-            && isWithin(pose.getJ2(), J2.getEncoder().getPosition(), tolerance)
-            && isWithin(pose.getJ3(), J3.getEncoder().getPosition(), tolerance);
+            && isWithin(pose.getJ2(), J2.getEncoder().getPosition(), tolerance);
+           // && isWithin(pose.getJ3(), J3.getEncoder().getPosition(), tolerance);
           //  && pose.getClaw() == getClaw();
          
     }
 
     private boolean isWithin(double a, double b, double within)
     {
+        System.out.println(Math.abs(a-b));
         return Math.abs(a-b)<within;
     }
 
