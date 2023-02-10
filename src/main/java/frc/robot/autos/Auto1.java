@@ -13,6 +13,7 @@ import frc.robot.ArmPoses;
 import frc.robot.Constants;
 import frc.robot.ArmPoses.Poses;
 import frc.robot.commands.ArmCommand;
+import frc.robot.commands.LockSwerveCommand;
 import frc.robot.subsystems.Arm;
 
 public class Auto1 extends SequentialCommandGroup
@@ -43,7 +44,9 @@ public class Auto1 extends SequentialCommandGroup
                 // End 3 meters straight ahead of where we started, facing forward
                 new Pose2d(0, 0, new Rotation2d(0)),
                 config)),
-                new ArmCommand(arm, arm.getPose(Poses.Home))
+            
+                new ArmCommand(arm, arm.getPose(Poses.Home)),
+                new LockSwerveCommand(swerve, ()->false)
                 
         );
 
