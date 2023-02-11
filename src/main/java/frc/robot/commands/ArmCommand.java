@@ -34,14 +34,14 @@ public class ArmCommand extends CommandBase
     {
         if(! inturrupted)
         {
-        System.out.println("good arming "+inturrupted);
+        System.out.println("posed "+inturrupted);
         }
     }
 
     @Override
     public boolean isFinished()
     {
-        System.out.println(arm.isAtPose(pose));
+        
         return arm.isAtPose(pose);
     }
 }

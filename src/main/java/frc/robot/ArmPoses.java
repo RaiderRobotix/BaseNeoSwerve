@@ -81,7 +81,7 @@ public class ArmPoses
             new ArmPose(0, 78, 0,  false);
 
         poseList[Poses.CubeScoreL3.ordinal()] = 
-            new ArmPose(-7, 95, 0,  false);
+            new ArmPose(-7, 90, 0,  false);
           
         
     }

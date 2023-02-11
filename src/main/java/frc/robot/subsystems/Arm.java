@@ -118,13 +118,14 @@ public class Arm extends SubsystemBase
     @Override
     public void periodic()
     {
-        // despite the lack of roundness, this is very sensual.
+        // despite the lack of roundness, this is very sensual. Yes more!;
         SmartDashboard.putNumber("J1", J1.getEncoder().getPosition());
         SmartDashboard.putNumber("J2", J2.getEncoder().getPosition());
         SmartDashboard.putNumber("J3", J3.getEncoder().getPosition());
         SmartDashboard.putNumber("J1 Current", J1.getOutputCurrent());
         SmartDashboard.putNumber("J2 Current", J2.getOutputCurrent());
         SmartDashboard.putNumber("J3 Current", J3.getOutputCurrent());
+        
         
         adoptPose(currentPose);
     }
@@ -175,11 +176,11 @@ public class Arm extends SubsystemBase
     {
         if(extended)
         {
-           // extender.set(Value.kForward);
+            //extender.set(Value.kForward);  //TODO uncomment when ready for extender
             return;
         }
         
-       //extender.set(Value.kReverse);
+        //extender.set(Value.kReverse);
     }
 
     public boolean getExtender()
@@ -205,7 +206,7 @@ public class Arm extends SubsystemBase
             return;
         }
 
-        
+        //why is this neccisary
         if(currentPose!=null && (!pose.isAllowedTransition(currentPose) && currentPose!=pose))
         {
             System.out.println("Invalid pose transition.");
@@ -225,15 +226,16 @@ public class Arm extends SubsystemBase
 
         double tolerance = 4;
         return isWithin(pose.getJ1(), J1.getEncoder().getPosition(), tolerance)
-            && isWithin(pose.getJ2(), J2.getEncoder().getPosition(), tolerance)
-            && isWithin(pose.getJ3(), J3.getEncoder().getPosition(), tolerance);
+            && isWithin(pose.getJ2(), J2.getEncoder().getPosition(), tolerance);
+            //&& isWithin(pose.getJ3(), J3.getEncoder().getPosition(), tolerance);
           
          
     }
 
     private boolean isWithin(double a, double b, double within)
     {
-        System.out.println(Math.abs(a-b));
+       
+    
         return Math.abs(a-b)<within;
     }
 

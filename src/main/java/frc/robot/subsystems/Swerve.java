@@ -12,6 +12,7 @@ import com.ctre.phoenix.sensors.Pigeon2;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
@@ -108,7 +109,8 @@ public class Swerve extends SubsystemBase
 
     public void resetOdometry(Pose2d pose) 
     {
-        swerveOdometry.resetPosition(getYaw(), getModulePositions(), pose);
+        swerveOdometry.resetPosition(Rotation2d.fromDegrees(gyro.getYaw()), getModulePositions(), pose);
+       
     }
 
     public SwerveModuleState[] getModuleStates()
@@ -146,14 +148,14 @@ public class Swerve extends SubsystemBase
     public void lockWheels()
     {
         // 0,3  1,2
-        SwerveModuleState sms = new SwerveModuleState(0, Rotation2d.fromDegrees(45));
+        SwerveModuleState sms = new SwerveModuleState(.1, Rotation2d.fromDegrees(45));
     
-
+        System.out.println("LOCKING");
         mSwerveMods[0].setDesiredState(sms, false);
         mSwerveMods[3].setDesiredState(sms, false);
 
 
-        sms = new SwerveModuleState(0, Rotation2d.fromDegrees(-45));
+        sms = new SwerveModuleState(-.1, Rotation2d.fromDegrees(360-45));
 
         mSwerveMods[1].setDesiredState(sms, false);
         mSwerveMods[2].setDesiredState(sms, false);
@@ -179,6 +181,8 @@ public class Swerve extends SubsystemBase
         SmartDashboard.putNumber("Odo Pos X", pose.getX());
         SmartDashboard.putNumber("Odo Pos Y", pose.getY());
         SmartDashboard.putNumber("Odo Angle", pose.getRotation().getDegrees());
+
+        SmartDashboard.putNumber("real pitch", getPitchDegrees());
     }
 
     // slight witchcra%ft
@@ -189,4 +193,22 @@ public class Swerve extends SubsystemBase
         container.addNumber("Angle", ()->pose.getRotation().getDegrees());
     }
 
+    public double getPitchDegrees()
+    {
+
+       
+        Rotation3d gyroAng = new Rotation3d(
+            Math.toRadians(gyro.getRoll()), 
+            Math.toRadians(gyro.getPitch()), 
+            Math.toRadians(gyro.getYaw()));
+            
+        Rotation3d diff = new Rotation3d(0, 0,
+         Math.toRadians(gyro.getYaw()-swerveOdometry.getPoseMeters().getRotation().getDegrees()));
+
+        Rotation3d real = gyroAng.rotateBy(diff);
+
+        System.out.println("diff "+(gyro.getYaw()-swerveOdometry.getPoseMeters().getRotation().getDegrees()));
+        return Math.toDegrees(real.getY());
+
+    }
 }

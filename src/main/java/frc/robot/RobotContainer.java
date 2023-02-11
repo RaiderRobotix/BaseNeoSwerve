@@ -125,7 +125,7 @@ public class RobotContainer {
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
 
         Trigger lockSwerve = new Trigger(() -> rotater.getRawButton(1));
-        lockSwerve.whileTrue(new LockSwerveCommand(s_Swerve, lockSwerve));
+        lockSwerve.onTrue(new LockSwerveCommand(s_Swerve, ()->!lockSwerve.getAsBoolean()));
 
         // TODO uncomment once intake... exists.
         // intakeButton.onTrue(new TeleopIntake(s_Intake, s_Arm));
@@ -185,6 +185,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return new Auto1(s_Swerve, s_Arm);
+        return new AutoBalance(s_Swerve);
     }
 }

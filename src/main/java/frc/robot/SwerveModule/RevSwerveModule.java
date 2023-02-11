@@ -87,10 +87,10 @@ public class RevSwerveModule implements SwerveModule
         relAngleEncoder.setVelocityConversionFactor(Constants.REV.DegreesPerTurnRotation / 60);
         // TODO might need fixing for real robot
         //relAngleEncoder.setPosition(0);
-
+        resetToAbsolute();
         mDriveMotor.burnFlash();
         mAngleMotor.burnFlash();
-        resetToAbsolute();
+        
     }
 
     private void configAngleMotor()
