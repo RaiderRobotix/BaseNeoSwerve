@@ -14,7 +14,9 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,8 +30,8 @@ public class Arm extends SubsystemBase
     private CANSparkMax J2;
     private CANSparkMax J2Follow;
     private CANSparkMax J3;
-    //private DoubleSolenoid extender;
-    //private DoubleSolenoid claw;
+    private DoubleSolenoid extender;
+    private DoubleSolenoid claw;
 
     private ArmPose currentPose;
 
@@ -154,35 +156,35 @@ public class Arm extends SubsystemBase
 
     public void setClaw(boolean extended)
     {
-        /*if(extended)
+        if(extended)
         {
-            claw.set(Value.kForward);
+            //claw.set(Value.kForward);
             return;
         }
         
-        claw.set(Value.kReverse);*/
+        //claw.set(Value.kReverse);
     }
 
-    //public boolean getClaw()
+    public boolean getClaw()
     {
-        /*return claw.get()==Value.kForward;*/
+        return claw.get()==Value.kForward;
     }
 
     
     private void setExtender(boolean extended)
     {
-       /*/ if(extended)
+        if(extended)
         {
-            extender.set(Value.kForward);
+           // extender.set(Value.kForward);
             return;
         }
         
-        extender.set(Value.kReverse);*/
+       //extender.set(Value.kReverse);
     }
 
-    //public boolean getExtender()
+    public boolean getExtender()
     {
-       // return extender.get() == Value.kForward;
+        return extender.get() == Value.kForward;
     }
 
     // in revolutions
@@ -223,9 +225,9 @@ public class Arm extends SubsystemBase
 
         double tolerance = 4;
         return isWithin(pose.getJ1(), J1.getEncoder().getPosition(), tolerance)
-            && isWithin(pose.getJ2(), J2.getEncoder().getPosition(), tolerance);
-           // && isWithin(pose.getJ3(), J3.getEncoder().getPosition(), tolerance);
-          //  && pose.getClaw() == getClaw();
+            && isWithin(pose.getJ2(), J2.getEncoder().getPosition(), tolerance)
+            && isWithin(pose.getJ3(), J3.getEncoder().getPosition(), tolerance);
+          
          
     }
 

@@ -25,25 +25,18 @@ public class LockSwerveCommand extends CommandBase
     public void initialize() 
     {
         System.out.println("llocckking?");
-
-       SWERVE.lockWheels();
     }
     @Override
     public void execute()
     {
-      
+        SWERVE.lockWheels();
+
     }
 
     @Override
     public void end(boolean inturrupted)
     {
         
-
-     
-        if(!inturrupted)
-        {
-           
-        }
     }
 
     @Override
