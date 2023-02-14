@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -58,8 +59,11 @@ public class RobotContainer {
     // private final Intake s_Intake;
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
-    public RobotContainer() {
+    public RobotContainer() 
+    {
        
+        PneumaticHub ph = new PneumaticHub(Constants.REV.PHID);
+
         /* Controllers */
         driver = new Joystick(0);
         rotater = new Joystick(1);
@@ -92,7 +96,7 @@ public class RobotContainer {
         s_Swerve = new Swerve();
         // TODO Uncomment once intake exists.
         //s_Intake = new Intake();
-        s_Arm = new Arm(poses.getArmPose(Poses.Home));
+        s_Arm = new Arm(poses.getArmPose(Poses.Home), ph);
             
    
 
@@ -126,6 +130,12 @@ public class RobotContainer {
 
         Trigger lockSwerve = new Trigger(() -> rotater.getRawButton(1));
         lockSwerve.onTrue(new LockSwerveCommand(s_Swerve, ()->!lockSwerve.getAsBoolean()));
+
+        Trigger closeClaw = new Trigger(() -> rotater.getRawButton(7));
+        closeClaw.onTrue(new InstantCommand(()->s_Arm.setClaw(true)));
+
+        Trigger openClaw= new Trigger(() -> rotater.getRawButton(6));
+        openClaw.onTrue(new InstantCommand(()->s_Arm.setClaw(false)));
 
         // TODO uncomment once intake... exists.
         // intakeButton.onTrue(new TeleopIntake(s_Intake, s_Arm));
@@ -176,6 +186,8 @@ public class RobotContainer {
         Trigger resetOdometrey = new Trigger(()-> rotater.getRawButton(2));
         resetOdometrey.onTrue(new InstantCommand(()-> {s_Swerve.resetOdometry(new Pose2d(   /*wow*/));}));//this is normal
 
+        Trigger substation = new Trigger(() -> operator.getXButton());
+        substation.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.PickFromSubstation)));
     }
 
     /**

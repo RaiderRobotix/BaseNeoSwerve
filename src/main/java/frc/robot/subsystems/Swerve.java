@@ -207,7 +207,7 @@ public class Swerve extends SubsystemBase
 
         Rotation3d real = gyroAng.rotateBy(diff);
 
-        System.out.println("diff "+(gyro.getYaw()-swerveOdometry.getPoseMeters().getRotation().getDegrees()));
+        //System.out.println("diff "+(gyro.getYaw()-swerveOdometry.getPoseMeters().getRotation().getDegrees()));
         return Math.toDegrees(real.getY());
 
     }

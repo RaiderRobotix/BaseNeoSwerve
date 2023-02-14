@@ -33,7 +33,7 @@ public final class Constants
         public static final IdleMode driveIdleMode = IdleMode.kCoast;
         public static final IdleMode angleIdleMode = IdleMode.kBrake;
 
-
+        public static final int PHID = 30;
         
         public static final boolean doAngleAdjustment = false;
 

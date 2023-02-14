@@ -51,7 +51,7 @@ public class Auto1 extends SequentialCommandGroup
                 config)),
             
                 
-                new AutoBalance(swerve)
+                new LockSwerveCommand(swerve, ()->false)
                 
         );
 

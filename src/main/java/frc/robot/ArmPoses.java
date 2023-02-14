@@ -38,13 +38,13 @@ public class ArmPoses
             new ArmPose(0, 0, 0,  false);
       
         poseList[Poses.PouncePreScore.ordinal()] = 
-            new ArmPose(5, 80, 0,  false);
+            new ArmPose(5, 130, 0,  false);
 
         poseList[Poses.Travel.ordinal()] = 
             new ArmPose(6.5, -26, 0,  false);
 
         poseList[Poses.PickFromSubstation.ordinal()] = 
-            new ArmPose(0, 83, 0,  false);
+            new ArmPose(0, -60, 68,  false);
       
         poseList[Poses.PickDriveUpWindow.ordinal()] = 
             new ArmPose(0, -90, 0,  false);
@@ -62,7 +62,7 @@ public class ArmPoses
             new ArmPose(-24, 24, 0,  false);
       
         poseList[Poses.ConeScoreL2.ordinal()] = 
-            new ArmPose(0, 78, 0,  false);
+            new ArmPose(-10, 130, -45,  false);
 
         poseList[Poses.ConeScoreL3.ordinal()] = 
             new ArmPose( -7, 90, 0,  false);
@@ -78,7 +78,7 @@ public class ArmPoses
             new ArmPose(-24, 24, 0,  false);
       
         poseList[Poses.CubeScoreL2.ordinal()] = 
-            new ArmPose(0, 78, 0,  false);
+            new ArmPose(-10, 130,-45,  false);
 
         poseList[Poses.CubeScoreL3.ordinal()] = 
             new ArmPose(-7, 90, 0,  false);
