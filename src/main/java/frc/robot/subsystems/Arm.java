@@ -215,11 +215,9 @@ public class Arm extends SubsystemBase
     {
         if(currentPose== null )
         {
-            System.out.println("null arm pose");
-            return;
+            throw new NullPointerException("Arm pose may not be null. You ****ed up");
         }
 
-        //why is this neccisary
         if(currentPose!=null && (!pose.isAllowedTransition(currentPose) && currentPose!=pose))
         {
             System.out.println("Invalid pose transition.");

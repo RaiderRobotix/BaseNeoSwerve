@@ -27,6 +27,12 @@ public class ArmPose
     }
 
 
+    public ArmPose(double J1deg, double J2deg, double J3deg, boolean clawClosed)
+    {
+        this(Double.valueOf(J1deg), Double.valueOf(J2deg), Double.valueOf(J3deg), clawClosed);
+    }
+
+
     public Double getJ1()
     {
         return J1Degrees;
