@@ -11,13 +11,13 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.Swerve;
-import frc.robot.ArmPoses;
 import frc.robot.Constants;
-import frc.robot.ArmPoses.Poses;
-import frc.robot.commands.ArmCommand;
+import frc.robot.Arm.Arm;
+import frc.robot.Arm.ArmCommand;
+import frc.robot.Arm.ArmPoses;
+import frc.robot.Arm.ArmPoses.Poses;
 import frc.robot.commands.AutoBalance;
 import frc.robot.commands.LockSwerveCommand;
-import frc.robot.subsystems.Arm;
 
 public class Auto1 extends SequentialCommandGroup
 {

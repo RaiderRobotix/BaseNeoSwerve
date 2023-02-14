@@ -1,8 +1,7 @@
-package frc.robot.subsystems;
+package frc.robot.Arm;
 
-import frc.robot.ArmPoses;
 import frc.robot.Constants;
-import frc.robot.ArmPoses.Poses;
+import frc.robot.Arm.ArmPoses.Poses;
 
 import java.net.CacheRequest;
 import java.util.concurrent.CancellationException;
