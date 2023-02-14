@@ -1,8 +1,6 @@
-package frc.robot;
+package frc.robot.Arm;
 
 import java.util.ArrayList;
-
-import frc.robot.subsystems.ArmPose;
 
 
 

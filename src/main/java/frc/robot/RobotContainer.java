@@ -9,7 +9,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.ArmPoses.Poses;
+import frc.robot.Arm.Arm;
+import frc.robot.Arm.ArmCommand;
+import frc.robot.Arm.ArmPoses;
+import frc.robot.Arm.ArmPoses.Poses;
 import frc.robot.autos.Auto1;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -175,13 +178,26 @@ public class RobotContainer {
         Trigger pickCubeDriveUp = new Trigger(() -> buttonBoard.getRawButton(10));
         pickCubeDriveUp.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.PickDriveUpWindow)));
 
-        // Xbox controller
-
-        Trigger home = new Trigger(() -> operator.getStartButton());
+        Trigger home = new Trigger(() -> buttonBoard.getRawButton(11));
         home.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.Home)));
 
-        Trigger travel = new Trigger(() -> operator.getBackButton());
-        travel.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.Travel)));
+        new Trigger(() -> buttonBoard.getRawButton(12))
+            .onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.FloorPickCone)));
+
+        new Trigger(() -> buttonBoard.getRawButton(13))
+            .onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.FloorPickCube)));
+
+        new Trigger(() -> buttonBoard.getRawButton(14))
+            .onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.PickFromSubstation)));
+
+        new Trigger(() -> buttonBoard.getRawButton(15))
+            .onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.Travel)));
+
+        
+
+        // Xbox controller
+
+
 
         Trigger resetOdometrey = new Trigger(()-> rotater.getRawButton(2));
         resetOdometrey.onTrue(new InstantCommand(()-> {s_Swerve.resetOdometry(new Pose2d(   /*wow*/));}));//this is normal

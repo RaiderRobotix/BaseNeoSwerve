@@ -5,9 +5,10 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.lib.util.States.LinkableState;
 import frc.lib.util.States.StateMachine;
-import frc.robot.ArmPoses;
-import frc.robot.ArmPoses.Poses;
-import frc.robot.subsystems.Arm;
+import frc.robot.Arm.Arm;
+import frc.robot.Arm.ArmCommand;
+import frc.robot.Arm.ArmPoses;
+import frc.robot.Arm.ArmPoses.Poses;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeState;
 

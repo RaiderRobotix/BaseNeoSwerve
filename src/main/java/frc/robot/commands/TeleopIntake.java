@@ -1,8 +1,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.ArmPoses;
-import frc.robot.subsystems.Arm;
+import frc.robot.Arm.Arm;
+import frc.robot.Arm.ArmPoses;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeState;
 
