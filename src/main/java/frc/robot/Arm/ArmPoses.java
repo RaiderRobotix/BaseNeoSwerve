@@ -1,6 +1,8 @@
-package frc.robot.Arm;
+package frc.robot;
 
 import java.util.ArrayList;
+
+import frc.robot.subsystems.ArmPose;
 
 
 
@@ -39,7 +41,7 @@ public class ArmPoses
             new ArmPose(5, 130, 0,  false);
 
         poseList[Poses.Travel.ordinal()] = 
-            new ArmPose(6.5, -26, 0,  false);
+            new ArmPose(6, -15, 80,  false);
 
         poseList[Poses.PickFromSubstation.ordinal()] = 
             new ArmPose(0, -60, 68,  false);
