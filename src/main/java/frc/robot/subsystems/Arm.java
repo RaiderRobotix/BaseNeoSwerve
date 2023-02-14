@@ -65,6 +65,8 @@ public class Arm extends SubsystemBase
         J2 = new CANSparkMax(Constants.Arm.J2MotorID, MotorType.kBrushless);
         J2.getEncoder().setPositionConversionFactor(360.0/100.0);
 
+        J2.setIdleMode(IdleMode.kCoast);
+
         J2.setSoftLimit(SoftLimitDirection.kReverse, -130);
         J2.setSoftLimit(SoftLimitDirection.kForward, 130);
 

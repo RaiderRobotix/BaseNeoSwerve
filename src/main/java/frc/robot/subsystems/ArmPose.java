@@ -4,15 +4,15 @@ import java.util.ArrayList;
 
 public class ArmPose
 {
-    private double J1Degrees;
-    private double J2Degrees;
-    private double J3Degrees;
+    private Double J1Degrees;
+    private Double J2Degrees;
+    private Double J3Degrees;
 
     private boolean clawContracted;
 
     private ArrayList<ArmPose> allowedTransitions;
 
-    public ArmPose(double J1deg, double J2deg, double J3deg,  boolean clawClosed)
+    public ArmPose(Double J1deg, Double J2deg, Double J3deg,  boolean clawClosed)
     {
 
         allowedTransitions = new ArrayList<ArmPose>();
@@ -27,18 +27,18 @@ public class ArmPose
     }
 
 
-    public double getJ1()
+    public Double getJ1()
     {
         return J1Degrees;
 
     }
 
-    public double getJ2()
+    public Double getJ2()
     {
         return J2Degrees;
     }
 
-    public double getJ3()
+    public Double getJ3()
     {
         return J3Degrees;
     }
@@ -69,6 +69,7 @@ public class ArmPose
         }
 
         return allowedTransitions.contains(pose);
+
     }
 
 
