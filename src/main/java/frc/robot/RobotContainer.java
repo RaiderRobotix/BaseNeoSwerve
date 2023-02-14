@@ -178,13 +178,26 @@ public class RobotContainer {
         Trigger pickCubeDriveUp = new Trigger(() -> buttonBoard.getRawButton(10));
         pickCubeDriveUp.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.PickDriveUpWindow)));
 
-        // Xbox controller
-
-        Trigger home = new Trigger(() -> operator.getStartButton());
+        Trigger home = new Trigger(() -> buttonBoard.getRawButton(11));
         home.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.Home)));
 
-        Trigger travel = new Trigger(() -> operator.getBackButton());
-        travel.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.Travel)));
+        new Trigger(() -> buttonBoard.getRawButton(12))
+            .onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.FloorPickCone)));
+
+        new Trigger(() -> buttonBoard.getRawButton(13))
+            .onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.FloorPickCube)));
+
+        new Trigger(() -> buttonBoard.getRawButton(14))
+            .onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.PickFromSubstation)));
+
+        new Trigger(() -> buttonBoard.getRawButton(15))
+            .onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.Travel)));
+
+        
+
+        // Xbox controller
+
+
 
         Trigger resetOdometrey = new Trigger(()-> rotater.getRawButton(2));
         resetOdometrey.onTrue(new InstantCommand(()-> {s_Swerve.resetOdometry(new Pose2d(   /*wow*/));}));//this is normal
