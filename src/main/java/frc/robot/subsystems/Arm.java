@@ -49,6 +49,8 @@ public class Arm extends SubsystemBase
         J1 = new CANSparkMax(Constants.Arm.J1MotorID, MotorType.kBrushless);
         J1.getEncoder().setPositionConversionFactor(360.0/(144.0));
 
+        J1.setIdleMode(IdleMode.kBrake);
+
         J1.setSoftLimit(SoftLimitDirection.kReverse, -25);
         J1.setSoftLimit(SoftLimitDirection.kForward, 25);
 
@@ -71,7 +73,7 @@ public class Arm extends SubsystemBase
         J2.setSoftLimit(SoftLimitDirection.kForward, 130);
 
         controller = J2.getPIDController();
-        controller.setP(.01,0);
+        controller.setP(.005,0);
         controller.setI(.00,0);
         controller.setD(.0,0);
         controller.setFF(.0,0);
@@ -83,15 +85,17 @@ public class Arm extends SubsystemBase
         J3 = new CANSparkMax(Constants.Arm.J3MotorID, MotorType.kBrushless);
         J3.getEncoder().setPositionConversionFactor(360.0/60.0);
 
-        J3.setSoftLimit(SoftLimitDirection.kReverse, -65);
+        J3.setIdleMode(IdleMode.kBrake);
+
+        J3.setSoftLimit(SoftLimitDirection.kReverse, 0);
         J3.setSoftLimit(SoftLimitDirection.kForward, 65);
 
         controller = J3.getPIDController();
-        controller.setP(.025,0);
+        controller.setP(.01,0);
         controller.setI(.00,0);
         controller.setD(.0,0);
         controller.setFF(.0,0);
-        controller.setOutputRange(-.3, .3);
+        controller.setOutputRange(-.6, .6);
 
         //extender = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.Arm.forwardExtenderChannel, Constants.Arm.reverseExtenderChannel);
         setExtender(false);
@@ -140,7 +144,6 @@ public class Arm extends SubsystemBase
     {
         for(CANSparkMax motor: motors)
         {
-            motor.setIdleMode(IdleMode.kBrake);
             motor.setSmartCurrentLimit(40,15 );
 
            
@@ -153,11 +156,14 @@ public class Arm extends SubsystemBase
             
             motor.enableSoftLimit(SoftLimitDirection.kForward, true);
             motor.enableSoftLimit(SoftLimitDirection.kReverse, true);
-    
-            motor.burnFlash();
             
     
             motor.getEncoder().setPosition(0);
+        }
+        J3.setSmartCurrentLimit(20, 15);
+        for(CANSparkMax motor : motors)
+        {
+            motor.burnFlash();
         }
     }
 

@@ -62,10 +62,10 @@ public class ArmPoses
             new ArmPose(-24, 24, 0,  false);
       
         poseList[Poses.ConeScoreL2.ordinal()] = 
-            new ArmPose(-10, 130, -45,  false);
+            new ArmPose(-5, 100, -0,  false);
 
         poseList[Poses.ConeScoreL3.ordinal()] = 
-            new ArmPose( -7, 90, 0,  false);
+            new ArmPose( -13, 130, 0,  false);
 
 
 
@@ -78,10 +78,10 @@ public class ArmPoses
             new ArmPose(-24, 24, 0,  false);
       
         poseList[Poses.CubeScoreL2.ordinal()] = 
-            new ArmPose(-10, 130,-45,  false);
+            new ArmPose(-5, 100,0,  false);
 
         poseList[Poses.CubeScoreL3.ordinal()] = 
-            new ArmPose(-7, 90, 0,  false);
+            new ArmPose(-13, 130, 0,  false);
           
         
     }
