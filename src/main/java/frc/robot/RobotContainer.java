@@ -108,7 +108,7 @@ public class RobotContainer {
                 s_Swerve, 
                 () -> Math.pow(driver.getRawAxis(translationAxis),3), 
                 () -> Math.pow(driver.getRawAxis(strafeAxis),3), 
-                () -> rotater.getRawAxis(rotationAxis), 
+                () -> rotater.getRawAxis(rotationAxis)/2, 
                 () -> robotCentric.getAsBoolean()
             )
         );
@@ -181,17 +181,18 @@ public class RobotContainer {
         Trigger home = new Trigger(() -> buttonBoard.getRawButton(11));
         home.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.Home)));
 
-        new Trigger(() -> buttonBoard.getRawButton(12))
-            .onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.FloorPickCone)));
+        Trigger t;
+        t = new Trigger(() -> buttonBoard.getRawButton(12));
+        t.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.FloorPickCone)));
 
-        new Trigger(() -> buttonBoard.getRawButton(13))
-            .onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.FloorPickCube)));
+        t = new Trigger(() -> buttonBoard.getRawAxis(0)<0);
+        t.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.FloorPickCube)));
 
-        new Trigger(() -> buttonBoard.getRawButton(14))
-            .onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.PickFromSubstation)));
+        t =new Trigger(() -> buttonBoard.getRawAxis(0)>0);
+        t.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.PickFromSubstation)));
 
-        new Trigger(() -> buttonBoard.getRawButton(15))
-            .onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.Travel)));
+        t =new Trigger(() ->buttonBoard.getRawAxis(1)>0);
+        t .onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.Travel)));
 
         
 

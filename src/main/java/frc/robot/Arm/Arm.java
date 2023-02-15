@@ -1,8 +1,8 @@
-package frc.robot.subsystems;
+package frc.robot.Arm;
 
-import frc.robot.ArmPoses;
+
 import frc.robot.Constants;
-import frc.robot.ArmPoses.Poses;
+import frc.robot.Arm.ArmPoses.Poses;
 
 import java.net.CacheRequest;
 import java.util.concurrent.CancellationException;
@@ -88,7 +88,7 @@ public class Arm extends SubsystemBase
         J3.setIdleMode(IdleMode.kBrake);
 
         J3.setSoftLimit(SoftLimitDirection.kReverse, 0);
-        J3.setSoftLimit(SoftLimitDirection.kForward, 65);
+        J3.setSoftLimit(SoftLimitDirection.kForward, 80);
 
         controller = J3.getPIDController();
         controller.setP(.01,0);
@@ -210,7 +210,13 @@ public class Arm extends SubsystemBase
          
          J2.getPIDController().setReference(J2Ref, ControlType.kPosition);
 
-         if(Math.signum(J2Ref)== Math.signum(J2.getEncoder().getPosition()) )
+         // only move J3 if J2 is the same side of 0 that the final pose will be or
+         // if it's close... (ew)
+         // I swear we're gonna fix this
+         double idiotTolerance = 5;
+         if( (Math.signum(J2Ref)== Math.signum(J2.getEncoder().getPosition()-idiotTolerance)
+         && Math.signum(J2Ref)== Math.signum(J2.getEncoder().getPosition()+idiotTolerance)) 
+          || Math.abs(J2Ref)< idiotTolerance )
          {
             J3.getPIDController().setReference(J3Ref, ControlType.kPosition);
          }
