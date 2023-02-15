@@ -108,7 +108,7 @@ public class RobotContainer {
                 s_Swerve, 
                 () -> Math.pow(driver.getRawAxis(translationAxis),3), 
                 () -> Math.pow(driver.getRawAxis(strafeAxis),3), 
-                () -> rotater.getRawAxis(rotationAxis), 
+                () -> rotater.getRawAxis(rotationAxis)/2, 
                 () -> robotCentric.getAsBoolean()
             )
         );
@@ -193,7 +193,6 @@ public class RobotContainer {
         new Trigger(() -> buttonBoard.getRawButton(15))
             .onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.Travel)));
 
-        
 
         // Xbox controller
 
