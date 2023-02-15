@@ -24,7 +24,7 @@ public class PoseList
             new ArmPose(5, 130, 0,  false);
 
         poseList[NamedPose.Travel.ordinal()] = 
-            new ArmPose(6, -15, 80,  false);
+            new ArmPose(0, 3, 80,  false);
 
         poseList[NamedPose.PickFromSubstation.ordinal()] = 
             new ArmPose(0, -60, 68,  false);
