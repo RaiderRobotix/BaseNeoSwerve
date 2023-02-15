@@ -12,7 +12,7 @@ public class ArmPose
 
     private ArrayList<ArmPose> allowedTransitions;
 
-    public ArmPose(Double J1deg, Double J2deg, Double J3deg,  boolean clawClosed)
+    public ArmPose(Double J1deg, Double J2deg, Double J3deg,  boolean extended)
     {
 
         allowedTransitions = new ArrayList<ArmPose>();
@@ -21,7 +21,7 @@ public class ArmPose
         J2Degrees = J2deg;
         J3Degrees = J3deg;
 
-        clawContracted = clawClosed;
+        clawContracted = extended;
 
 
     }

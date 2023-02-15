@@ -69,6 +69,7 @@ public class Arm extends SubsystemBase
         J2.getEncoder().setPositionConversionFactor(360.0/100.0);
 
         J2.setIdleMode(IdleMode.kCoast);
+        J2Follow.setIdleMode(IdleMode.kCoast);
 
         J2.setSoftLimit(SoftLimitDirection.kReverse, -130);
         J2.setSoftLimit(SoftLimitDirection.kForward, 130);
@@ -295,7 +296,7 @@ public class Arm extends SubsystemBase
 
         }
 
-        adoptPose(new ArmPose(pos1, pos2, pos3, getClaw()));
+        adoptPose(new ArmPose(pos1, pos2, pos3, getExtender()));
     }
 
     

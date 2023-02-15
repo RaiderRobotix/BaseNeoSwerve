@@ -203,6 +203,27 @@ public class RobotContainer {
 
         Trigger substation = new Trigger(() -> operator.getXButton());
         substation.onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.PickFromSubstation)));
+
+
+        Trigger jogJ1Forwards = new Trigger(()-> operator.getRightBumper());
+        jogJ1Forwards.whileTrue(new InstantCommand(()-> s_Arm.jogJoint(1, true)));
+
+        Trigger jogJ1Backwards = new Trigger(()-> operator.getLeftBumper());
+        jogJ1Backwards.whileTrue(new InstantCommand(()-> s_Arm.jogJoint(1, false)));
+
+        Trigger jogJ2Forwards = new Trigger(()-> operator.getRightBumper());
+        jogJ1Forwards.whileTrue(new InstantCommand(()-> s_Arm.jogJoint(2, true)));
+
+        Trigger jogJ2Backwards = new Trigger(()-> operator.getRightBumper());
+        jogJ1Backwards.whileTrue(new InstantCommand(()-> s_Arm.jogJoint(2, false)));
+
+        Trigger jogJ3Forwards = new Trigger(()-> operator.getRightBumper());
+        jogJ1Forwards.whileTrue(new InstantCommand(()-> s_Arm.jogJoint(3, true)));
+
+        Trigger jogJ3Backwards = new Trigger(()-> operator.getRightBumper());
+        jogJ1Backwards.whileTrue(new InstantCommand(()-> s_Arm.jogJoint(3, false)));
+
+
     }
 
     /**
