@@ -1,8 +1,7 @@
-package frc.robot.subsystems;
+package frc.robot.Arm;
 
-import frc.robot.ArmPoses;
 import frc.robot.Constants;
-import frc.robot.ArmPoses.Poses;
+
 
 import java.net.CacheRequest;
 import java.util.concurrent.CancellationException;
@@ -36,14 +35,14 @@ public class Arm extends SubsystemBase
 
     private ArmPose currentPose;
 
-    private ArmPoses poses;
+    private PoseList poses;
     // pose should be all zeros
     public Arm(ArmPose pose, PneumaticHub ph)
     {
 
         // TODO set soft limits for arm motors (I would appreciate the robot not exploding)
 
-        poses = new ArmPoses();
+        poses = new PoseList();
         currentPose = pose;
         
         J1 = new CANSparkMax(Constants.Arm.J1MotorID, MotorType.kBrushless);
@@ -120,7 +119,7 @@ public class Arm extends SubsystemBase
 
     }
 
-    public ArmPose getPose(Poses p)
+    public ArmPose getPose(NamedPose p)
     {
         return poses.getArmPose(p);
     }

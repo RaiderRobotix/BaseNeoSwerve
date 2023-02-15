@@ -14,8 +14,8 @@ import frc.robot.subsystems.Swerve;
 import frc.robot.Constants;
 import frc.robot.Arm.Arm;
 import frc.robot.Arm.ArmCommand;
-import frc.robot.Arm.ArmPoses;
-import frc.robot.Arm.ArmPoses.Poses;
+import frc.robot.Arm.PoseList;
+import frc.robot.Arm.NamedPose;
 import frc.robot.commands.AutoBalance;
 import frc.robot.commands.LockSwerveCommand;
 
@@ -31,11 +31,11 @@ public class Auto1 extends SequentialCommandGroup
 
             
         addCommands(
-            new ArmCommand(arm, arm.getPose(Poses.PouncePreScore)),
-            new ArmCommand(arm, arm.getPose(Poses.ConeScoreL3)),
+            new ArmCommand(arm, arm.getPose(NamedPose.PouncePreScore)),
+            new ArmCommand(arm, arm.getPose(NamedPose.ConeScoreL3)),
             new WaitCommand(1),
-            new ArmCommand(arm, arm.getPose(Poses.PouncePreScore)),
-            new ArmCommand(arm, arm.getPose(Poses.Home)),
+            new ArmCommand(arm, arm.getPose(NamedPose.PouncePreScore)),
+            new ArmCommand(arm, arm.getPose(NamedPose.Home)),
             new AutoTrajectory(swerve, 
             TrajectoryGenerator.generateTrajectory(
                 // Start at the origin facing the +X direction

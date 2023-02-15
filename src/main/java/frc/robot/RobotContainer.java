@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Arm.Arm;
 import frc.robot.Arm.ArmCommand;
-import frc.robot.Arm.ArmPoses;
-import frc.robot.Arm.ArmPoses.Poses;
+import frc.robot.Arm.PoseList;
+import frc.robot.Arm.NamedPose;
 import frc.robot.autos.Auto1;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -57,7 +57,7 @@ public class RobotContainer {
     /* Subsystems */
     private final Swerve s_Swerve;
     private final Arm s_Arm;
-    private ArmPoses poses;
+    private PoseList poses;
     // TODO uncomment once intake exists
     // private final Intake s_Intake;
 
@@ -75,7 +75,7 @@ public class RobotContainer {
         buttonBoard = new GenericHID(3);
 
 
-        poses = new  ArmPoses();
+        poses = new  PoseList();
 
         /* Drive Controls */
         translationAxis = Joystick.AxisType.kY.value;
@@ -99,7 +99,7 @@ public class RobotContainer {
         s_Swerve = new Swerve();
         // TODO Uncomment once intake exists.
         //s_Intake = new Intake();
-        s_Arm = new Arm(poses.getArmPose(Poses.Home), ph);
+        s_Arm = new Arm(poses.getArmPose(NamedPose.Home), ph);
             
    
 
@@ -149,49 +149,49 @@ public class RobotContainer {
 
         // Button board (this is terrible)
         Trigger pounce = new Trigger(() -> buttonBoard.getRawButton(1));
-        pounce.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.PouncePreScore)));
+        pounce.onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.PouncePreScore)));
 
         Trigger coneL1 = new Trigger(() -> buttonBoard.getRawButton(2));
-        coneL1.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.ConeScoreL1)));
+        coneL1.onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.ConeScoreL1)));
 
         Trigger coneL2 = new Trigger(() -> buttonBoard.getRawButton(3));
-        coneL2.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.ConeScoreL2)));
+        coneL2.onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.ConeScoreL2)));
 
         Trigger coneL3 = new Trigger(() -> buttonBoard.getRawButton(4));
-        coneL3.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.ConeScoreL3)));
+        coneL3.onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.ConeScoreL3)));
 
         Trigger cubeL1 = new Trigger(() -> buttonBoard.getRawButton(5));
-        cubeL1.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.CubeScoreL1)));
+        cubeL1.onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.CubeScoreL1)));
 
         Trigger cubeL2 = new Trigger(() -> buttonBoard.getRawButton(6));
-        cubeL2.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.CubeScoreL2)));
+        cubeL2.onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.CubeScoreL2)));
 
         Trigger cubeL3 = new Trigger(() -> buttonBoard.getRawButton(7));
-        cubeL3.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.CubeScoreL3)));
+        cubeL3.onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.CubeScoreL3)));
 
         Trigger pounceDriveUp = new Trigger(() -> buttonBoard.getRawButton(8));
-        pounceDriveUp.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.PounceDriveUpWindow)));
+        pounceDriveUp.onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.PounceDriveUpWindow)));
 
         Trigger pickConeDriveUp = new Trigger(() -> buttonBoard.getRawButton(9));
-        pickConeDriveUp.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.PickDriveUpWindow)));
+        pickConeDriveUp.onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.PickDriveUpWindow)));
 
         Trigger pickCubeDriveUp = new Trigger(() -> buttonBoard.getRawButton(10));
-        pickCubeDriveUp.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.PickDriveUpWindow)));
+        pickCubeDriveUp.onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.PickDriveUpWindow)));
 
         Trigger home = new Trigger(() -> buttonBoard.getRawButton(11));
-        home.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.Home)));
+        home.onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.Home)));
 
         new Trigger(() -> buttonBoard.getRawButton(12))
-            .onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.FloorPickCone)));
+            .onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.FloorPickCone)));
 
         new Trigger(() -> buttonBoard.getRawButton(13))
-            .onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.FloorPickCube)));
+            .onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.FloorPickCube)));
 
         new Trigger(() -> buttonBoard.getRawButton(14))
-            .onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.PickFromSubstation)));
+            .onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.PickFromSubstation)));
 
         new Trigger(() -> buttonBoard.getRawButton(15))
-            .onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.Travel)));
+            .onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.Travel)));
 
         
 
@@ -203,7 +203,7 @@ public class RobotContainer {
         resetOdometrey.onTrue(new InstantCommand(()-> {s_Swerve.resetOdometry(new Pose2d(   /*wow*/));}));//this is normal
 
         Trigger substation = new Trigger(() -> operator.getXButton());
-        substation.onTrue(new ArmCommand(s_Arm, poses.getArmPose(Poses.PickFromSubstation)));
+        substation.onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.PickFromSubstation)));
     }
 
     /**
