@@ -42,4 +42,10 @@ public class ArmCommand extends CommandBase
         
         return arm.isAtPose(pose);
     }
+
+
+    public static void ScheduleArmCommandToPose()
+    {
+        
+    }
 }
