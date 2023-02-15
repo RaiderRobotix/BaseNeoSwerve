@@ -127,6 +127,21 @@ public class Arm extends SubsystemBase
         return poses.getArmPose(p);
     }
 
+    /**
+     * get the current state of the arm as an armpose
+     * @return
+     */
+    public ArmPose getCurrentPose()
+    {
+        return new ArmPose(J1.getEncoder().getPosition(), J2.getEncoder().getPosition(), J3.getEncoder().getPosition(), getClaw());
+    }
+
+
+    public ArmPose getSetPose()
+    {
+        return currentPose;
+    }
+
     @Override
     public void periodic()
     {
@@ -224,16 +239,10 @@ public class Arm extends SubsystemBase
          
          J2.getPIDController().setReference(J2Ref, ControlType.kPosition);
 
-         // only move J3 if J2 is the same side of 0 that the final pose will be or
-         // if it's close... (ew)
-         // I swear we're gonna fix this
-         double idiotTolerance = 5;
-         if( (Math.signum(J2Ref)== Math.signum(J2.getEncoder().getPosition()-idiotTolerance)
-         && Math.signum(J2Ref)== Math.signum(J2.getEncoder().getPosition()+idiotTolerance)) 
-          || Math.abs(J2Ref)< idiotTolerance )
-         {
-            J3.getPIDController().setReference(J3Ref, ControlType.kPosition);
-         }
+  
+         
+        J3.getPIDController().setReference(J3Ref, ControlType.kPosition);
+         
     }
 
 
