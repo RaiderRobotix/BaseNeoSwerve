@@ -8,30 +8,27 @@ public class ArmPose
     private Double J2Degrees;
     private Double J3Degrees;
 
-    private boolean clawContracted;
+    private boolean ExtenderExtended;
 
-    private ArrayList<ArmPose> allowedTransitions;
-
+   
     public ArmPose(Double J1deg, Double J2deg, Double J3deg,  boolean extended)
     {
 
-        allowedTransitions = new ArrayList<ArmPose>();
+       
 
         J1Degrees = J1deg;
         J2Degrees = J2deg;
         J3Degrees = J3deg;
 
-        clawContracted = extended;
+        ExtenderExtended = extended;
 
 
     }
-
-
+    
     public ArmPose(double J1deg, double J2deg, double J3deg, boolean clawClosed)
     {
         this(Double.valueOf(J1deg), Double.valueOf(J2deg), Double.valueOf(J3deg), clawClosed);
     }
-
 
     public Double getJ1()
     {
@@ -49,34 +46,12 @@ public class ArmPose
         return J3Degrees;
     }
 
-    public boolean getClaw()
+    public boolean getExtender()
     {
-        return clawContracted;
+        return ExtenderExtended;
     }
 
 
-    public void AddAllowedTransition(ArmPose...armPoses)
-    {
-        for(ArmPose pose: armPoses)
-        {
-            if(pose== null || pose == this)
-            {
-                throw new IllegalArgumentException("valid pose cannot be self or null.");
-            }
-            allowedTransitions.add(pose);
-        }
-    }
-
-    public boolean isAllowedTransition(ArmPose pose)
-    {
-        if(allowedTransitions.size()==0)
-        {
-            return true;
-        }
-
-        return allowedTransitions.contains(pose);
-
-    }
 
     
 

@@ -149,49 +149,48 @@ public class RobotContainer {
 
         // Button board (this is terrible)
         Trigger pounce = new Trigger(() -> buttonBoard.getRawButton(1));
-        pounce.onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.PouncePreScore)));
+        pounce.onTrue(ArmCommand.PlotPath( NamedPose.PouncePreScore, s_Arm));
 
         Trigger coneL1 = new Trigger(() -> buttonBoard.getRawButton(2));
-        coneL1.onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.ConeScoreL1)));
+        coneL1.onTrue(ArmCommand.PlotPath( NamedPose.ConeScoreL1, s_Arm));
 
         Trigger coneL2 = new Trigger(() -> buttonBoard.getRawButton(3));
-        coneL2.onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.ConeScoreL2)));
+        coneL2.onTrue(ArmCommand.PlotPath( NamedPose.ConeScoreL2, s_Arm));
 
         Trigger coneL3 = new Trigger(() -> buttonBoard.getRawButton(4));
-        coneL3.onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.ConeScoreL3)));
+        coneL3.onTrue(ArmCommand.PlotPath( NamedPose.ConeScoreL3, s_Arm));
 
         Trigger cubeL1 = new Trigger(() -> buttonBoard.getRawButton(5));
-        cubeL1.onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.CubeScoreL1)));
+        cubeL1.onTrue(ArmCommand.PlotPath( NamedPose.CubeScoreL1, s_Arm));
 
         Trigger cubeL2 = new Trigger(() -> buttonBoard.getRawButton(6));
-        cubeL2.onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.CubeScoreL2)));
+        cubeL2.onTrue(ArmCommand.PlotPath( NamedPose.CubeScoreL2, s_Arm));
 
         Trigger cubeL3 = new Trigger(() -> buttonBoard.getRawButton(7));
-        cubeL3.onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.CubeScoreL3)));
+        cubeL3.onTrue(ArmCommand.PlotPath( NamedPose.CubeScoreL3, s_Arm));
 
         Trigger pounceDriveUp = new Trigger(() -> buttonBoard.getRawButton(8));
-        pounceDriveUp.onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.PounceDriveUpWindow)));
+        pounceDriveUp.onTrue(ArmCommand.PlotPath( NamedPose.PounceDriveUpWindow, s_Arm));
 
         Trigger pickConeDriveUp = new Trigger(() -> buttonBoard.getRawButton(9));
-        pickConeDriveUp.onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.PickDriveUpWindow)));
+        pickConeDriveUp.onTrue(ArmCommand.PlotPath( NamedPose.PickDriveUpWindow, s_Arm));
 
         Trigger pickCubeDriveUp = new Trigger(() -> buttonBoard.getRawButton(10));
-        pickCubeDriveUp.onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.PickDriveUpWindow)));
+        pickCubeDriveUp.onTrue(ArmCommand.PlotPath( NamedPose.PickDriveUpWindow, s_Arm));
 
         Trigger home = new Trigger(() -> buttonBoard.getRawButton(11));
-        home.onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.Home)));
+        home.onTrue(ArmCommand.PlotPath( NamedPose.Home, s_Arm));
 
         new Trigger(() -> buttonBoard.getRawButton(12))
-            .onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.FloorPickCone)));
+            .onTrue(ArmCommand.PlotPath( NamedPose.FloorPickCone, s_Arm));
 
-        new Trigger(() -> buttonBoard.getRawButton(13))
-            .onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.FloorPickCube)));
+        new Trigger(() -> buttonBoard.getRawAxis(0)<0)
+            .onTrue(ArmCommand.PlotPath( NamedPose.FloorPickCube, s_Arm));
+        new Trigger(() -> buttonBoard.getRawAxis(0)>0)
+            .onTrue(ArmCommand.PlotPath( NamedPose.PickFromSubstation, s_Arm));
 
-        new Trigger(() -> buttonBoard.getRawButton(14))
-            .onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.PickFromSubstation)));
-
-        new Trigger(() -> buttonBoard.getRawButton(15))
-            .onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.Travel)));
+        new Trigger(() -> buttonBoard.getRawAxis(1)>0)
+            .onTrue(ArmCommand.PlotPath( NamedPose.Travel, s_Arm));
 
 
         // Xbox controller
@@ -201,8 +200,7 @@ public class RobotContainer {
         Trigger resetOdometrey = new Trigger(()-> rotater.getRawButton(2));
         resetOdometrey.onTrue(new InstantCommand(()-> {s_Swerve.resetOdometry(new Pose2d(   /*wow*/));}));//this is normal
 
-        Trigger substation = new Trigger(() -> operator.getXButton());
-        substation.onTrue(new ArmCommand(s_Arm, poses.getArmPose(NamedPose.PickFromSubstation)));
+       
 
 
         Trigger jogJ1Forwards = new Trigger(()-> operator.getRightBumper());

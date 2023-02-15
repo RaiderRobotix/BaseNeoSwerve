@@ -31,11 +31,11 @@ public class Auto1 extends SequentialCommandGroup
 
             
         addCommands(
-            new ArmCommand(arm, arm.getPose(NamedPose.PouncePreScore)),
-            new ArmCommand(arm, arm.getPose(NamedPose.ConeScoreL3)),
+            ArmCommand.PlotPath( NamedPose.PouncePreScore, arm),
+            ArmCommand.PlotPath(NamedPose.ConeScoreL3,arm),
             new WaitCommand(1),
-            new ArmCommand(arm, arm.getPose(NamedPose.PouncePreScore)),
-            new ArmCommand(arm, arm.getPose(NamedPose.Home)),
+            ArmCommand.PlotPath(NamedPose.PouncePreScore,arm),
+            ArmCommand.PlotPath(NamedPose.Home,arm),
             new AutoTrajectory(swerve, 
             TrajectoryGenerator.generateTrajectory(
                 // Start at the origin facing the +X direction

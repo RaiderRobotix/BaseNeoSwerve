@@ -202,15 +202,15 @@ public class Arm extends SubsystemBase
     }
 
     
-    private void setExtender(boolean extended)
+    void setExtender(boolean extended)
     {
         if(extended)
         {
-            //extender.set(Value.kForward);  //TODO uncomment when ready for extender
+            extender.set(Value.kForward);  //TODO uncomment when ready for extender
             return;
         }
         
-        //extender.set(Value.kReverse);
+        extender.set(Value.kReverse);
     }
 
     public boolean getExtender()
@@ -253,17 +253,13 @@ public class Arm extends SubsystemBase
             throw new NullPointerException("Arm pose may not be null. You ****ed up");
         }
 
-        if(!pose.isAllowedTransition(currentPose) && currentPose!=pose)
-        {
-            System.out.println("Invalid pose transition.");
-            return;
-        }
+        
         currentPose = pose;
         
         //System.out.println("working?");
         setArmPosition(pose.getJ1(),pose.getJ2(), pose.getJ3());
        
-        //setClaw(pose.getClaw());
+        
     }
 
 
