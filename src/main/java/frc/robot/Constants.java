@@ -30,7 +30,7 @@ public final class Constants
      */
     public static final class REV
     {
-        public static final IdleMode driveIdleMode = IdleMode.kCoast;
+        public static final IdleMode driveIdleMode = IdleMode.kBrake;
         public static final IdleMode angleIdleMode = IdleMode.kBrake;
 
         public static final int PHID = 30;
