@@ -203,8 +203,20 @@ public class Arm extends SubsystemBase
     }
 
     // in revolutions
-    private void setArmPosition(double J1Ref, double J2Ref, double J3Ref )
+    private void setArmPosition(Double J1Ref, Double J2Ref, Double J3Ref )
     {
+        if(J1Ref == null)
+        {
+            J1Ref = J1.getEncoder().getPosition();
+        }
+        if(J2Ref == null)
+        {
+            J2Ref = J2.getEncoder().getPosition();
+        }
+        if(J3Ref == null)
+        {
+            J3Ref = J3.getEncoder().getPosition();
+        }
 
          J1.getPIDController().setReference(J1Ref, ControlType.kPosition);
 
@@ -231,7 +243,7 @@ public class Arm extends SubsystemBase
             throw new NullPointerException("Arm pose may not be null. You ****ed up");
         }
 
-        if(currentPose!=null && (!pose.isAllowedTransition(currentPose) && currentPose!=pose))
+        if(!pose.isAllowedTransition(currentPose) && currentPose!=pose)
         {
             System.out.println("Invalid pose transition.");
             return;
@@ -250,8 +262,8 @@ public class Arm extends SubsystemBase
 
         double tolerance = 4;
         return isWithin(pose.getJ1(), J1.getEncoder().getPosition(), tolerance)
-            && isWithin(pose.getJ2(), J2.getEncoder().getPosition(), tolerance);
-            //&& isWithin(pose.getJ3(), J3.getEncoder().getPosition(), tolerance);
+            && isWithin(pose.getJ2(), J2.getEncoder().getPosition(), tolerance)
+            && isWithin(pose.getJ3(), J3.getEncoder().getPosition(), tolerance);
           
          
     }
@@ -261,6 +273,29 @@ public class Arm extends SubsystemBase
        
     
         return Math.abs(a-b)<within;
+    }
+
+    public void jogJoint(int joint, boolean forward)
+    {
+        final double JOG_BY = 0.01;
+        double jog = (forward)? JOG_BY : -JOG_BY;
+
+        Double pos1 = null, pos2 = null, pos3 = null;
+        switch (joint)
+        {
+            case 1:
+                pos1 = J1.getEncoder().getPosition() + jog;
+                break;
+            case 2:
+                pos2 = J2.getEncoder().getPosition() + jog;
+                break;
+            case 3:
+                pos3 = J3.getEncoder().getPosition() + jog;
+                break;
+
+        }
+
+        adoptPose(new ArmPose(pos1, pos2, pos3, getClaw()));
     }
 
     
