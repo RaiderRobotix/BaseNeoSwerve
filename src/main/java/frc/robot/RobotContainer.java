@@ -203,23 +203,23 @@ public class RobotContainer {
        
 
 
-        Trigger jogJ1Forwards = new Trigger(()-> operator.getRightBumper());
+        Trigger jogJ1Forwards = new Trigger(()-> driver.getRawButton(6));
         jogJ1Forwards.whileTrue(new InstantCommand(()-> s_Arm.jogJoint(1, true)));
 
-        Trigger jogJ1Backwards = new Trigger(()-> operator.getLeftBumper());
+        Trigger jogJ1Backwards = new Trigger(()-> driver.getRawButton(7));
         jogJ1Backwards.whileTrue(new InstantCommand(()-> s_Arm.jogJoint(1, false)));
 
-        Trigger jogJ2Forwards = new Trigger(()-> operator.getRightBumper());
-        jogJ1Forwards.whileTrue(new InstantCommand(()-> s_Arm.jogJoint(2, true)));
+        Trigger jogJ2Forwards = new Trigger(()-> driver.getRawButton(8));
+        jogJ2Forwards.whileTrue(new InstantCommand(()-> s_Arm.jogJoint(2, true)));
 
-        Trigger jogJ2Backwards = new Trigger(()-> operator.getRightBumper());
-        jogJ1Backwards.whileTrue(new InstantCommand(()-> s_Arm.jogJoint(2, false)));
+        Trigger jogJ2Backwards = new Trigger(()-> driver.getRawButton(9));
+        jogJ2Backwards.whileTrue(new InstantCommand(()-> s_Arm.jogJoint(2, false)));
 
-        Trigger jogJ3Forwards = new Trigger(()-> operator.getRightBumper());
-        jogJ1Forwards.whileTrue(new InstantCommand(()-> s_Arm.jogJoint(3, true)));
+        Trigger jogJ3Forwards = new Trigger(()-> driver.getRawButton(10));
+        jogJ3Forwards.whileTrue(new InstantCommand(()-> s_Arm.jogJoint(3, true)));
 
-        Trigger jogJ3Backwards = new Trigger(()-> operator.getRightBumper());
-        jogJ1Backwards.whileTrue(new InstantCommand(()-> s_Arm.jogJoint(3, false)));
+        Trigger jogJ3Backwards = new Trigger(()-> driver.getRawButton(11));
+        jogJ3Backwards.whileTrue(new InstantCommand(()-> s_Arm.jogJoint(3, false)));
 
 
     }
