@@ -7,8 +7,8 @@ import frc.lib.util.States.LinkableState;
 import frc.lib.util.States.StateMachine;
 import frc.robot.Arm.Arm;
 import frc.robot.Arm.ArmCommand;
-import frc.robot.Arm.ArmPoses;
-import frc.robot.Arm.ArmPoses.Poses;
+import frc.robot.Arm.NamedPose;
+import frc.robot.Arm.PoseList;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeState;
 
@@ -20,7 +20,7 @@ public class PresentPiece extends CommandBase
         // doing this definitely feels like I'm subverting the purpose of the command system,
         // but I'm very happy with the state machine thing I made and wanted to use it more.
         private final Arm ARM;
-        private ArmPoses poses;
+        private PoseList poses;
         private CommandBase subordinateCommand;
 
        
@@ -36,7 +36,7 @@ public class PresentPiece extends CommandBase
          * @param arm
          * @param waitOn a command which must finish executing before the intake will present.
          */
-        public PresentPiece(Intake intake, Arm arm, ArmPoses poses)
+        public PresentPiece(Intake intake, Arm arm, PoseList poses)
         {
             INTAKE = intake;
             ARM = arm;
@@ -90,7 +90,7 @@ public class PresentPiece extends CommandBase
         private LinkableState begin()
         {
             // TODO set correct arm pose
-            subordinateCommand = new ArmCommand(ARM, poses.getArmPose(Poses.FloorPickCone));
+            subordinateCommand = new ArmCommand(ARM, poses.getArmPose(NamedPose.FloorPickCone));
 
              // cones do not need to execute the prePresent stage, since they do not deal with the vaccum.
             if(INTAKE.getState() == IntakeState.getCube)
