@@ -105,7 +105,7 @@ public class ArmCommand extends CommandBase
         System.out.println("Thinking of adding wristup...");
         
         
-        if(isJ2OnSameSideOfTarget(current.getJ2(), to.getJ2(), crossTolerance))
+        if( !isJ2OnSameSideOfTarget(current.getJ2(), to.getJ2(), crossTolerance))
         {
            
             
