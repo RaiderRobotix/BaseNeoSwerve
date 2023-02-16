@@ -149,48 +149,48 @@ public class RobotContainer {
 
         // Button board (this is terrible)
         Trigger pounce = new Trigger(() -> buttonBoard.getRawButton(1));
-        pounce.onTrue(ArmCommand.PlotPath( NamedPose.PouncePreScore, s_Arm));
+        pounce.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.PouncePreScore, s_Arm)));
 
         Trigger coneL1 = new Trigger(() -> buttonBoard.getRawButton(2));
-        coneL1.onTrue(ArmCommand.PlotPath( NamedPose.ConeScoreL1, s_Arm));
+        coneL1.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.ConeScoreL1, s_Arm)));
 
         Trigger coneL2 = new Trigger(() -> buttonBoard.getRawButton(3));
-        coneL2.onTrue(ArmCommand.PlotPath( NamedPose.ConeScoreL2, s_Arm));
+        coneL2.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.ConeScoreL2, s_Arm)));
 
         Trigger coneL3 = new Trigger(() -> buttonBoard.getRawButton(4));
-        coneL3.onTrue(ArmCommand.PlotPath( NamedPose.ConeScoreL3, s_Arm));
+        coneL3.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.ConeScoreL3, s_Arm)));
 
         Trigger cubeL1 = new Trigger(() -> buttonBoard.getRawButton(5));
-        cubeL1.onTrue(ArmCommand.PlotPath( NamedPose.CubeScoreL1, s_Arm));
+        cubeL1.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.CubeScoreL1, s_Arm)));
 
         Trigger cubeL2 = new Trigger(() -> buttonBoard.getRawButton(6));
-        cubeL2.onTrue(ArmCommand.PlotPath( NamedPose.CubeScoreL2, s_Arm));
+        cubeL2.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.CubeScoreL2, s_Arm)));
 
         Trigger cubeL3 = new Trigger(() -> buttonBoard.getRawButton(7));
-        cubeL3.onTrue(ArmCommand.PlotPath( NamedPose.CubeScoreL3, s_Arm));
+        cubeL3.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.CubeScoreL3, s_Arm)));
 
         Trigger pounceDriveUp = new Trigger(() -> buttonBoard.getRawButton(8));
-        pounceDriveUp.onTrue(ArmCommand.PlotPath( NamedPose.PounceDriveUpWindow, s_Arm));
+        pounceDriveUp.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.PounceDriveUpWindow, s_Arm)));
 
         Trigger pickConeDriveUp = new Trigger(() -> buttonBoard.getRawButton(9));
-        pickConeDriveUp.onTrue(ArmCommand.PlotPath( NamedPose.PickDriveUpWindow, s_Arm));
+        pickConeDriveUp.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.PickDriveUpWindow, s_Arm)));
 
         Trigger pickCubeDriveUp = new Trigger(() -> buttonBoard.getRawButton(10));
-        pickCubeDriveUp.onTrue(ArmCommand.PlotPath( NamedPose.PickDriveUpWindow, s_Arm));
+        pickCubeDriveUp.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.PickDriveUpWindow, s_Arm)));
 
         Trigger home = new Trigger(() -> buttonBoard.getRawButton(11));
-        home.onTrue(ArmCommand.PlotPath( NamedPose.Home, s_Arm));
+        home.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.Home, s_Arm)));
 
         new Trigger(() -> buttonBoard.getRawButton(12))
-            .onTrue(ArmCommand.PlotPath( NamedPose.FloorPickCone, s_Arm));
+            .onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.FloorPickCone, s_Arm)));
 
         new Trigger(() -> buttonBoard.getRawAxis(0)<0)
-            .onTrue(ArmCommand.PlotPath( NamedPose.FloorPickCube, s_Arm));
-        new Trigger(() -> buttonBoard.getRawAxis(0)>0)
-            .onTrue(ArmCommand.PlotPath( NamedPose.PickFromSubstation, s_Arm));
+            .onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.FloorPickCube, s_Arm)));
+        new Trigger(() -> operator.getXButton())
+            .onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.PickFromSubstation, s_Arm)));
 
-        new Trigger(() -> buttonBoard.getRawAxis(1)>0)
-            .onTrue(ArmCommand.PlotPath( NamedPose.Travel, s_Arm));
+        new Trigger(() -> operator.getBButton())
+            .onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.Travel, s_Arm)));
 
 
         // Xbox controller
@@ -231,6 +231,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return new AutoBalance(s_Swerve);
+        return new Auto1(s_Swerve, s_Arm);
     }
 }

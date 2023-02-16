@@ -69,7 +69,7 @@ public class Arm extends SubsystemBase
         J2.getEncoder().setPositionConversionFactor(360.0/100.0);
 
         J2.setIdleMode(IdleMode.kCoast);
-        J2Follow.setIdleMode(IdleMode.kCoast);
+      
 
         J2.setSoftLimit(SoftLimitDirection.kReverse, -130);
         J2.setSoftLimit(SoftLimitDirection.kForward, 130);
@@ -82,7 +82,7 @@ public class Arm extends SubsystemBase
         controller.setOutputRange(-.6, .6);
 
         J2Follow = new CANSparkMax(Constants.Arm.J2FollowMotorID, MotorType.kBrushless);
-        
+        J2Follow.setIdleMode(IdleMode.kCoast);
         
         J3 = new CANSparkMax(Constants.Arm.J3MotorID, MotorType.kBrushless);
         J3.getEncoder().setPositionConversionFactor(360.0/60.0);
@@ -99,7 +99,7 @@ public class Arm extends SubsystemBase
         controller.setFF(.0,0);
         controller.setOutputRange(-.6, .6);
 
-        //extender = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.Arm.forwardExtenderChannel, Constants.Arm.reverseExtenderChannel);
+        extender = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.Arm.forwardExtenderChannel, Constants.Arm.reverseExtenderChannel);
         setExtender(false);
         claw = ph.makeDoubleSolenoid( Constants.Arm.forwardClawChannel, Constants.Arm.reverseClawChannel);
         setClaw(false);
@@ -186,7 +186,6 @@ public class Arm extends SubsystemBase
 
     public void setClaw(boolean extended)
     {
-        System.out.println("Claw: "+extended);
         if(extended)
         {
             claw.set(Value.kForward);
@@ -234,13 +233,10 @@ public class Arm extends SubsystemBase
             J3Ref = J3.getEncoder().getPosition();
         }
 
-         J1.getPIDController().setReference(J1Ref, ControlType.kPosition);
+        J1.getPIDController().setReference(J1Ref, ControlType.kPosition);
 
-         
-         J2.getPIDController().setReference(J2Ref, ControlType.kPosition);
+        J2.getPIDController().setReference(J2Ref, ControlType.kPosition);
 
-  
-         
         J3.getPIDController().setReference(J3Ref, ControlType.kPosition);
          
     }
@@ -283,8 +279,10 @@ public class Arm extends SubsystemBase
 
     public void jogJoint(int joint, boolean forward)
     {
-        final double JOG_BY = 0.01;
+        final double JOG_BY = 0.25;
         double jog = (forward)? JOG_BY : -JOG_BY;
+
+        System.out.println("jogging motor by " + jog + " degrees");
 
         Double pos1 = null, pos2 = null, pos3 = null;
         switch (joint)

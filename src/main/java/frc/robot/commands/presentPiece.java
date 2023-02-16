@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.lib.util.States.LinkableState;
 import frc.lib.util.States.StateMachine;
@@ -21,7 +22,7 @@ public class PresentPiece extends CommandBase
         // but I'm very happy with the state machine thing I made and wanted to use it more.
         private final Arm ARM;
         private PoseList poses;
-        private CommandBase subordinateCommand;
+        private Command subordinateCommand;
 
        
         private StateMachine stateMachine;
@@ -90,7 +91,7 @@ public class PresentPiece extends CommandBase
         private LinkableState begin()
         {
             // TODO set correct arm pose
-            subordinateCommand = new ArmCommand(ARM, poses.getArmPose(NamedPose.FloorPickCone));
+            subordinateCommand = ArmCommand.PlotPath((NamedPose.FloorPickCone), ARM);
 
              // cones do not need to execute the prePresent stage, since they do not deal with the vaccum.
             if(INTAKE.getState() == IntakeState.getCube)
