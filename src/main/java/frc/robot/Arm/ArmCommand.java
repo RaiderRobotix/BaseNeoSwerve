@@ -107,13 +107,15 @@ public class ArmCommand extends CommandBase
         
         if(isJ2OnSameSideOfTarget(current.getJ2(), to.getJ2(), crossTolerance))
         {
-            System.out.println("Added wristup");
+           
             
             // We want the waypoint to be BEFORE J2 passes zero, so crossTolerance will be set to the opposite of our goal.
             crossTolerance*= -Math.signum(to.getJ2());
             
             // AFAIK, we don't really care what J1 is doing. We want the wrist up, though.
             ArmPose p = new ArmPose((double)to.getJ1(), crossTolerance, 80.0, false);
+            
+             System.out.println("Added wristup: "+p);
             
             sequence.add(new ArmCommand(arm, p));
         }
