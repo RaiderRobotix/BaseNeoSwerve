@@ -87,6 +87,8 @@ public class ArmCommand extends CommandBase
         {
             toReturn[i]=sequence.get(i);
         }
+        
+        
         Command c = Commands.sequence(toReturn);
         CommandScheduler.getInstance().schedule( c);
         return Commands.sequence(c);
@@ -99,17 +101,45 @@ public class ArmCommand extends CommandBase
         ArrayList<Command> sequence = new ArrayList<Command>();
         double crossTolerance = 5;
         ArmPose current = arm.getCurrentPose();
-        System.out.println("doing things");
-        if(Math.signum(to.getJ2())== Math.signum(current.getJ2()-crossTolerance)
-         && Math.signum(to.getJ2())== Math.signum(current.getJ2()+crossTolerance))
+        
+        System.out.println("Thinking of adding wristup...");
+        
+        
+        if(isJ2OnSameSideOfTarget(current.getJ2(), to.getJ2(), crossTolerance))
         {
             System.out.println("Added wristup");
-            crossTolerance*=Math.signum(to.getJ2());
+            
+            // We want the waypoint to be BEFORE J2 passes zero, so crossTolerance will be set to the opposite of our goal.
+            crossTolerance*= -Math.signum(to.getJ2());
+            
+            // AFAIK, we don't really care what J1 is doing. We want the wrist up, though.
             ArmPose p = new ArmPose((double)to.getJ1(), crossTolerance, 80.0, false);
+            
             sequence.add(new ArmCommand(arm, p));
         }
 
         return sequence;
+    }
+    
+    
+    private static bool isJ2OnSameSideOfTarget(double J2, double ref, double clearance)
+    {
+        // What is the goal?
+        // we want to know whether J2 on the same side as ref, and at least negTol away from zero.
+      
+        if( Math.signum(J2) != Math.signum(ref))
+        {
+            return false;
+        }
+        
+        
+        if(Math.Abs(J2) <= clearance)
+        {
+            return false;
+        }
+        
+        return true;
+    
     }
 
 
