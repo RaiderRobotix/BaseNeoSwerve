@@ -35,11 +35,11 @@ public class Arm extends SubsystemBase
     private DoubleSolenoid extender;
     private DoubleSolenoid claw;
 
-    private ArmPose currentPose;
+    private BasicPose currentPose;
 
     private PoseList poses;
     // pose should be all zeros
-    public Arm(ArmPose pose, PneumaticHub ph)
+    public Arm(BasicPose pose, PneumaticHub ph)
     {
 
         // TODO set soft limits for arm motors (I would appreciate the robot not exploding)
@@ -75,31 +75,31 @@ public class Arm extends SubsystemBase
         J2.setSoftLimit(SoftLimitDirection.kForward, 130);
 
         controller = J2.getPIDController();
-        controller.setP(.005,0);
+        controller.setP(.01,0);
         controller.setI(.00,0);
         controller.setD(.0,0);
         controller.setFF(.0,0);
-        controller.setOutputRange(-.6, .6);
+        controller.setOutputRange(-.7, .7);
 
         J2Follow = new CANSparkMax(Constants.Arm.J2FollowMotorID, MotorType.kBrushless);
-        J2Follow.setIdleMode(IdleMode.kCoast);
+        J2Follow.setIdleMode(IdleMode.kBrake);
         
         J3 = new CANSparkMax(Constants.Arm.J3MotorID, MotorType.kBrushless);
         J3.getEncoder().setPositionConversionFactor(360.0/60.0);
 
-        J3.setIdleMode(IdleMode.kBrake);
+        J3.setIdleMode(IdleMode.kCoast);
 
         J3.setSoftLimit(SoftLimitDirection.kReverse, 0);
         J3.setSoftLimit(SoftLimitDirection.kForward, 80);
 
         controller = J3.getPIDController();
-        controller.setP(.01,0);
+        controller.setP(.03,0);
         controller.setI(.00,0);
         controller.setD(.0,0);
         controller.setFF(.0,0);
-        controller.setOutputRange(-.6, .6);
+        controller.setOutputRange(-1, 1);
 
-        extender = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.Arm.forwardExtenderChannel, Constants.Arm.reverseExtenderChannel);
+        extender =  ph.makeDoubleSolenoid(Constants.Arm.forwardExtenderChannel, Constants.Arm.reverseExtenderChannel);
         setExtender(false);
         claw = ph.makeDoubleSolenoid( Constants.Arm.forwardClawChannel, Constants.Arm.reverseClawChannel);
         setClaw(false);
@@ -122,7 +122,7 @@ public class Arm extends SubsystemBase
 
     }
 
-    public ArmPose getPose(NamedPose p)
+    public BasicPose getPose(NamedPose p)
     {
         return poses.getArmPose(p);
     }
@@ -131,13 +131,13 @@ public class Arm extends SubsystemBase
      * get the current state of the arm as an armpose
      * @return
      */
-    public ArmPose getCurrentPose()
+    public BasicPose getCurrentPose()
     {
-        return new ArmPose(J1.getEncoder().getPosition(), J2.getEncoder().getPosition(), J3.getEncoder().getPosition(), getClaw());
+        return new BasicPose(J1.getEncoder().getPosition(), J2.getEncoder().getPosition(), J3.getEncoder().getPosition(), getClaw());
     }
 
 
-    public ArmPose getSetPose()
+    public BasicPose getSetPose()
     {
         return currentPose;
     }
@@ -203,7 +203,7 @@ public class Arm extends SubsystemBase
     
     void setExtender(boolean extended)
     {
-        if(extended)
+        if(!extended)
         {
             extender.set(Value.kForward);  //TODO uncomment when ready for extender
             return;
@@ -242,7 +242,7 @@ public class Arm extends SubsystemBase
     }
 
 
-    public void adoptPose(ArmPose pose)
+    public void adoptPose(BasicPose pose)
     {
         if(currentPose== null )
         {
@@ -259,10 +259,10 @@ public class Arm extends SubsystemBase
     }
 
 
-    public boolean isAtPose(ArmPose pose)
+    public boolean isAtPose(BasicPose pose)
     {
 
-        double tolerance = 4;
+        double tolerance = 2;
         return isWithin(pose.getJ1(), J1.getEncoder().getPosition(), tolerance)
             && isWithin(pose.getJ2(), J2.getEncoder().getPosition(), tolerance)
             && isWithin(pose.getJ3(), J3.getEncoder().getPosition(), tolerance);
@@ -299,7 +299,7 @@ public class Arm extends SubsystemBase
 
         }
 
-        adoptPose(new ArmPose(pos1, pos2, pos3, getExtender()));
+        adoptPose(new BasicPose(pos1, pos2, pos3, getExtender()));
     }
 
     

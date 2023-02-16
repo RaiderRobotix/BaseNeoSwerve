@@ -13,9 +13,9 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 public class ArmCommand extends CommandBase
 {
     private Arm arm;
-    private ArmPose pose;
+    private BasicPose pose;
 
-    private ArmCommand(Arm s_Arm, ArmPose pose)
+    private ArmCommand(Arm s_Arm, BasicPose pose)
     {
        
         this.arm = s_Arm;
@@ -58,8 +58,8 @@ public class ArmCommand extends CommandBase
         boolean hasPiece = arm.getClaw();
         
         System.out.println("Plotting path");
-        ArmPose current = arm.getCurrentPose();
-        ArmPose to = new PoseList().getArmPose(dest);
+        BasicPose current = arm.getCurrentPose();
+        BasicPose to = new PoseList().getArmPose(dest);
 
         ArrayList<Command> sequence = new ArrayList<Command>();
        
@@ -70,10 +70,9 @@ public class ArmCommand extends CommandBase
         }
 
 
-        if(hasPiece)
-        {
-            sequence.addAll(AdjustForHeldPiece(to, arm));
-        }
+        
+        sequence.addAll(AdjustForHeldPiece(to, arm));
+        
 
         sequence.add(new ArmCommand(arm,to));
 
@@ -94,29 +93,50 @@ public class ArmCommand extends CommandBase
         return Commands.sequence(c);
     }
 
-    private static ArrayList<Command> AdjustForHeldPiece(ArmPose to, Arm arm)
+    private static ArrayList<Command> AdjustForHeldPiece(BasicPose to, Arm arm)
     {
 
         // pull the wrist up if J2 is passing 0.
         ArrayList<Command> sequence = new ArrayList<Command>();
-        double crossTolerance = 5;
-        ArmPose current = arm.getCurrentPose();
+        double crossTolerance = 20;
+        BasicPose current = arm.getCurrentPose();
         
         System.out.println("Thinking of adding wristup...");
         
-        
+        if(Math.abs(to.getJ2())<=crossTolerance)
+        {
+            return sequence;
+        }
+
         if( !isJ2OnSameSideOfTarget(current.getJ2(), to.getJ2(), crossTolerance))
         {
            
+            double waypointJ2 = crossTolerance *Math.signum(current.getJ2());
+            if(Math.abs(current.getJ2())<=crossTolerance)
+            {
+                waypointJ2 = current.getJ2();
+            }
             
+            BasicPose p = new BasicPose((double)to.getJ1(), waypointJ2, 80.0, false);
+            
+            System.out.println("Added wristup: "+p);
+           
+           sequence.add(new ArmCommand(arm, p));
+           
+           
             // We want the waypoint to be BEFORE J2 passes zero, so crossTolerance will be set to the opposite of our goal.
-            crossTolerance*= -Math.signum(to.getJ2());
+            waypointJ2 = crossTolerance*Math.signum(to.getJ2());
             
             // AFAIK, we don't really care what J1 is doing. We want the wrist up, though.
-            ArmPose p = new ArmPose((double)to.getJ1(), crossTolerance, 80.0, false);
+
+            p = new BasicPose((double)to.getJ1(), waypointJ2, 80.0, false);
             
              System.out.println("Added wristup: "+p);
             
+            sequence.add(new ArmCommand(arm, p));
+
+            
+          
             sequence.add(new ArmCommand(arm, p));
         }
 
@@ -124,7 +144,7 @@ public class ArmCommand extends CommandBase
     }
     
     
-    private static bool isJ2OnSameSideOfTarget(double J2, double ref, double clearance)
+    private static boolean isJ2OnSameSideOfTarget(double J2, double ref, double clearance)
     {
         // What is the goal?
         // we want to know whether J2 on the same side as ref, and at least negTol away from zero.
@@ -134,13 +154,8 @@ public class ArmCommand extends CommandBase
             return false;
         }
         
-        
-        if(Math.Abs(J2) <= clearance)
-        {
-            return false;
-        }
-        
-        return true;
+
+        return Math.abs(J2) > clearance;
     
     }
 
