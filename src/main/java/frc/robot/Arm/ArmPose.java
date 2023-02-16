@@ -51,6 +51,11 @@ public class ArmPose
         return ExtenderExtended;
     }
 
+    
+    public String toString()
+    {
+        return "ArmPose: { J1: "+getJ1()+" J2: "+getJ2()+" J3: "+getJ3()+" Extended: "+getExtender()+" }";
+    }
 
 
     
