@@ -7,11 +7,10 @@ import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.lib.util.States.GamePiece;
 import frc.robot.Arm.Arm;
 import frc.robot.Arm.ArmCommand;
-import frc.robot.Arm.PoseList;
 import frc.robot.Arm.NamedPose;
 import frc.robot.autos.Auto1;
 import frc.robot.commands.*;
@@ -48,16 +47,14 @@ public class RobotContainer {
     private final Trigger zeroGyro;
     private final Trigger robotCentric;
 
-    private final Trigger intakeButton;
-    private final Trigger outtakeButton;
-
-    private final Trigger cubeButton;
-    private final Trigger coneButton;
 
     /* Subsystems */
     private final Swerve s_Swerve;
     private final Arm s_Arm;
-    private PoseList poses;
+
+
+
+    private GamePiece armMode;
     // TODO uncomment once intake exists
     // private final Intake s_Intake;
 
@@ -75,7 +72,7 @@ public class RobotContainer {
         buttonBoard = new GenericHID(3);
 
 
-        poses = new  PoseList();
+     
 
         /* Drive Controls */
         translationAxis = Joystick.AxisType.kY.value;
@@ -99,7 +96,8 @@ public class RobotContainer {
         s_Swerve = new Swerve();
         // TODO Uncomment once intake exists.
         //s_Intake = new Intake();
-        s_Arm = new Arm(poses.getArmPose(NamedPose.Home), ph);
+        armMode = GamePiece.cone;
+        s_Arm = new Arm(NamedPose.Home, ph, ()->armMode);
             
    
 
@@ -118,6 +116,8 @@ public class RobotContainer {
         
     }
 
+
+   
     /**
      * Use this method to define your button->command mappings. Buttons can be
      * created by
@@ -148,49 +148,44 @@ public class RobotContainer {
         // cubeButton.onTrue(new InstantCommand(() -> s_Intake.wantsCube()));
 
         // Button board (this is terrible)
-        Trigger pounce = new Trigger(() -> buttonBoard.getRawButton(1));
-        pounce.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.PouncePreScore, s_Arm)));
+        Trigger BB1 = new Trigger(() -> buttonBoard.getRawButton(1));
+        BB1.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.PouncePreScore, s_Arm)));
 
-        Trigger coneL1 = new Trigger(() -> buttonBoard.getRawButton(2));
-        coneL1.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.ConeScoreL1, s_Arm)));
+        Trigger BB2 = new Trigger(() -> buttonBoard.getRawButton(2));
+        BB2.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.ScoreL1, s_Arm)));
 
-        Trigger coneL2 = new Trigger(() -> buttonBoard.getRawButton(3));
-        coneL2.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.ConeScoreL2, s_Arm)));
+        Trigger BB3 = new Trigger(() -> buttonBoard.getRawButton(3));
+        BB3.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.ScoreL2, s_Arm)));
 
-        Trigger coneL3 = new Trigger(() -> buttonBoard.getRawButton(4));
-        coneL3.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.ConeScoreL3, s_Arm)));
+        Trigger BB4 = new Trigger(() -> buttonBoard.getRawButton(4));
+        BB4.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.ScoreL3, s_Arm)));
 
-        Trigger cubeL1 = new Trigger(() -> buttonBoard.getRawButton(5));
-        cubeL1.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.CubeScoreL1, s_Arm)));
+        Trigger BB5 = new Trigger(() -> buttonBoard.getRawButton(5));
+        BB5.onTrue(new InstantCommand(()->{armMode=GamePiece.cone;}));
 
-        Trigger cubeL2 = new Trigger(() -> buttonBoard.getRawButton(6));
-        cubeL2.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.CubeScoreL2, s_Arm)));
+        
+        Trigger BB6 = new Trigger(() -> buttonBoard.getRawButton(6));
+        BB6.onTrue(new InstantCommand(()->{armMode=GamePiece.cube;}));
 
-        Trigger cubeL3 = new Trigger(() -> buttonBoard.getRawButton(7));
-        cubeL3.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.CubeScoreL3, s_Arm)));
+        Trigger BB7 = new Trigger(() -> buttonBoard.getRawButton(7));
+        BB7.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.FloorPick, s_Arm)));
 
-        Trigger pounceDriveUp = new Trigger(() -> buttonBoard.getRawButton(8));
-        pounceDriveUp.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.PounceDriveUpWindow, s_Arm)));
+        Trigger BB8 = new Trigger(() -> buttonBoard.getRawButton(8));
+        BB8.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.PounceDriveUpWindow, s_Arm)));
 
-        Trigger pickConeDriveUp = new Trigger(() -> buttonBoard.getRawButton(9));
-        pickConeDriveUp.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.PickDriveUpWindow, s_Arm)));
+        Trigger BB9 = new Trigger(() -> buttonBoard.getRawButton(9));
+        BB9.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.PickDriveUpWindow, s_Arm)));
 
-        Trigger pickCubeDriveUp = new Trigger(() -> buttonBoard.getRawButton(10));
-        pickCubeDriveUp.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.PickDriveUpWindow, s_Arm)));
+        Trigger BB10 = new Trigger(() -> buttonBoard.getRawButton(10));
+        BB10.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.PickFromSubstation, s_Arm)));
 
         Trigger home = new Trigger(() -> buttonBoard.getRawButton(11));
         home.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.Home, s_Arm)));
 
         new Trigger(() -> buttonBoard.getRawButton(12))
-            .onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.FloorPickCone, s_Arm)));
-
-        new Trigger(() -> buttonBoard.getRawAxis(0)<0)
-            .onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.FloorPickCube, s_Arm)));
-        new Trigger(() -> operator.getXButton())
-            .onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.PickFromSubstation, s_Arm)));
-
-        new Trigger(() -> operator.getBButton())
             .onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.Travel, s_Arm)));
+
+      
 
 
         // Xbox controller

@@ -1,12 +1,10 @@
 package frc.robot.Arm;
 
 
+import frc.lib.util.States.GamePieceSupplier;
 import frc.robot.Constants;
 
 
-
-import java.net.CacheRequest;
-import java.util.concurrent.CancellationException;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
@@ -17,7 +15,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticHub;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -35,17 +32,17 @@ public class Arm extends SubsystemBase
     private DoubleSolenoid extender;
     private DoubleSolenoid claw;
 
-    private BasicPose currentPose;
+    private ArmPose currentPose;
 
     private PoseList poses;
     // pose should be all zeros
-    public Arm(BasicPose pose, PneumaticHub ph)
+    public Arm(NamedPose pose, PneumaticHub ph, GamePieceSupplier mode)
     {
 
         // TODO set soft limits for arm motors (I would appreciate the robot not exploding)
 
-        poses = new PoseList();
-        currentPose = pose;
+        poses = new PoseList(mode);
+        currentPose = poses.getArmPose(pose);
         
         J1 = new CANSparkMax(Constants.Arm.J1MotorID, MotorType.kBrushless);
         J1.getEncoder().setPositionConversionFactor(360.0/(144.0));
@@ -122,22 +119,22 @@ public class Arm extends SubsystemBase
 
     }
 
-    public BasicPose getPose(NamedPose p)
+    public PoseList getPoseList()
     {
-        return poses.getArmPose(p);
+        return poses;
     }
 
     /**
      * get the current state of the arm as an armpose
      * @return
      */
-    public BasicPose getCurrentPose()
+    public ArmPose getCurrentPose()
     {
         return new BasicPose(J1.getEncoder().getPosition(), J2.getEncoder().getPosition(), J3.getEncoder().getPosition(), getClaw());
     }
 
 
-    public BasicPose getSetPose()
+    public ArmPose getSetPose()
     {
         return currentPose;
     }
@@ -242,7 +239,7 @@ public class Arm extends SubsystemBase
     }
 
 
-    public void adoptPose(BasicPose pose)
+    public void adoptPose(ArmPose pose)
     {
         if(currentPose== null )
         {
@@ -259,7 +256,7 @@ public class Arm extends SubsystemBase
     }
 
 
-    public boolean isAtPose(BasicPose pose)
+    public boolean isAtPose(ArmPose pose)
     {
 
         double tolerance = 2;

@@ -7,15 +7,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class ArmCommand extends CommandBase
 {
     private Arm arm;
-    private BasicPose pose;
+    private ArmPose pose;
 
-    private ArmCommand(Arm s_Arm, BasicPose pose)
+    private ArmCommand(Arm s_Arm, ArmPose pose)
     {
        
         this.arm = s_Arm;
@@ -54,12 +53,10 @@ public class ArmCommand extends CommandBase
 
     public static Command PlotPath( NamedPose dest, Arm arm)
     {
-        // a decent proxy for whether a gamepiece is held, I guess
-        boolean hasPiece = arm.getClaw();
+      
         
         System.out.println("Plotting path");
-        BasicPose current = arm.getCurrentPose();
-        BasicPose to = new PoseList().getArmPose(dest);
+        ArmPose to = arm.getPoseList().getArmPose(dest);
 
         ArrayList<Command> sequence = new ArrayList<Command>();
        
@@ -93,13 +90,13 @@ public class ArmCommand extends CommandBase
         return Commands.sequence(c);
     }
 
-    private static ArrayList<Command> AdjustForHeldPiece(BasicPose to, Arm arm)
+    private static ArrayList<Command> AdjustForHeldPiece(ArmPose to, Arm arm)
     {
 
         // pull the wrist up if J2 is passing 0.
         ArrayList<Command> sequence = new ArrayList<Command>();
         double crossTolerance = 20;
-        BasicPose current = arm.getCurrentPose();
+        ArmPose current = arm.getCurrentPose();
         
         System.out.println("Thinking of adding wristup...");
         

@@ -1,31 +1,29 @@
 package frc.robot.Arm;
 
 import frc.lib.util.States.GamePiece;
+import frc.lib.util.States.GamePieceSupplier;
 
 public class DoublePose implements ArmPose
 {
 
-    private GamePiece mode;
+    private GamePieceSupplier mode;
     private BasicPose cube;
     private BasicPose cone;
 
-    public DoublePose(BasicPose cube, BasicPose cone)
+    public DoublePose(BasicPose cube, BasicPose cone, GamePieceSupplier mode)
     {
-        mode = GamePiece.cone;
+        this.mode = mode;
 
         this.cube = cube;
         this.cone = cone;
 
     }
 
-    public void update(GamePiece p)
-    {
-        mode = p;
-    }
+ 
 
     private BasicPose getRealPose()
     {
-        if(mode == GamePiece.cone)
+        if(mode.getAsGamePiece() == GamePiece.cone)
         {
             return cone;
         }

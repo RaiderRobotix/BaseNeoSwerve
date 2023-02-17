@@ -1,19 +1,17 @@
 package frc.robot.Arm;
 
-import java.util.ArrayList;
-
-
-
+import frc.lib.util.States.GamePieceSupplier;
 
 public class PoseList
 {
     
 
-    private BasicPose[] poseList;
+    
+    private ArmPose[] poseList;
 
-    public PoseList()
+    public PoseList(GamePieceSupplier mode)
     {
-        poseList = new BasicPose[NamedPose.values().length];
+        poseList = new ArmPose[NamedPose.values().length];
        
 
         // General
@@ -37,40 +35,28 @@ public class PoseList
 
 
         // Cone
-        poseList[NamedPose.FloorPickCone.ordinal()] = 
+        poseList[NamedPose.FloorPick.ordinal()] = 
             new BasicPose(7.5, 16.5, 0,  false);
 
         
-        poseList[NamedPose.ConeScoreL1.ordinal()] = 
+        poseList[NamedPose.ScoreL1.ordinal()] = 
             new BasicPose(-24, 24, 0,  false);
       
-        poseList[NamedPose.ConeScoreL2.ordinal()] = 
+        poseList[NamedPose.ScoreL2.ordinal()] = 
             new BasicPose(-5, 100, -0,  false);
 
-        poseList[NamedPose.ConeScoreL3.ordinal()] = 
+        poseList[NamedPose.ScoreL3.ordinal()] = 
             new BasicPose( -13, 115, 0,  false);
 
 
 
-        // Cube
-        poseList[NamedPose.FloorPickCube.ordinal()] = 
-            new BasicPose(7.5, 16.5, 0,  false);
-        
-
-        poseList[NamedPose.CubeScoreL1.ordinal()] = 
-            new BasicPose(-24, 24, 0,  false);
-      
-        poseList[NamedPose.CubeScoreL2.ordinal()] = 
-            new BasicPose(-5, 100,0,  false);
-
-        poseList[NamedPose.CubeScoreL3.ordinal()] = 
-            new BasicPose(-13, 115, 0,  false);
+       
           
         
     }
 
 
-    public BasicPose getArmPose(NamedPose p)
+    public ArmPose getArmPose(NamedPose p)
     {
         return poseList[p.ordinal()];
     }

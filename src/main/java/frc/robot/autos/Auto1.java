@@ -1,8 +1,6 @@
 package frc.robot.autos;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -14,9 +12,7 @@ import frc.robot.subsystems.Swerve;
 import frc.robot.Constants;
 import frc.robot.Arm.Arm;
 import frc.robot.Arm.ArmCommand;
-import frc.robot.Arm.PoseList;
 import frc.robot.Arm.NamedPose;
-import frc.robot.commands.AutoBalance;
 import frc.robot.commands.LockSwerveCommand;
 
 public class Auto1 extends SequentialCommandGroup
@@ -32,7 +28,7 @@ public class Auto1 extends SequentialCommandGroup
             
         addCommands(
             ArmCommand.PlotPath( NamedPose.PouncePreScore, arm),
-            ArmCommand.PlotPath(NamedPose.ConeScoreL3,arm),
+            ArmCommand.PlotPath(NamedPose.ScoreL3,arm),
             new WaitCommand(1),
             ArmCommand.PlotPath(NamedPose.PouncePreScore,arm),
             ArmCommand.PlotPath(NamedPose.Home,arm),

@@ -1,6 +1,5 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -91,7 +90,7 @@ public class PresentPiece extends CommandBase
         private LinkableState begin()
         {
             // TODO set correct arm pose
-            subordinateCommand = ArmCommand.PlotPath((NamedPose.FloorPickCone), ARM);
+            subordinateCommand = ArmCommand.PlotPath((NamedPose.FloorPick), ARM);
 
              // cones do not need to execute the prePresent stage, since they do not deal with the vaccum.
             if(INTAKE.getState() == IntakeState.getCube)
