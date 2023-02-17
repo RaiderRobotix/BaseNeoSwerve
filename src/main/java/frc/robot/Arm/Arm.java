@@ -49,15 +49,15 @@ public class Arm extends SubsystemBase
 
         J1.setIdleMode(IdleMode.kBrake);
 
-        J1.setSoftLimit(SoftLimitDirection.kReverse, -25);
-        J1.setSoftLimit(SoftLimitDirection.kForward, 25);
+        J1.setSoftLimit(SoftLimitDirection.kReverse, ArmConstants.Joint1.lowerLimit);
+        J1.setSoftLimit(SoftLimitDirection.kForward, ArmConstants.Joint1.upperLimit);
 
         SparkMaxPIDController controller = J1.getPIDController();
-        controller.setP(.025,0);
-        controller.setI(.00,0);
-        controller.setD(.0,0);
-        controller.setFF(.0,0);
-        controller.setOutputRange(-.3, .3);
+        controller.setP(ArmConstants.Joint1.pValue,0);
+        controller.setI(ArmConstants.Joint1.iValue,0);
+        controller.setD(ArmConstants.Joint1.dValue,0);
+        controller.setFF(ArmConstants.Joint1.ffValue,0);
+        controller.setOutputRange(-ArmConstants.Joint1.maxPower, ArmConstants.Joint1.maxPower);
        
         J1Follow = new CANSparkMax(Constants.Arm.J1FollowMotorID, MotorType.kBrushless);
        
@@ -82,7 +82,7 @@ public class Arm extends SubsystemBase
         J2Follow.setIdleMode(IdleMode.kBrake);
         
         J3 = new CANSparkMax(Constants.Arm.J3MotorID, MotorType.kBrushless);
-        J3.getEncoder().setPositionConversionFactor(360.0/60.0);
+        J3.getEncoder().setPositionConversionFactor(360.0/100.0);
 
         J3.setIdleMode(IdleMode.kCoast);
 
