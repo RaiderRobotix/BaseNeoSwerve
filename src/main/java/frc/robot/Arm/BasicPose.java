@@ -1,7 +1,5 @@
 package frc.robot.Arm;
 
-import java.util.ArrayList;
-
 public class BasicPose implements ArmPose
 {
     private Double J1Degrees;

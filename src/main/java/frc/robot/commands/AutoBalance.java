@@ -1,9 +1,5 @@
 package frc.robot.commands;
 
-import javax.swing.plaf.synth.SynthOptionPaneUI;
-
-import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
