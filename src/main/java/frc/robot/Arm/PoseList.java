@@ -19,13 +19,17 @@ public class PoseList
             new BasicPose(0, 0, 0,  false);
       
         poseList[NamedPose.PouncePreScore.ordinal()] = 
-            new BasicPose(5, 115, 0,  false);
+            new BasicPose(0, 125, 0,  false);
 
         poseList[NamedPose.Travel.ordinal()] = 
-            new BasicPose(-7, -24, 69,  false);
+            new BasicPose(-3, -10, 90,  false);
 
         poseList[NamedPose.PickFromSubstation.ordinal()] = 
-            new BasicPose(-6, -75, 35,  false);
+            new DoublePose(
+                new BasicPose(3, -67, 50, false),
+                new BasicPose(-2, -66, 75,  false),
+                mode
+            );
       
         poseList[NamedPose.PickDriveUpWindow.ordinal()] = 
             new BasicPose(0, -90, 0,  false);
@@ -43,12 +47,19 @@ public class PoseList
             new BasicPose(-24, 24, 0,  false);
       
         poseList[NamedPose.ScoreL2.ordinal()] = 
-            new BasicPose(-5, 100, -0,  false);
-
+        new DoublePose(
+            new BasicPose(0, 75, 0, false),
+            new BasicPose(-5, 115, 0,   false),
+            mode
+        );
+            
+        
         poseList[NamedPose.ScoreL3.ordinal()] = 
-            new BasicPose( -13, 115, 0,  false);
-
-
+        new DoublePose(
+            new BasicPose(-17, 130, 0, false),
+            new BasicPose(-8, 130, 0,   true),
+            mode
+        );
 
        
           

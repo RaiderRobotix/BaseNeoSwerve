@@ -60,8 +60,9 @@ public class ArmCommand extends CommandBase
 
         ArrayList<Command> sequence = new ArrayList<Command>();
        
-        if(arm.getExtender() && !to.getExtender())
+        if( !to.getExtender())
         {
+            System.out.println("Retracting");
             sequence.add(new InstantCommand(()->arm.setExtender(false)));
             sequence.add(new WaitCommand(.5));
         }
@@ -75,6 +76,7 @@ public class ArmCommand extends CommandBase
 
         if(to.getExtender())
         {
+            System.out.println("Extending");
             sequence.add(new InstantCommand(()->arm.setExtender(true)));
         }
 
@@ -98,7 +100,7 @@ public class ArmCommand extends CommandBase
         double crossTolerance = 20;
         ArmPose current = arm.getCurrentPose();
         
-        System.out.println("Thinking of adding wristup...");
+        //System.out.println("Thinking of adding wristup...");
         
         if(Math.abs(to.getJ2())<=crossTolerance)
         {
@@ -114,9 +116,9 @@ public class ArmCommand extends CommandBase
                 waypointJ2 = current.getJ2();
             }
             
-            BasicPose p = new BasicPose((double)to.getJ1(), waypointJ2, 80.0, false);
+            BasicPose p = new BasicPose((double)to.getJ1(), waypointJ2, 85.0, false);
             
-            System.out.println("Added wristup: "+p);
+            //System.out.println("Added wristup: "+p);
            
            sequence.add(new ArmCommand(arm, p));
            
@@ -128,7 +130,7 @@ public class ArmCommand extends CommandBase
 
             p = new BasicPose((double)to.getJ1(), waypointJ2, 80.0, false);
             
-             System.out.println("Added wristup: "+p);
+             //System.out.println("Added wristup: "+p);
             
             sequence.add(new ArmCommand(arm, p));
 

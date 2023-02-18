@@ -37,20 +37,20 @@ public final class ArmConstants
         public static final double dValue = 0;
         public static final double ffValue = 0;
         
-        public static final double maxPower = 0.7;
+        public static final double maxPower = 0.9;
     }
 
     public static final class Joint3
     {
-        public static final int gearRatio = 144;
+        public static final int gearRatio = 100;
 
         public static final IdleMode idleMode = IdleMode.kBrake;
 
-        public static final float upperLimit = 80;
+        public static final float upperLimit = 95;
         public static final float lowerLimit = 0;
 
         //J3 PID
-        public static final double pValue = 0.03;
+        public static final double pValue = 0.01;
         public static final double iValue = 0;
         public static final double dValue = 0;
         public static final double ffValue = 0;

@@ -39,13 +39,11 @@ public class Arm extends SubsystemBase
     public Arm(NamedPose pose, PneumaticHub ph, GamePieceSupplier mode)
     {
 
-        // TODO set soft limits for arm motors (I would appreciate the robot not exploding)
-
         poses = new PoseList(mode);
         currentPose = poses.getArmPose(pose);
         
         J1 = new CANSparkMax(Constants.Arm.J1MotorID, MotorType.kBrushless);
-        J1.getEncoder().setPositionConversionFactor(360.0/(144.0));
+        J1.getEncoder().setPositionConversionFactor(360.0/(ArmConstants.Joint1.gearRatio));
 
         J1.setIdleMode(IdleMode.kBrake);
 
@@ -63,38 +61,38 @@ public class Arm extends SubsystemBase
        
 
         J2 = new CANSparkMax(Constants.Arm.J2MotorID, MotorType.kBrushless);
-        J2.getEncoder().setPositionConversionFactor(360.0/100.0);
+        J2.getEncoder().setPositionConversionFactor(360.0/(ArmConstants.Joint2.gearRatio));
 
         J2.setIdleMode(IdleMode.kCoast);
       
 
-        J2.setSoftLimit(SoftLimitDirection.kReverse, -130);
-        J2.setSoftLimit(SoftLimitDirection.kForward, 130);
+        J2.setSoftLimit(SoftLimitDirection.kReverse, ArmConstants.Joint2.lowerLimit);
+        J2.setSoftLimit(SoftLimitDirection.kForward, ArmConstants.Joint2.upperLimit);
 
         controller = J2.getPIDController();
-        controller.setP(.01,0);
-        controller.setI(.00,0);
-        controller.setD(.0,0);
-        controller.setFF(.0,0);
-        controller.setOutputRange(-.7, .7);
+        controller.setP(ArmConstants.Joint2.pValue,0);
+        controller.setI(ArmConstants.Joint2.iValue,0);
+        controller.setD(ArmConstants.Joint2.dValue,0);
+        controller.setFF(ArmConstants.Joint2.ffValue,0);
+        controller.setOutputRange(-ArmConstants.Joint2.maxPower, ArmConstants.Joint2.maxPower);
 
         J2Follow = new CANSparkMax(Constants.Arm.J2FollowMotorID, MotorType.kBrushless);
         J2Follow.setIdleMode(IdleMode.kBrake);
         
         J3 = new CANSparkMax(Constants.Arm.J3MotorID, MotorType.kBrushless);
-        J3.getEncoder().setPositionConversionFactor(360.0/100.0);
+        J3.getEncoder().setPositionConversionFactor(360.0/ArmConstants.Joint3.gearRatio);
 
         J3.setIdleMode(IdleMode.kCoast);
 
-        J3.setSoftLimit(SoftLimitDirection.kReverse, 0);
-        J3.setSoftLimit(SoftLimitDirection.kForward, 80);
+        J3.setSoftLimit(SoftLimitDirection.kReverse, ArmConstants.Joint3.lowerLimit);
+        J3.setSoftLimit(SoftLimitDirection.kForward, ArmConstants.Joint3.upperLimit);
 
         controller = J3.getPIDController();
-        controller.setP(.03,0);
-        controller.setI(.00,0);
-        controller.setD(.0,0);
-        controller.setFF(.0,0);
-        controller.setOutputRange(-1, 1);
+        controller.setP(ArmConstants.Joint3.pValue,0);
+        controller.setI(ArmConstants.Joint3.iValue,0);
+        controller.setD(ArmConstants.Joint3.dValue,0);
+        controller.setFF(ArmConstants.Joint3.ffValue,0);
+        controller.setOutputRange(-ArmConstants.Joint3.maxPower, ArmConstants.Joint3.maxPower);
 
         extender =  ph.makeDoubleSolenoid(Constants.Arm.forwardExtenderChannel, Constants.Arm.reverseExtenderChannel);
         setExtender(false);

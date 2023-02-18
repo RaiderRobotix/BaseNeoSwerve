@@ -83,15 +83,6 @@ public class RobotContainer {
         zeroGyro = new Trigger(()->driver.getRawButton(1));
         robotCentric = new Trigger(()-> driver.getRawButton(2));
 
-        intakeButton = new Trigger(()-> driver.getRawButton(4));
-        outtakeButton = new Trigger(()-> driver.getRawButton(5));
-  
-
-
-        coneButton = new Trigger(()-> operator.getRawButton(2));
-        cubeButton = new Trigger(()-> operator.getRawButton(3));
-       
-       
         /* Subsystems */
         s_Swerve = new Swerve();
         // TODO Uncomment once intake exists.

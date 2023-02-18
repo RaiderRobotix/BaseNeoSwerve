@@ -23,9 +23,9 @@ public class BasicPose implements ArmPose
 
     }
     
-    public BasicPose(double J1deg, double J2deg, double J3deg, boolean clawClosed)
+    public BasicPose(double J1deg, double J2deg, double J3deg, boolean extended)
     {
-        this(Double.valueOf(J1deg), Double.valueOf(J2deg), Double.valueOf(J3deg), clawClosed);
+        this(Double.valueOf(J1deg), Double.valueOf(J2deg), Double.valueOf(J3deg), extended);
     }
 
     public Double getJ1()
