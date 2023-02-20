@@ -4,6 +4,8 @@ import com.revrobotics.CANSparkMax.IdleMode;
 
 public final class ArmConfig 
 {
+    public static final double rampRate = 2;
+
     public static final class Joint1
     {
         public static final int gearRatio = 144;
@@ -56,5 +58,6 @@ public final class ArmConfig
         public static final double ffValue = 0;
         
         public static final double maxPower = 1;
-    }
+
+           }
 }

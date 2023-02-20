@@ -158,18 +158,12 @@ public class Arm extends SubsystemBase
         {
             motor.setSmartCurrentLimit(40,15 );
 
-           
-            
-            motor.setClosedLoopRampRate(2);
-            motor.setOpenLoopRampRate(2);
+            motor.setClosedLoopRampRate(ArmConfig.rampRate);
+            motor.setOpenLoopRampRate(ArmConfig.rampRate);
 
-
-
-            
             motor.enableSoftLimit(SoftLimitDirection.kForward, true);
             motor.enableSoftLimit(SoftLimitDirection.kReverse, true);
             
-    
             motor.getEncoder().setPosition(0);
         }
         J3.setSmartCurrentLimit(20, 15);
@@ -279,17 +273,20 @@ public class Arm extends SubsystemBase
 
         System.out.println("jogging motor by " + jog + " degrees");
 
-        Double pos1 = null, pos2 = null, pos3 = null;
+        Double pos1 = currentPose.getJ1();
+        Double pos2 = currentPose.getJ2();
+        Double pos3 = currentPose.getJ3();
+
         switch (joint)
         {
             case 1:
-                pos1 = J1.getEncoder().getPosition() + jog;
+                pos1 += jog;
                 break;
             case 2:
-                pos2 = J2.getEncoder().getPosition() + jog;
+                pos2 += jog;
                 break;
             case 3:
-                pos3 = J3.getEncoder().getPosition() + jog;
+                pos3 += jog;
                 break;
 
         }
