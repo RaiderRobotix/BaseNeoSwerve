@@ -6,9 +6,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.lib.util.States.LinkableState;
 import frc.lib.util.States.StateMachine;
 import frc.robot.Arm.Arm;
+import frc.robot.Arm.command.ArmCommand;
 import frc.robot.Arm.NamedPose;
 import frc.robot.Arm.PoseList;
-import frc.robot.Arm.command.ArmCommand;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeState;
 

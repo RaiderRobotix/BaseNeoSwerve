@@ -2,7 +2,7 @@ package frc.robot.Arm;
 
 import com.revrobotics.CANSparkMax.IdleMode;
 
-public final class ArmConstants 
+public final class ArmConfig 
 {
     public static final class Joint1
     {

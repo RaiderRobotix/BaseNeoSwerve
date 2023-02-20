@@ -43,56 +43,56 @@ public class Arm extends SubsystemBase
         currentPose = poses.getArmPose(pose);
         
         J1 = new CANSparkMax(Constants.Arm.J1MotorID, MotorType.kBrushless);
-        J1.getEncoder().setPositionConversionFactor(360.0/(ArmConstants.Joint1.gearRatio));
+        J1.getEncoder().setPositionConversionFactor(360.0/(ArmConfig.Joint1.gearRatio));
 
         J1.setIdleMode(IdleMode.kBrake);
 
-        J1.setSoftLimit(SoftLimitDirection.kReverse, ArmConstants.Joint1.lowerLimit);
-        J1.setSoftLimit(SoftLimitDirection.kForward, ArmConstants.Joint1.upperLimit);
+        J1.setSoftLimit(SoftLimitDirection.kReverse, ArmConfig.Joint1.lowerLimit);
+        J1.setSoftLimit(SoftLimitDirection.kForward, ArmConfig.Joint1.upperLimit);
 
         SparkMaxPIDController controller = J1.getPIDController();
-        controller.setP(ArmConstants.Joint1.pValue,0);
-        controller.setI(ArmConstants.Joint1.iValue,0);
-        controller.setD(ArmConstants.Joint1.dValue,0);
-        controller.setFF(ArmConstants.Joint1.ffValue,0);
-        controller.setOutputRange(-ArmConstants.Joint1.maxPower, ArmConstants.Joint1.maxPower);
+        controller.setP(ArmConfig.Joint1.pValue,0);
+        controller.setI(ArmConfig.Joint1.iValue,0);
+        controller.setD(ArmConfig.Joint1.dValue,0);
+        controller.setFF(ArmConfig.Joint1.ffValue,0);
+        controller.setOutputRange(-ArmConfig.Joint1.maxPower, ArmConfig.Joint1.maxPower);
        
         J1Follow = new CANSparkMax(Constants.Arm.J1FollowMotorID, MotorType.kBrushless);
        
 
         J2 = new CANSparkMax(Constants.Arm.J2MotorID, MotorType.kBrushless);
-        J2.getEncoder().setPositionConversionFactor(360.0/(ArmConstants.Joint2.gearRatio));
+        J2.getEncoder().setPositionConversionFactor(360.0/(ArmConfig.Joint2.gearRatio));
 
         J2.setIdleMode(IdleMode.kCoast);
       
 
-        J2.setSoftLimit(SoftLimitDirection.kReverse, ArmConstants.Joint2.lowerLimit);
-        J2.setSoftLimit(SoftLimitDirection.kForward, ArmConstants.Joint2.upperLimit);
+        J2.setSoftLimit(SoftLimitDirection.kReverse, ArmConfig.Joint2.lowerLimit);
+        J2.setSoftLimit(SoftLimitDirection.kForward, ArmConfig.Joint2.upperLimit);
 
         controller = J2.getPIDController();
-        controller.setP(ArmConstants.Joint2.pValue,0);
-        controller.setI(ArmConstants.Joint2.iValue,0);
-        controller.setD(ArmConstants.Joint2.dValue,0);
-        controller.setFF(ArmConstants.Joint2.ffValue,0);
-        controller.setOutputRange(-ArmConstants.Joint2.maxPower, ArmConstants.Joint2.maxPower);
+        controller.setP(ArmConfig.Joint2.pValue,0);
+        controller.setI(ArmConfig.Joint2.iValue,0);
+        controller.setD(ArmConfig.Joint2.dValue,0);
+        controller.setFF(ArmConfig.Joint2.ffValue,0);
+        controller.setOutputRange(-ArmConfig.Joint2.maxPower, ArmConfig.Joint2.maxPower);
 
         J2Follow = new CANSparkMax(Constants.Arm.J2FollowMotorID, MotorType.kBrushless);
         J2Follow.setIdleMode(IdleMode.kBrake);
         
         J3 = new CANSparkMax(Constants.Arm.J3MotorID, MotorType.kBrushless);
-        J3.getEncoder().setPositionConversionFactor(360.0/ArmConstants.Joint3.gearRatio);
+        J3.getEncoder().setPositionConversionFactor(360.0/ArmConfig.Joint3.gearRatio);
 
         J3.setIdleMode(IdleMode.kCoast);
 
-        J3.setSoftLimit(SoftLimitDirection.kReverse, ArmConstants.Joint3.lowerLimit);
-        J3.setSoftLimit(SoftLimitDirection.kForward, ArmConstants.Joint3.upperLimit);
+        J3.setSoftLimit(SoftLimitDirection.kReverse, ArmConfig.Joint3.lowerLimit);
+        J3.setSoftLimit(SoftLimitDirection.kForward, ArmConfig.Joint3.upperLimit);
 
         controller = J3.getPIDController();
-        controller.setP(ArmConstants.Joint3.pValue,0);
-        controller.setI(ArmConstants.Joint3.iValue,0);
-        controller.setD(ArmConstants.Joint3.dValue,0);
-        controller.setFF(ArmConstants.Joint3.ffValue,0);
-        controller.setOutputRange(-ArmConstants.Joint3.maxPower, ArmConstants.Joint3.maxPower);
+        controller.setP(ArmConfig.Joint3.pValue,0);
+        controller.setI(ArmConfig.Joint3.iValue,0);
+        controller.setD(ArmConfig.Joint3.dValue,0);
+        controller.setFF(ArmConfig.Joint3.ffValue,0);
+        controller.setOutputRange(-ArmConfig.Joint3.maxPower, ArmConfig.Joint3.maxPower);
 
         extender =  ph.makeDoubleSolenoid(Constants.Arm.forwardExtenderChannel, Constants.Arm.reverseExtenderChannel);
         setExtender(false);
@@ -110,7 +110,7 @@ public class Arm extends SubsystemBase
         initializeMotors(motors);
 
 
-        ShuffleboardTab tab = Shuffleboard.getTab("Arm");
+       
         
              
              

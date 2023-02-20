@@ -13,6 +13,7 @@ import frc.robot.Arm.Arm;
 import frc.robot.Arm.NamedPose;
 import frc.robot.Arm.command.ArmCommand;
 import frc.robot.swerve.Swerve;
+import frc.robot.swerve.SwerveConfig;
 import frc.robot.swerve.command.LockSwerveCommand;
 
 public class Auto1 extends SequentialCommandGroup
@@ -23,7 +24,7 @@ public class Auto1 extends SequentialCommandGroup
         new TrajectoryConfig(
                 Constants.AutoConstants.kMaxSpeedMetersPerSecond,
                 Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-            .setKinematics(Constants.Swerve.swerveKinematics);
+            .setKinematics(SwerveConfig.swerveKinematics);
 
             
         addCommands(
