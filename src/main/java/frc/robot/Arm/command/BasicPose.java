@@ -1,4 +1,4 @@
-package frc.robot.Arm;
+package frc.robot.Arm.command;
 
 public class BasicPose implements ArmPose
 {

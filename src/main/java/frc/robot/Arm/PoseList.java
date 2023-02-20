@@ -1,6 +1,10 @@
+
 package frc.robot.Arm;
 
 import frc.lib.util.States.GamePieceSupplier;
+import frc.robot.Arm.command.ArmPose;
+import frc.robot.Arm.command.BasicPose;
+import frc.robot.Arm.command.DoublePose;
 
 public class PoseList
 {

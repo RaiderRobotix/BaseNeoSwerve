@@ -1,10 +1,10 @@
 
-package frc.robot.commands;
+package frc.robot.swerve.command;
 
 import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Swerve;
+import frc.robot.swerve.Swerve;
 
 public class LockSwerveCommand extends CommandBase
 {
@@ -12,7 +12,7 @@ public class LockSwerveCommand extends CommandBase
     final private Swerve SWERVE;
     
     private BooleanSupplier isDone;
-    private boolean finished = false;
+
 
     public LockSwerveCommand(Swerve swerve, BooleanSupplier isFinished)
     {

@@ -1,4 +1,5 @@
-package frc.robot.Arm;
+
+package frc.robot.Arm.command;
 
 import java.util.ArrayList;
 
@@ -8,6 +9,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Arm.Arm;
+import frc.robot.Arm.NamedPose;
 
 public class ArmCommand extends CommandBase
 {

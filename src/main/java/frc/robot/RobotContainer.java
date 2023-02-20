@@ -10,11 +10,12 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.lib.util.States.GamePiece;
 import frc.robot.Arm.Arm;
-import frc.robot.Arm.ArmCommand;
 import frc.robot.Arm.NamedPose;
+import frc.robot.Arm.command.ArmCommand;
 import frc.robot.autos.Auto1;
-import frc.robot.commands.*;
-import frc.robot.subsystems.*;
+import frc.robot.swerve.Swerve;
+import frc.robot.swerve.command.LockSwerveCommand;
+import frc.robot.swerve.command.TeleopSwerve;
 
 /**
  * This class is where the bulk of the robot should be declared. Since

@@ -1,4 +1,5 @@
-package frc.robot.Arm;
+
+package frc.robot.Arm.command;
 
 public interface ArmPose
 {

@@ -1,4 +1,4 @@
-package frc.robot.Arm;
+package frc.robot.Arm.command;
 
 import frc.lib.util.States.GamePiece;
 import frc.lib.util.States.GamePieceSupplier;

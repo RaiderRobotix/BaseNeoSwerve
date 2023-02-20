@@ -8,12 +8,12 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.subsystems.Swerve;
 import frc.robot.Constants;
 import frc.robot.Arm.Arm;
-import frc.robot.Arm.ArmCommand;
 import frc.robot.Arm.NamedPose;
-import frc.robot.commands.LockSwerveCommand;
+import frc.robot.Arm.command.ArmCommand;
+import frc.robot.swerve.Swerve;
+import frc.robot.swerve.command.LockSwerveCommand;
 
 public class Auto1 extends SequentialCommandGroup
 {

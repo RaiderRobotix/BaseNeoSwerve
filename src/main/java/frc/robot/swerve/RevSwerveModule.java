@@ -1,4 +1,5 @@
-package frc.robot.SwerveModule;
+
+package frc.robot.swerve;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -83,8 +84,8 @@ public class RevSwerveModule implements SwerveModule
         relAngleEncoder.setPositionConversionFactor(Constants.REV.DegreesPerTurnRotation);
         // in degrees/sec
         relAngleEncoder.setVelocityConversionFactor(Constants.REV.DegreesPerTurnRotation / 60);
-        // TODO might need fixing for real robot
-        //relAngleEncoder.setPosition(0);
+    
+        
         resetToAbsolute();
         mDriveMotor.burnFlash();
         mAngleMotor.burnFlash();

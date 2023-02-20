@@ -3,8 +3,8 @@ package frc.robot.Arm;
 
 import frc.lib.util.States.GamePieceSupplier;
 import frc.robot.Constants;
-
-
+import frc.robot.Arm.command.ArmPose;
+import frc.robot.Arm.command.BasicPose;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMaxPIDController;
@@ -196,11 +196,11 @@ public class Arm extends SubsystemBase
     }
 
     
-    void setExtender(boolean extended)
+    public void setExtender(boolean extended)
     {
         if(!extended)
         {
-            extender.set(Value.kForward);  //TODO uncomment when ready for extender
+            extender.set(Value.kForward); 
             return;
         }
         
