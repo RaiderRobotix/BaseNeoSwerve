@@ -217,8 +217,9 @@ public class RobotContainer {
             s_Intake.setPresenter(false);
         }));
 
-        Trigger lBump = new Trigger(()->operator.getLeftBumper());
-        lBump.onTrue(new InstantCommand(()->s_Intake.setPresenter(true)));
+        // to Treavor's dismay:
+        Trigger startErection = new Trigger(()->operator.getLeftBumper());
+        startErection.onTrue(new InstantCommand(()->s_Intake.setPresenter(true)));
 
         Trigger X = new Trigger(()->operator.getXButton());
         X.onTrue(new InstantCommand(()->s_Arm.setClaw(false)));
