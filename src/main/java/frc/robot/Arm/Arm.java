@@ -95,7 +95,7 @@ public class Arm extends SubsystemBase
         extender =  ph.makeDoubleSolenoid(Constants.Arm.forwardExtenderChannel, Constants.Arm.reverseExtenderChannel);
         setExtender(false);
         claw = ph.makeDoubleSolenoid( Constants.Arm.forwardClawChannel, Constants.Arm.reverseClawChannel);
-        setClaw(false);
+        setClaw(true);
 
 
         
@@ -266,7 +266,7 @@ public class Arm extends SubsystemBase
 
     public void jogJoint(int joint, boolean forward)
     {
-        final double JOG_BY = 0.25;
+        final double JOG_BY = 1;
         double jog = (forward)? JOG_BY : -JOG_BY;
 
         System.out.println("jogging motor by " + jog + " degrees");

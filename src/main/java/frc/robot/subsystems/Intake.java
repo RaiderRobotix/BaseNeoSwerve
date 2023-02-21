@@ -1,12 +1,16 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
+
+import java.util.ArrayList;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,20 +24,24 @@ public class Intake extends SubsystemBase
     private CANSparkMax undertakeMotor;
     private CANSparkMax undertakeFollowMotor;
 
-    CANSparkMax[] motors = {intakeMotor, undertakeMotor, undertakeFollowMotor};
-
+    ArrayList<CANSparkMax> motors;
     private DoubleSolenoid intakeArms;
     private DoubleSolenoid presenter;
     private DoubleSolenoid vaccum;
 
     private DigitalInput sensor;
 
-    public Intake()
+    public Intake(PneumaticHub ph)
     {
         // initialize intake motors
         intakeMotor = new CANSparkMax(Constants.Intake.intakeMotorID, MotorType.kBrushless);
         undertakeMotor = new CANSparkMax(Constants.Intake.undertakeMotorID, MotorType.kBrushless);
         undertakeFollowMotor = new CANSparkMax(Constants.Intake.undertakeFollowMotorID, MotorType.kBrushless);
+
+        motors = new ArrayList<CANSparkMax>();
+        motors.add(intakeMotor);
+        motors.add(undertakeMotor);
+        motors.add(undertakeFollowMotor);
 
         for(CANSparkMax i : motors)
         {
@@ -44,11 +52,13 @@ public class Intake extends SubsystemBase
         undertakeFollowMotor.follow(undertakeMotor);
 
         // initialize solinoids.
-        intakeArms = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.Intake.intakeArmsDownChannel, Constants.Intake.intakeArmsUpChannel);
-        presenter = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.Intake.presenterUpChannel, Constants.Intake.presenterDownChannel);
-        vaccum = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.Intake.vaccumForwardChannel, Constants.Intake.vaccumReverseChannel);
+        intakeArms = ph.makeDoubleSolenoid(Constants.Intake.intakeArmsDownChannel, Constants.Intake.intakeArmsUpChannel);
+        presenter = ph.makeDoubleSolenoid(Constants.Intake.presenterUpChannel, Constants.Intake.presenterDownChannel);
+        vaccum = ph.makeDoubleSolenoid( Constants.Intake.vaccumForwardChannel, Constants.Intake.vaccumReverseChannel);
 
-        sensor = new DigitalInput(Constants.Intake.sensorChannel);
+        // TODO sensor
+        //sensor = new DigitalInput(Constants.Intake.sensorChannel);
+        setPresenter(false);
     }
 
     public void startIntake()
@@ -89,7 +99,8 @@ public class Intake extends SubsystemBase
 
     public boolean getSensorValue()
     {
-        return !sensor.get();
+        // TODO once sensor
+        return false;//!sensor.get();
     }
 
     public void outtake()

@@ -13,6 +13,7 @@ import frc.robot.Arm.Arm;
 import frc.robot.Arm.NamedPose;
 import frc.robot.Arm.command.ArmCommand;
 import frc.robot.autos.Auto1;
+import frc.robot.subsystems.Intake;
 import frc.robot.swerve.Swerve;
 import frc.robot.swerve.command.LockSwerveCommand;
 import frc.robot.swerve.command.TeleopSwerve;
@@ -57,7 +58,7 @@ public class RobotContainer {
 
     private GamePiece armMode;
     // TODO uncomment once intake exists
-    // private final Intake s_Intake;
+     private final Intake s_Intake;
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() 
@@ -86,9 +87,9 @@ public class RobotContainer {
 
         /* Subsystems */
         s_Swerve = new Swerve();
-        // TODO Uncomment once intake exists.
-        //s_Intake = new Intake();
-        armMode = GamePiece.cone;
+        
+        s_Intake = new Intake(ph);
+        armMode = GamePiece.cube;
         s_Arm = new Arm(NamedPose.Home, ph, ()->armMode);
             
    
@@ -209,6 +210,21 @@ public class RobotContainer {
         jogJ3Backwards.whileTrue(new InstantCommand(()-> s_Arm.jogJoint(3, false)));
 
 
+        Trigger rBump = new Trigger(()->operator.getRightBumper());
+        rBump.onTrue(new InstantCommand(()->
+        {
+            System.out.println("WHATTTT");
+            s_Intake.setPresenter(false);
+        }));
+
+        Trigger lBump = new Trigger(()->operator.getLeftBumper());
+        lBump.onTrue(new InstantCommand(()->s_Intake.setPresenter(true)));
+
+        Trigger X = new Trigger(()->operator.getXButton());
+        X.onTrue(new InstantCommand(()->s_Arm.setClaw(false)));
+
+        Trigger A = new Trigger(()->operator.getAButton());
+        A.onTrue(new InstantCommand(()->s_Arm.setClaw(true)));
     }
 
     /**
