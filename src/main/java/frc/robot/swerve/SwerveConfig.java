@@ -109,6 +109,7 @@ public class SwerveConfig
 
     public SwerveConfig()
     {
+        canCoderConfig = new CANCoderConfiguration();
         canCoderConfig.absoluteSensorRange = AbsoluteSensorRange.Unsigned_0_to_360;
         canCoderConfig.sensorDirection = canCoderInvert;
         canCoderConfig.initializationStrategy = SensorInitializationStrategy.BootToAbsolutePosition;

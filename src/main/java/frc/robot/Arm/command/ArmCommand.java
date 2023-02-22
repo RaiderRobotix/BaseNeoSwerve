@@ -131,7 +131,7 @@ public class ArmCommand extends CommandBase
             
             // AFAIK, we don't really care what J1 is doing. We want the wrist up, though.
 
-            p = new BasicPose((double)to.getJ1(), waypointJ2, 80.0, false);
+            p = new BasicPose((double)to.getJ1(), waypointJ2, 98.0, false);
             
              //System.out.println("Added wristup: "+p);
             

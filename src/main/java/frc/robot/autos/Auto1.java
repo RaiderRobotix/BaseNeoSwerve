@@ -6,6 +6,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.lib.util.States.GamePiece;
@@ -33,9 +34,10 @@ public class Auto1 extends SequentialCommandGroup
         addCommands(
             ArmCommand.PlotPath( NamedPose.PouncePreScore, arm),
             ArmCommand.PlotPath(NamedPose.ScoreL3,arm),
+            new InstantCommand(()->{arm.setClaw(false);}),
             new WaitCommand(1),
             ArmCommand.PlotPath(NamedPose.PouncePreScore,arm),
-            ArmCommand.PlotPath(NamedPose.Home,arm),
+            ArmCommand.PlotPath(NamedPose.Travel,arm),
             new AutoTrajectory(swerve, 
             TrajectoryGenerator.generateTrajectory(
                 // Start at the origin facing the +X direction

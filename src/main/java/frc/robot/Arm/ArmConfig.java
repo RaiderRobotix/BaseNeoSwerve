@@ -4,7 +4,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 
 public final class ArmConfig 
 {
-    public static final double rampRate = 2;
+    public static final double rampRate = 1;
 
     public static final class Joint1
     {
@@ -30,11 +30,11 @@ public final class ArmConfig
 
         public static final IdleMode idleMode = IdleMode.kCoast;
 
-        public static final float upperLimit = 130;
-        public static final float lowerLimit = -130;
+        public static final float upperLimit = 150;
+        public static final float lowerLimit = -150;
 
         //J2 PID
-        public static final double pValue = 0.01;
+        public static final double pValue = 0.02;
         public static final double iValue = 0;
         public static final double dValue = 0;
         public static final double ffValue = 0;
@@ -48,11 +48,11 @@ public final class ArmConfig
 
         public static final IdleMode idleMode = IdleMode.kBrake;
 
-        public static final float upperLimit = 95;
+        public static final float upperLimit = 98;
         public static final float lowerLimit = 0;
 
         //J3 PID
-        public static final double pValue = 0.01;
+        public static final double pValue = 0.02;
         public static final double iValue = 0;
         public static final double dValue = 0;
         public static final double ffValue = 0;
