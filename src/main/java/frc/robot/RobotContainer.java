@@ -55,7 +55,7 @@ public class RobotContainer {
 
 
 
-    private GamePiece armMode;
+    private PieceMode pieceMode;
     // TODO uncomment once intake exists
     // private final Intake s_Intake;
 
@@ -88,11 +88,11 @@ public class RobotContainer {
         s_Swerve = new Swerve();
         // TODO Uncomment once intake exists.
         //s_Intake = new Intake();
-        armMode = GamePiece.cone;
-        s_Arm = new Arm(NamedPose.Home, ph, ()->armMode);
+        new PieceMode();
+        s_Arm = new Arm(NamedPose.Home, ph, pieceMode);
             
    
-
+ 
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
@@ -152,12 +152,13 @@ public class RobotContainer {
         Trigger BB4 = new Trigger(() -> buttonBoard.getRawButton(4));
         BB4.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.ScoreL3, s_Arm)));
 
-        Trigger BB5 = new Trigger(() -> buttonBoard.getRawButton(5));
-        BB5.onTrue(new InstantCommand(()->{armMode=GamePiece.cone;}));
 
-        
+        Trigger BB5 = new Trigger(() -> buttonBoard.getRawButton(5));
+        BB5.onTrue(new InstantCommand(()->{pieceMode.setPiece(GamePiece.cone);}));
+
         Trigger BB6 = new Trigger(() -> buttonBoard.getRawButton(6));
-        BB6.onTrue(new InstantCommand(()->{armMode=GamePiece.cube;}));
+        BB6.onTrue(new InstantCommand(()->{pieceMode.setPiece(GamePiece.cube);}));
+
 
         Trigger BB7 = new Trigger(() -> buttonBoard.getRawButton(7));
         BB7.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.FloorPick, s_Arm)));

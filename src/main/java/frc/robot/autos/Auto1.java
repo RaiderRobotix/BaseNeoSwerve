@@ -8,7 +8,9 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.lib.util.States.GamePiece;
 import frc.robot.Constants;
+import frc.robot.PieceMode;
 import frc.robot.Arm.Arm;
 import frc.robot.Arm.NamedPose;
 import frc.robot.Arm.command.ArmCommand;
@@ -18,7 +20,7 @@ import frc.robot.swerve.command.LockSwerveCommand;
 
 public class Auto1 extends SequentialCommandGroup
 {
-    public Auto1(Swerve swerve, Arm arm)
+    public Auto1(Swerve swerve, Arm arm, PieceMode mode)
     {
         TrajectoryConfig config =
         new TrajectoryConfig(
@@ -27,6 +29,7 @@ public class Auto1 extends SequentialCommandGroup
             .setKinematics(SwerveConfig.swerveKinematics);
 
             
+        mode.setPiece(GamePiece.cube);
         addCommands(
             ArmCommand.PlotPath( NamedPose.PouncePreScore, arm),
             ArmCommand.PlotPath(NamedPose.ScoreL3,arm),
