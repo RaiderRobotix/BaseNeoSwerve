@@ -150,7 +150,7 @@ public class RobotContainer {
         Trigger BB2 = new Trigger(() -> buttonBoard.getRawButton(2));
         BB2.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.ScoreL1, s_Arm)));
 
-        Trigger BB3 = new Trigger(() -> buttonBoard.getRawButton(3));
+        Trigger BB3 = new Trigger(() -> buttonBoard.getRawButton(7));
         BB3.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.ScoreL2, s_Arm)));
 
         Trigger BB4 = new Trigger(() -> buttonBoard.getRawButton(4));
@@ -164,7 +164,7 @@ public class RobotContainer {
         BB6.onTrue(new InstantCommand(()->{pieceMode.setPiece(GamePiece.cube);}));
 
 
-        Trigger BB7 = new Trigger(() -> buttonBoard.getRawButton(7));
+        Trigger BB7 = new Trigger(() -> buttonBoard.getRawButton(3));
         BB7.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.FloorPick, s_Arm)));
 
         Trigger BB8 = new Trigger(() -> buttonBoard.getRawButton(8));

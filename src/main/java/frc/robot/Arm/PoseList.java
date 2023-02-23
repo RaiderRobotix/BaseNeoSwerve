@@ -23,15 +23,15 @@ public class PoseList
             new BasicPose(0, 0, 0,  false);
       
         poseList[NamedPose.PouncePreScore.ordinal()] = 
-            new BasicPose(16, 98, 0,  false);
+            new BasicPose(0, 88, 0,  false);
 
         poseList[NamedPose.Travel.ordinal()] = 
-            new BasicPose(-3, -10, 100,  false);
+            new BasicPose(0, 0, 50,  false);
 
         poseList[NamedPose.PickFromSubstation.ordinal()] = 
             new DoublePose(
-                new BasicPose(-6, -67, 50, false),
-                new BasicPose(-2, -70, 77,  false),
+                new BasicPose(-2,50, 50, false),
+                new BasicPose(-1, 53, 61,  false),
                 mode
             );
       
@@ -57,7 +57,7 @@ public class PoseList
         poseList[NamedPose.ScoreL2.ordinal()] = 
         new DoublePose(
             new BasicPose(0, 75, 0, false),
-            new BasicPose(-2, 115, 2,   false),
+            new BasicPose(-28, 106, 0,   false),
             mode
         );
             

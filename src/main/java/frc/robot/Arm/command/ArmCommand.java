@@ -59,7 +59,7 @@ public class ArmCommand extends CommandBase
         return ArmCommand.PlotPath(dest, arm.getCurrentPose(), arm);
     }
 
-    public static Command PlotPath( NamedPose dest, ArmPose pose, Arm arm)
+    public static Command PlotPath( NamedPose dest, ArmPose from, Arm arm)
     {
       
         
