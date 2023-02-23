@@ -12,6 +12,10 @@ public class DoublePose implements ArmPose
 
     public DoublePose(BasicPose cube, BasicPose cone, GamePieceSupplier mode)
     {
+        if(mode == null)
+        {
+            throw new NullPointerException("Doublepose mode supplier cannot be null!");
+        }
         this.mode = mode;
 
         this.cube = cube;

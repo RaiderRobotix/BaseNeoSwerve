@@ -54,7 +54,12 @@ public class ArmCommand extends CommandBase
     }
 
 
-    public static Command PlotPath( NamedPose dest, Arm arm)
+    public static Command PlotPath(NamedPose dest, Arm arm)
+    {
+        return ArmCommand.PlotPath(dest, arm.getCurrentPose(), arm);
+    }
+
+    public static Command PlotPath( NamedPose dest, ArmPose pose, Arm arm)
     {
       
         
@@ -72,7 +77,7 @@ public class ArmCommand extends CommandBase
 
 
         
-        sequence.addAll(AdjustForHeldPiece(to, arm));
+        sequence.addAll(AdjustForHeldPiece(to, from, arm));
         
 
         sequence.add(new ArmCommand(arm,to));
@@ -95,13 +100,13 @@ public class ArmCommand extends CommandBase
         return Commands.sequence(c);
     }
 
-    private static ArrayList<Command> AdjustForHeldPiece(ArmPose to, Arm arm)
+    private static ArrayList<Command> AdjustForHeldPiece(ArmPose to, ArmPose from, Arm arm)
     {
 
         // pull the wrist up if J2 is passing 0.
         ArrayList<Command> sequence = new ArrayList<Command>();
-        double crossTolerance = 20;
-        ArmPose current = arm.getCurrentPose();
+        double crossTolerance = 30;
+        ArmPose current = from;
         
         //System.out.println("Thinking of adding wristup...");
         
@@ -119,7 +124,7 @@ public class ArmCommand extends CommandBase
                 waypointJ2 = current.getJ2();
             }
             
-            BasicPose p = new BasicPose((double)to.getJ1(), waypointJ2, 85.0, false);
+            BasicPose p = new BasicPose((double)to.getJ1(), waypointJ2, 100.0, false);
             
             //System.out.println("Added wristup: "+p);
            
@@ -131,7 +136,7 @@ public class ArmCommand extends CommandBase
             
             // AFAIK, we don't really care what J1 is doing. We want the wrist up, though.
 
-            p = new BasicPose((double)to.getJ1(), waypointJ2, 98.0, false);
+            p = new BasicPose((double)to.getJ1(), waypointJ2, 100.0, false);
             
              //System.out.println("Added wristup: "+p);
             
@@ -139,7 +144,7 @@ public class ArmCommand extends CommandBase
 
             
           
-            sequence.add(new ArmCommand(arm, p));
+            
         }
 
         return sequence;

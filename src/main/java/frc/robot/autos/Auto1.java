@@ -14,7 +14,9 @@ import frc.robot.Constants;
 import frc.robot.PieceMode;
 import frc.robot.Arm.Arm;
 import frc.robot.Arm.NamedPose;
+import frc.robot.Arm.PoseList;
 import frc.robot.Arm.command.ArmCommand;
+import frc.robot.Arm.command.BasicPose;
 import frc.robot.swerve.Swerve;
 import frc.robot.swerve.SwerveConfig;
 import frc.robot.swerve.command.LockSwerveCommand;
@@ -29,15 +31,23 @@ public class Auto1 extends SequentialCommandGroup
                 Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
             .setKinematics(SwerveConfig.swerveKinematics);
 
-            
+        PoseList p = arm.getPoseList();
+        //arm.adopt Pose(new BasicPose
+        //(null, null, null, true));
         mode.setPiece(GamePiece.cube);
         addCommands(
-            ArmCommand.PlotPath( NamedPose.PouncePreScore, arm),
-            ArmCommand.PlotPath(NamedPose.ScoreL3,arm),
             new InstantCommand(()->{arm.setClaw(false);}),
-            new WaitCommand(1),
-            ArmCommand.PlotPath(NamedPose.PouncePreScore,arm),
-            ArmCommand.PlotPath(NamedPose.Travel,arm),
+            new WaitCommand(2),
+            ArmCommand.PlotPath( NamedPose.PouncePreScore, arm),
+            new WaitCommand(2),
+            ArmCommand.PlotPath(NamedPose.ScoreL3, p.getArmPose(NamedPose.PouncePreScore),arm),
+            new WaitCommand(2),
+            new InstantCommand(()->{arm.setClaw(true);}),
+            new WaitCommand(2),
+            ArmCommand.PlotPath(NamedPose.PouncePreScore, p.getArmPose(NamedPose.ScoreL3),arm),
+            new WaitCommand(2),
+            ArmCommand.PlotPath(NamedPose.Travel,p.getArmPose(NamedPose.PouncePreScore),arm),
+            new WaitCommand(2),
             new AutoTrajectory(swerve, 
             TrajectoryGenerator.generateTrajectory(
                 // Start at the origin facing the +X direction

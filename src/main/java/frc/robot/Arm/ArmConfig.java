@@ -8,6 +8,9 @@ public final class ArmConfig
 
     public static final class Joint1
     {
+
+        public static final double rampRate = 1;
+
         public static final int gearRatio = 144;
 
         public static final IdleMode idleMode = IdleMode.kBrake;
@@ -26,7 +29,7 @@ public final class ArmConfig
 
     public static final class Joint2
     {
-        public static final int gearRatio = 100;
+        public static final int gearRatio = 192;
 
         public static final IdleMode idleMode = IdleMode.kCoast;
 
@@ -34,12 +37,12 @@ public final class ArmConfig
         public static final float lowerLimit = -150;
 
         //J2 PID
-        public static final double pValue = 0.02;
+        public static final double pValue = 0.025;
         public static final double iValue = 0;
-        public static final double dValue = 0;
+        public static final double dValue = 0.005;
         public static final double ffValue = 0;
         
-        public static final double maxPower = 0.9;
+        public static final double maxPower = 1;
     }
 
     public static final class Joint3
@@ -48,7 +51,7 @@ public final class ArmConfig
 
         public static final IdleMode idleMode = IdleMode.kBrake;
 
-        public static final float upperLimit = 98;
+        public static final float upperLimit = 100;
         public static final float lowerLimit = 0;
 
         //J3 PID

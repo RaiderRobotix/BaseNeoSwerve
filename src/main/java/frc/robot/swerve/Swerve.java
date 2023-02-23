@@ -165,7 +165,7 @@ public class Swerve extends SubsystemBase
     {
           
         swerveOdometry.update(getYaw(), getModulePositions());  
-
+        /* 
         for(SwerveModule mod : mSwerveMods)
         {
             
@@ -181,6 +181,7 @@ public class Swerve extends SubsystemBase
         SmartDashboard.putNumber("Odo Angle", pose.getRotation().getDegrees());
 
         SmartDashboard.putNumber("real pitch", getPitchDegrees());
+        */
     }
 
     // slight witchcra%ft

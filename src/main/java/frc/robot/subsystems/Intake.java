@@ -79,7 +79,7 @@ public class Intake extends SubsystemBase
 
     public void setPresenter(boolean extended)
     {
-        if(extended)
+        if(!extended)
         {
             presenter.set(Value.kForward);
             return;

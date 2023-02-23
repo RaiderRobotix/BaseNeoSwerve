@@ -36,7 +36,7 @@ public class Arm extends SubsystemBase
     // pose should be all zeros
     public Arm(NamedPose pose, PneumaticHub ph, GamePieceSupplier mode)
     {
-
+        
         poses = new PoseList(mode);
         currentPose = poses.getArmPose(pose);
         
@@ -61,12 +61,13 @@ public class Arm extends SubsystemBase
         J2 = new CANSparkMax(Constants.Arm.J2MotorID, MotorType.kBrushless);
         J2.getEncoder().setPositionConversionFactor(360.0/(ArmConfig.Joint2.gearRatio));
 
-        J2.setIdleMode(IdleMode.kCoast);
+        J2.setIdleMode(ArmConfig.Joint2.idleMode);
       
 
         J2.setSoftLimit(SoftLimitDirection.kReverse, ArmConfig.Joint2.lowerLimit);
         J2.setSoftLimit(SoftLimitDirection.kForward, ArmConfig.Joint2.upperLimit);
 
+        
         controller = J2.getPIDController();
         controller.setP(ArmConfig.Joint2.pValue,0);
         controller.setI(ArmConfig.Joint2.iValue,0);
@@ -75,7 +76,7 @@ public class Arm extends SubsystemBase
         controller.setOutputRange(-ArmConfig.Joint2.maxPower, ArmConfig.Joint2.maxPower);
 
         J2Follow = new CANSparkMax(Constants.Arm.J2FollowMotorID, MotorType.kBrushless);
-        J2Follow.setIdleMode(IdleMode.kBrake);
+        J2Follow.setIdleMode(ArmConfig.Joint2.idleMode);
         
         J3 = new CANSparkMax(Constants.Arm.J3MotorID, MotorType.kBrushless);
         J3.getEncoder().setPositionConversionFactor(360.0/ArmConfig.Joint3.gearRatio);
@@ -145,8 +146,12 @@ public class Arm extends SubsystemBase
         SmartDashboard.putNumber("J1 Current", J1.getOutputCurrent());
         SmartDashboard.putNumber("J2 Current", J2.getOutputCurrent());
         SmartDashboard.putNumber("J3 Current", J3.getOutputCurrent());
-        
-        
+      
+        SmartDashboard.putNumber("J1 error", J1.getEncoder().getPosition()- currentPose.getJ1());
+        SmartDashboard.putNumber("J2 error", J2.getEncoder().getPosition() - currentPose.getJ2());
+        SmartDashboard.putNumber("J3 error", J3.getEncoder().getPosition() - currentPose.getJ3());
+        SmartDashboard.putBoolean( "At Pose?", isAtPose(currentPose));
+
         adoptPose(currentPose);
     }
 
@@ -165,6 +170,9 @@ public class Arm extends SubsystemBase
             motor.getEncoder().setPosition(0);
         }
         J3.setSmartCurrentLimit(20, 15);
+       
+        J1.setClosedLoopRampRate(ArmConfig.Joint1.rampRate);
+        J1.setOpenLoopRampRate(ArmConfig.Joint1.rampRate);
         for(CANSparkMax motor : motors)
         {
             motor.burnFlash();
@@ -231,7 +239,7 @@ public class Arm extends SubsystemBase
 
     public void adoptPose(ArmPose pose)
     {
-        if(currentPose== null )
+        if(currentPose == null )
         {
             throw new NullPointerException("Arm pose may not be null. You ****ed up");
         }

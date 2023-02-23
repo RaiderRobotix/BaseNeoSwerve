@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.lib.util.States.GamePiece;
@@ -89,7 +90,7 @@ public class RobotContainer {
         s_Swerve = new Swerve();
 
      
-        new PieceMode();
+        pieceMode = new PieceMode();
         s_Arm = new Arm(NamedPose.Home, ph, pieceMode);
         s_Intake = new Intake(ph);
        
@@ -213,22 +214,31 @@ public class RobotContainer {
         jogJ3Backwards.whileTrue(new InstantCommand(()-> s_Arm.jogJoint(3, false)));
 
 
-        Trigger rBump = new Trigger(()->operator.getRightBumper());
-        rBump.onTrue(new InstantCommand(()->
+        Trigger lBump = new Trigger(()->operator.getLeftBumper());
+        lBump.onTrue(new InstantCommand(()->
         {
             System.out.println("WHATTTT");
             s_Intake.setPresenter(false);
         }));
 
         // to Treavor's dismay:
-        Trigger startErection = new Trigger(()->operator.getLeftBumper());
-        startErection.onTrue(new InstantCommand(()->s_Intake.setPresenter(true)));
+        Trigger startErection = new Trigger(()->operator.getRightBumper());
+        startErection.onTrue(
+            
+                new InstantCommand(()->
+                {
+                    s_Intake.setPresenter(true);
+                    ArmCommand.PlotPath(NamedPose.FloorPick, s_Arm);
+                })
+        );
+
+        
 
         Trigger X = new Trigger(()->operator.getXButton());
-        X.onTrue(new InstantCommand(()->s_Arm.setClaw(false)));
+        X.onTrue(new InstantCommand(()->s_Arm.setClaw(true)));
 
         Trigger A = new Trigger(()->operator.getAButton());
-        A.onTrue(new InstantCommand(()->s_Arm.setClaw(true)));
+        A.onTrue(new InstantCommand(()->s_Arm.setClaw(false)));
     }
 
     /**
