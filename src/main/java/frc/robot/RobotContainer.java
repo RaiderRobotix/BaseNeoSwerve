@@ -130,10 +130,16 @@ public class RobotContainer {
         Trigger lockSwerve = new Trigger(() -> rotater.getRawButton(1));
         lockSwerve.onTrue(new LockSwerveCommand(s_Swerve, ()->!lockSwerve.getAsBoolean()));
 
-        Trigger closeClaw = new Trigger(() -> rotater.getRawButton(7));
+      //  Trigger closeClaw = new Trigger(() -> rotater.getRawButton(6));
+        //closeClaw.onTrue(new InstantCommand(()->s_Arm.setClaw(true)));
+
+    //    Trigger openClaw= new Trigger(() -> rotater.getRawButton(7));
+       // openClaw.onTrue(new InstantCommand(()->s_Arm.setClaw(false)));
+
+        Trigger closeClaw = new Trigger(() -> rotater.getRawButton(10));
         closeClaw.onTrue(new InstantCommand(()->s_Arm.setClaw(true)));
 
-        Trigger openClaw= new Trigger(() -> rotater.getRawButton(6));
+        Trigger openClaw= new Trigger(() -> rotater.getRawButton(11));
         openClaw.onTrue(new InstantCommand(()->s_Arm.setClaw(false)));
 
         // TODO uncomment once intake... exists.
