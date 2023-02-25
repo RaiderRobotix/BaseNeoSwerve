@@ -13,7 +13,7 @@ import frc.lib.util.States.GamePiece;
 import frc.robot.Arm.Arm;
 import frc.robot.Arm.NamedPose;
 import frc.robot.Arm.command.ArmCommand;
-import frc.robot.autos.Auto1;
+
 import frc.robot.autos.AutoSelector;
 import frc.robot.commands.Aim;
 import frc.robot.subsystems.Intake;
