@@ -7,7 +7,7 @@ import frc.lib.util.SwerveModuleConstants;
 public final class Constants 
 {
     public static final double stickDeadband = 0.1;
-
+    public static final double limelightOffset = 3;
   
     /**
      * REV Robotics specific settings

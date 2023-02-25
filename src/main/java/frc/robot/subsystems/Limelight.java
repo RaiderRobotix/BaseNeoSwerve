@@ -49,6 +49,16 @@ public class Limelight
         return limelight.getEntry("ts").getDouble(0);
     }
 
+    public void setLight(boolean on)
+    {
+        if(on)
+        {
+            limelight.getEntry("ledMode").setNumber(3);
+            return;
+        }
+        limelight.getEntry("ledMode").setNumber(1);
+    }
+
 
 }
 
