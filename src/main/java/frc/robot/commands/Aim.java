@@ -41,7 +41,7 @@ public class Aim extends CommandBase
             swerve.drive(new Translation2d(-0.15, 0), 0, true, false);
             return;
         }
-        if(offset <0)
+        if(offset < 0)
         {
             swerve.drive(new Translation2d(0.15, 0), 0, true, false);
             return;
