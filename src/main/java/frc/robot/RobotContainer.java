@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PerpetualCommand;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.lib.util.States.GamePiece;
 import frc.robot.Arm.Arm;
@@ -16,7 +18,9 @@ import frc.robot.Arm.command.ArmCommand;
 
 import frc.robot.autos.AutoSelector;
 import frc.robot.commands.Aim;
+import frc.robot.commands.ledControlCommand;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Leds;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Thumbwheel;
 import frc.robot.swerve.Swerve;
@@ -60,6 +64,7 @@ public class RobotContainer {
     private final Swerve s_Swerve;
     private final Arm s_Arm;
     private final Thumbwheel s_Thumb;
+    private final Leds s_leds;
 
 
 
@@ -70,7 +75,7 @@ public class RobotContainer {
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() 
     {
-        blindingDevice = new Limelight();
+        //blindingDevice = new Limelight();
        
         PneumaticHub ph = new PneumaticHub(Constants.REV.PHID);
 
@@ -102,9 +107,9 @@ public class RobotContainer {
         s_Arm = new Arm(NamedPose.Home, ph, pieceMode);
         s_Intake = new Intake(ph);
        
-
+        s_leds = new Leds(pieceMode);
    
- 
+        Command c;
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
@@ -114,7 +119,8 @@ public class RobotContainer {
                 () -> robotCentric.getAsBoolean()
             )
         );
-
+       // s_leds.setDefaultCommand(new ledControlCommand(s_leds, rotateStick));
+        
         // Configure the button bindings
         configureButtonBindings();
         

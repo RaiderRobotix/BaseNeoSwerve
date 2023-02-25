@@ -52,20 +52,12 @@ public class AutoSelector
 
         balanceAuto =  score(arm).andThen(
           
-            new AutoTrajectory(swerve, 
-                TrajectoryGenerator.generateTrajectory(
-                // Start at the origin facing the +X direction
-                new Pose2d(0, 0, new Rotation2d(0)),
-                // Pass through these interior waypoints.
-                List.of(new Translation2d(6,-.5)),
-                
-                //new ArrayList<>(),
-            
-                // End 3 meters straight ahead of where we started, facing forward
-                new Pose2d(-1.5, 0, new Rotation2d(0)),
-                config)
-            ),
-            new AutoBalance(swerve, false),
+            new SwerveController(swerve,  List.of(
+                new Pose2d(0,0,new Rotation2d(0)),
+                new Pose2d(4.5,0,new Rotation2d(0)),
+                new Pose2d(1.5,0,new Rotation2d(0))
+            )),
+          
             new LockSwerveCommand(swerve, ()->false)
         );
         
@@ -75,28 +67,17 @@ public class AutoSelector
 
     private Command basicAuto(Arm arm, Swerve swerve)
     {
-        TrajectoryConfig config =
-        new TrajectoryConfig(
-                Constants.AutoConstants.kMaxSpeedMetersPerSecond,
-                Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-            .setKinematics(SwerveConfig.swerveKinematics);
+      
 
 
         return score(arm).andThen(
-            new AutoTrajectory(swerve, 
-            TrajectoryGenerator.generateTrajectory(
-            // Start at the origin facing the +X direction
-            new Pose2d(0, 0, new Rotation2d(0)),
-            // Pass through these interior waypoints.
-            //List.of(new Translation2d(6,-.5)),
+            new SwerveController(swerve,  List.of(
+                new Pose2d(0,0,new Rotation2d(0)),
+                new Pose2d(3.85,0,new Rotation2d(0))
+            ))
+        );
             
-            new ArrayList<>(),
-        
-            // End 3 meters straight ahead of where we started, facing forward
-            new Pose2d(12, 0, new Rotation2d(0)),
-            config)
-            )
-        );        
+               
     }
 
     private Command score(Arm arm)
