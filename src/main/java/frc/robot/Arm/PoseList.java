@@ -36,21 +36,22 @@ public class PoseList
             );
       
         poseList[NamedPose.PickDriveUpWindow.ordinal()] = 
-            new BasicPose(-3, 92, 71,  false);
-
-        poseList[NamedPose.PounceDriveUpWindow.ordinal()] = 
-            new DoublePose(
-                new BasicPose(-0, 79, -26, false),
-                new BasicPose(-56, 92, -29, false),
+        new DoublePose(
+                new BasicPose(-4, 85, -13, false),
+                new BasicPose(-11, 101, -18, false),
                 mode
             );
+           
+
+        poseList[NamedPose.PounceDriveUpWindow.ordinal()] = 
+        new BasicPose(0, 91, 84,  false);
 
 
-        // Cone
+      
         poseList[NamedPose.FloorPick.ordinal()] = 
         new DoublePose(
-            new BasicPose(-54, 39, -24, false),
-            new BasicPose(-61, 40, 48,   false),
+            new BasicPose(-53, 30, 3, false),
+            new BasicPose(-51, 27, 50,   false),
             mode
         );
 
@@ -68,8 +69,8 @@ public class PoseList
         
         poseList[NamedPose.ScoreL3.ordinal()] = 
         new DoublePose(
-            new BasicPose(-39, 111, -7, false),
-            new BasicPose(-47, 148, -27,   true),
+            new BasicPose(-39, 116, 0, false),
+            new BasicPose(-42, 151, -26,   true),
             mode
         );
 

@@ -161,8 +161,7 @@ public class Arm extends SubsystemBase
         {
             motor.setSmartCurrentLimit(40,15 );
 
-            motor.setClosedLoopRampRate(ArmConfig.rampRate);
-            motor.setOpenLoopRampRate(ArmConfig.rampRate);
+          
 
             motor.enableSoftLimit(SoftLimitDirection.kForward, true);
             motor.enableSoftLimit(SoftLimitDirection.kReverse, true);
@@ -173,6 +172,12 @@ public class Arm extends SubsystemBase
        
         J1.setClosedLoopRampRate(ArmConfig.Joint1.rampRate);
         J1.setOpenLoopRampRate(ArmConfig.Joint1.rampRate);
+
+        J2.setClosedLoopRampRate(ArmConfig.Joint2.rampRate);
+        J2.setOpenLoopRampRate(ArmConfig.Joint2.rampRate);
+
+        J3.setClosedLoopRampRate(ArmConfig.Joint3.rampRate);
+        J3.setOpenLoopRampRate(ArmConfig.Joint3.rampRate);
         for(CANSparkMax motor : motors)
         {
             motor.burnFlash();

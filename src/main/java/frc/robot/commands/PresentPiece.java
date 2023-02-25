@@ -90,7 +90,7 @@ public class PresentPiece extends CommandBase
         private LinkableState begin()
         {
             // TODO set correct arm pose
-            subordinateCommand = ArmCommand.PlotPath((NamedPose.FloorPick), ARM);
+            subordinateCommand = ArmCommand.PlotPathAndSchedule((NamedPose.FloorPick), ARM);
 
              // cones do not need to execute the prePresent stage, since they do not deal with the vaccum.
             if(INTAKE.getState() == IntakeState.getCube)

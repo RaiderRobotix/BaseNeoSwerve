@@ -151,16 +151,16 @@ public class RobotContainer {
 
         // Button board (this is terrible)
         Trigger BB1 = new Trigger(() -> buttonBoard.getRawButton(1));
-        BB1.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.PouncePreScore, s_Arm)));
+        BB1.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.PouncePreScore, s_Arm)));
 
         Trigger BB2 = new Trigger(() -> buttonBoard.getRawButton(2));
-        BB2.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.ScoreL1, s_Arm)));
+        BB2.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.ScoreL1, s_Arm)));
 
         Trigger BB3 = new Trigger(() -> buttonBoard.getRawButton(7));
-        BB3.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.ScoreL2, s_Arm)));
+        BB3.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.ScoreL2, s_Arm)));
 
         Trigger BB4 = new Trigger(() -> buttonBoard.getRawButton(4));
-        BB4.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.ScoreL3, s_Arm)));
+        BB4.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.ScoreL3, s_Arm)));
 
 
         Trigger BB5 = new Trigger(() -> buttonBoard.getRawButton(5));
@@ -171,22 +171,22 @@ public class RobotContainer {
 
 
         Trigger BB7 = new Trigger(() -> buttonBoard.getRawButton(3));
-        BB7.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.FloorPick, s_Arm)));
+        BB7.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.FloorPick, s_Arm)));
 
         Trigger BB8 = new Trigger(() -> buttonBoard.getRawButton(8));
-        BB8.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.PounceDriveUpWindow, s_Arm)));
+        BB8.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.PounceDriveUpWindow, s_Arm)));
 
         Trigger BB9 = new Trigger(() -> buttonBoard.getRawButton(9));
-        BB9.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.PickDriveUpWindow, s_Arm)));
+        BB9.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.PickDriveUpWindow, s_Arm)));
 
         Trigger BB10 = new Trigger(() -> buttonBoard.getRawButton(10));
-        BB10.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.PickFromSubstation, s_Arm)));
+        BB10.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.PickFromSubstation, s_Arm)));
 
         Trigger home = new Trigger(() -> buttonBoard.getRawButton(11));
-        home.onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.Home, s_Arm)));
+        home.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.Home, s_Arm)));
 
         new Trigger(() -> buttonBoard.getRawButton(12))
-            .onTrue(new InstantCommand(()->ArmCommand.PlotPath( NamedPose.Travel, s_Arm)));
+            .onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.Travel, s_Arm)));
 
       
 
@@ -223,7 +223,7 @@ public class RobotContainer {
         Trigger lBump = new Trigger(()->operator.getLeftBumper());
         lBump.onTrue(new InstantCommand(()->
         {
-            System.out.println("WHATTTT");
+           
             s_Intake.setPresenter(false);
         }));
 
@@ -234,7 +234,7 @@ public class RobotContainer {
                 new InstantCommand(()->
                 {
                     s_Intake.setPresenter(true);
-                    ArmCommand.PlotPath(NamedPose.FloorPick, s_Arm);
+                    //ArmCommand.PlotPath(NamedPose.FloorPick, s_Arm);
                 })
         );
 
