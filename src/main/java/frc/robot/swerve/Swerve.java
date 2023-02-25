@@ -148,9 +148,9 @@ public class Swerve extends SubsystemBase
         return (SwerveConfig.invertGyro) ? 360-gyro.getPitch() : gyro.getPitch();
     }
 
-    public double getYawDegrees()
+    public double getRollDegrees()
     {
-        return (SwerveConfig.invertGyro) ? 360-gyro.getYaw() : gyro.getYaw();
+        return (SwerveConfig.invertGyro) ? 360-gyro.getRoll() : gyro.getRoll();
     }
 
     public void lockWheels()
@@ -191,7 +191,8 @@ public class Swerve extends SubsystemBase
         SmartDashboard.putNumber("Odo Pos Y", pose.getY());
         SmartDashboard.putNumber("Odo Angle", pose.getRotation().getDegrees());
 
-        //SmartDashboard.putNumber("real pitch", getPitchDegrees());
+        SmartDashboard.putNumber("pitch", getPitchDegrees());
+        SmartDashboard.putNumber("roll", getRollDegrees());
         
     }
 

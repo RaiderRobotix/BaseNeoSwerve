@@ -43,8 +43,8 @@ public class AutoBalance extends CommandBase
     public boolean isFinished()
     {
        double tolerance = 3;
-       return SWERVE.getYawDegrees()<tolerance 
-              && SWERVE.getPitchDegrees()<tolerance;
+       return Math.abs(SWERVE.getRollDegrees())<tolerance 
+              &&Math.abs( SWERVE.getPitchDegrees())<tolerance;
     }
 
     
