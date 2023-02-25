@@ -14,7 +14,11 @@ import frc.robot.Arm.Arm;
 import frc.robot.Arm.NamedPose;
 import frc.robot.Arm.command.ArmCommand;
 import frc.robot.autos.Auto1;
+import frc.robot.autos.AutoSelector;
+import frc.robot.commands.Aim;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Thumbwheel;
 import frc.robot.swerve.Swerve;
 import frc.robot.swerve.command.LockSwerveCommand;
 import frc.robot.swerve.command.TeleopSwerve;
@@ -30,9 +34,9 @@ import frc.robot.swerve.command.TeleopSwerve;
  */
 public class RobotContainer {
     /* Controllers */
-    private final Joystick driver;
-    private final Joystick rotater;
-    private final XboxController operator;
+    private final Joystick driveStick;
+    private final Joystick rotateStick;
+    private final XboxController controller;
     private final GenericHID buttonBoard;
 
     /* Drive Controls */
@@ -68,10 +72,10 @@ public class RobotContainer {
         PneumaticHub ph = new PneumaticHub(Constants.REV.PHID);
 
         /* Controllers */
-        driver = new Joystick(0);
-        rotater = new Joystick(1);
+        driveStick = new Joystick(0);
+        rotateStick = new Joystick(1);
 
-        operator = new XboxController(2);
+        controller = new XboxController(2);
         buttonBoard = new GenericHID(3);
 
 
@@ -83,8 +87,8 @@ public class RobotContainer {
         rotationAxis = Joystick.AxisType.kX.value;
 
         /* Driver Buttons */
-        zeroGyro = new Trigger(()->driver.getRawButton(1));
-        robotCentric = new Trigger(()-> driver.getRawButton(2));
+        zeroGyro = new Trigger(()->driveStick.getRawButton(1));
+        robotCentric = new Trigger(()-> driveStick.getRawButton(2));
 
         /* Subsystems */
         s_Swerve = new Swerve();
@@ -100,9 +104,9 @@ public class RobotContainer {
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
-                () -> Math.pow(driver.getRawAxis(translationAxis),3), 
-                () -> Math.pow(driver.getRawAxis(strafeAxis),3), 
-                () -> rotater.getRawAxis(rotationAxis)/2, 
+                () -> Math.pow(driveStick.getRawAxis(translationAxis),3), 
+                () -> Math.pow(driveStick.getRawAxis(strafeAxis),3), 
+                () -> rotateStick.getRawAxis(rotationAxis)/2, 
                 () -> robotCentric.getAsBoolean()
             )
         );
@@ -127,19 +131,18 @@ public class RobotContainer {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
 
-        Trigger lockSwerve = new Trigger(() -> rotater.getRawButton(1));
+        Trigger lockSwerve = new Trigger(() -> rotateStick.getRawButton(1));
         lockSwerve.onTrue(new LockSwerveCommand(s_Swerve, ()->!lockSwerve.getAsBoolean()));
 
-      //  Trigger closeClaw = new Trigger(() -> rotater.getRawButton(6));
-        //closeClaw.onTrue(new InstantCommand(()->s_Arm.setClaw(true)));
+        
+        Trigger aim = new Trigger(() -> rotateStick.getRawButton(3));
+        aim.onTrue(new Aim(s_Swerve, new Limelight()));
+ 
 
-    //    Trigger openClaw= new Trigger(() -> rotater.getRawButton(7));
-       // openClaw.onTrue(new InstantCommand(()->s_Arm.setClaw(false)));
-
-        Trigger closeClaw = new Trigger(() -> rotater.getRawButton(10));
+        Trigger closeClaw = new Trigger(() -> driveStick.getRawButton(10));
         closeClaw.onTrue(new InstantCommand(()->s_Arm.setClaw(true)));
 
-        Trigger openClaw= new Trigger(() -> rotater.getRawButton(11));
+        Trigger openClaw= new Trigger(() -> driveStick.getRawButton(11));
         openClaw.onTrue(new InstantCommand(()->s_Arm.setClaw(false)));
 
         // TODO uncomment once intake... exists.
@@ -195,32 +198,11 @@ public class RobotContainer {
 
 
 
-        Trigger resetOdometrey = new Trigger(()-> rotater.getRawButton(2));
+        Trigger resetOdometrey = new Trigger(()-> rotateStick.getRawButton(2));
         resetOdometrey.onTrue(new InstantCommand(()-> {s_Swerve.resetOdometry(new Pose2d(   /*wow*/));}));//this is normal
 
-       
 
-
-        Trigger jogJ1Forwards = new Trigger(()-> driver.getRawButton(6));
-        jogJ1Forwards.whileTrue(new InstantCommand(()-> s_Arm.jogJoint(1, true)));
-
-        Trigger jogJ1Backwards = new Trigger(()-> driver.getRawButton(7));
-        jogJ1Backwards.whileTrue(new InstantCommand(()-> s_Arm.jogJoint(1, false)));
-
-        Trigger jogJ2Forwards = new Trigger(()-> driver.getRawButton(8));
-        jogJ2Forwards.whileTrue(new InstantCommand(()-> s_Arm.jogJoint(2, true)));
-
-        Trigger jogJ2Backwards = new Trigger(()-> driver.getRawButton(9));
-        jogJ2Backwards.whileTrue(new InstantCommand(()-> s_Arm.jogJoint(2, false)));
-
-        Trigger jogJ3Forwards = new Trigger(()-> driver.getRawButton(10));
-        jogJ3Forwards.whileTrue(new InstantCommand(()-> s_Arm.jogJoint(3, true)));
-
-        Trigger jogJ3Backwards = new Trigger(()-> driver.getRawButton(11));
-        jogJ3Backwards.whileTrue(new InstantCommand(()-> s_Arm.jogJoint(3, false)));
-
-
-        Trigger lBump = new Trigger(()->operator.getLeftBumper());
+        Trigger lBump = new Trigger(()->controller.getLeftBumper());
         lBump.onTrue(new InstantCommand(()->
         {
            
@@ -228,7 +210,7 @@ public class RobotContainer {
         }));
 
         // to Treavor's dismay:
-        Trigger startErection = new Trigger(()->operator.getRightBumper());
+        Trigger startErection = new Trigger(()->controller.getRightBumper());
         startErection.onTrue(
             
                 new InstantCommand(()->
@@ -240,10 +222,10 @@ public class RobotContainer {
 
         
 
-        Trigger X = new Trigger(()->operator.getXButton());
+        Trigger X = new Trigger(()->controller.getXButton());
         X.onTrue(new InstantCommand(()->s_Arm.setClaw(true)));
 
-        Trigger A = new Trigger(()->operator.getAButton());
+        Trigger A = new Trigger(()->controller.getAButton());
         A.onTrue(new InstantCommand(()->s_Arm.setClaw(false)));
     }
 
@@ -254,6 +236,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return new Auto1(s_Swerve, s_Arm, pieceMode);
+        AutoSelector auto =new AutoSelector(new Thumbwheel(), s_Arm, s_Swerve, pieceMode);
+        return auto.getAutonomousCommand();
     }
 }
