@@ -28,47 +28,29 @@ public class AutoSelector
 
     private Thumbwheel wheel;
     PieceMode mode;
+    private Arm arm;
+    private Swerve swerve;
 
-    private Command basicAuto;
     private Command balanceAuto;
     
     public AutoSelector(Thumbwheel th, Arm arm, Swerve swerve, PieceMode mode)
     {
+        this.arm = arm;
         wheel = th;
         this.mode = mode;
+        this.swerve = swerve;
 
+
+ 
         TrajectoryConfig config =
         new TrajectoryConfig(
                 Constants.AutoConstants.kMaxSpeedMetersPerSecond,
                 Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
             .setKinematics(SwerveConfig.swerveKinematics);
 
-        Command score =   new AutoPoseCommand( NamedPose.Travel, arm)
-            .andThen( new InstantCommand(()->{arm.setClaw(false);}),
-            new WaitCommand(.1),
-            new AutoPoseCommand( NamedPose.PouncePreScore, arm),
-            new AutoPoseCommand(NamedPose.ScoreL3, arm), 
-            new WaitCommand(1),
-            new WaitCommand(.1),
-            new ScheduleCommand(new AutoPoseCommand(NamedPose.Travel, arm)));
-
-        basicAuto =  score.andThen(
-            new AutoTrajectory(swerve, 
-            TrajectoryGenerator.generateTrajectory(
-            // Start at the origin facing the +X direction
-            new Pose2d(0, 0, new Rotation2d(0)),
-            // Pass through these interior waypoints.
-            //List.of(new Translation2d(6,-.5)),
-            
-            new ArrayList<>(),
         
-            // End 3 meters straight ahead of where we started, facing forward
-            new Pose2d(7, 0, new Rotation2d(0)),
-            config)
-            )
-        );           
 
-        balanceAuto =  score.andThen(
+        balanceAuto =  score(arm).andThen(
           
             new AutoTrajectory(swerve, 
                 TrajectoryGenerator.generateTrajectory(
@@ -80,7 +62,7 @@ public class AutoSelector
                 //new ArrayList<>(),
             
                 // End 3 meters straight ahead of where we started, facing forward
-                new Pose2d(-2, 0, new Rotation2d(0)),
+                new Pose2d(-1.5, 0, new Rotation2d(0)),
                 config)
             ),
             new AutoBalance(swerve, false),
@@ -89,6 +71,46 @@ public class AutoSelector
         
 
            
+    }
+
+    private Command basicAuto(Arm arm, Swerve swerve)
+    {
+        TrajectoryConfig config =
+        new TrajectoryConfig(
+                Constants.AutoConstants.kMaxSpeedMetersPerSecond,
+                Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+            .setKinematics(SwerveConfig.swerveKinematics);
+
+
+        return score(arm).andThen(
+            new AutoTrajectory(swerve, 
+            TrajectoryGenerator.generateTrajectory(
+            // Start at the origin facing the +X direction
+            new Pose2d(0, 0, new Rotation2d(0)),
+            // Pass through these interior waypoints.
+            //List.of(new Translation2d(6,-.5)),
+            
+            new ArrayList<>(),
+        
+            // End 3 meters straight ahead of where we started, facing forward
+            new Pose2d(12, 0, new Rotation2d(0)),
+            config)
+            )
+        );        
+    }
+
+    private Command score(Arm arm)
+    {
+         return   new AutoPoseCommand( NamedPose.Travel, arm)
+        .andThen( 
+        new InstantCommand(()->{arm.setClaw(false);}),
+        new WaitCommand(.1),
+        new AutoPoseCommand( NamedPose.PouncePreScore, arm),
+        new AutoPoseCommand(NamedPose.ScoreL3, arm), 
+        new WaitCommand(1),
+        new InstantCommand(()->{arm.setClaw(true);}),
+        new WaitCommand(.1),
+        new ScheduleCommand(new AutoPoseCommand(NamedPose.Travel, arm)));
     }
 
 
@@ -101,11 +123,11 @@ public class AutoSelector
             case 0: // we reseve zero to doing nothing.
                 return new InstantCommand();
             case 1:
-                return new InstantCommand(()->mode.setPiece(GamePiece.cone)).andThen(basicAuto);
+                return new InstantCommand(()->mode.setPiece(GamePiece.cone)).andThen(basicAuto(arm, swerve));
             case 2:
                 return new InstantCommand(()->mode.setPiece(GamePiece.cone)).andThen(balanceAuto);
             case 3:
-                return new InstantCommand(()->mode.setPiece(GamePiece.cone)).andThen(basicAuto);
+                return new InstantCommand(()->mode.setPiece(GamePiece.cone)).andThen(basicAuto(arm, swerve));
 
             default:
                 return new InstantCommand();

@@ -58,6 +58,7 @@ public class RobotContainer {
     /* Subsystems */
     private final Swerve s_Swerve;
     private final Arm s_Arm;
+    private final Thumbwheel s_Thumb;
 
 
 
@@ -92,6 +93,7 @@ public class RobotContainer {
 
         /* Subsystems */
         s_Swerve = new Swerve();
+        s_Thumb = new Thumbwheel();
 
      
         pieceMode = new PieceMode();
@@ -236,7 +238,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        AutoSelector auto =new AutoSelector(new Thumbwheel(), s_Arm, s_Swerve, pieceMode);
+        AutoSelector auto =new AutoSelector(s_Thumb, s_Arm, s_Swerve, pieceMode);
         return auto.getAutonomousCommand();
     }
 }
