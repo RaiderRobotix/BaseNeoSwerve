@@ -38,12 +38,12 @@ public class Aim extends CommandBase
         }
         if(offset > 0)
         {
-            swerve.drive(new Translation2d(-0.5, 0), 0, true, false);
+            swerve.drive(new Translation2d(-0.15, 0), 0, true, false);
             return;
         }
         if(offset <0)
         {
-            swerve.drive(new Translation2d(0.5, 0), 0, true, false);
+            swerve.drive(new Translation2d(0.15, 0), 0, true, false);
             return;
         }
     }
