@@ -11,7 +11,9 @@ public class Limelight
 
     public Limelight()
     {
+        System.out.println("creating limelight");
         limelight =  NetworkTableInstance.getDefault().getTable("limelight");
+        setLight(false);
     }
 
     // returns whether the limelight has found a target.
@@ -53,10 +55,12 @@ public class Limelight
     {
         if(on)
         {
-            limelight.getEntry("ledMode").setNumber(3);
+            limelight.getEntry("pipeline").setNumber(0);
+            System.out.println("turning limelight on");
             return;
         }
-        limelight.getEntry("ledMode").setNumber(1);
+        limelight.getEntry("pipeline").setNumber(3);
+        System.out.println("turning limelight off");
     }
 
 

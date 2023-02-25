@@ -38,6 +38,7 @@ public class RobotContainer {
     private final Joystick rotateStick;
     private final XboxController controller;
     private final GenericHID buttonBoard;
+    private Limelight blindingDevice;
 
     /* Drive Controls */
     private final int translationAxis;
@@ -69,6 +70,7 @@ public class RobotContainer {
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() 
     {
+        blindingDevice = new Limelight();
        
         PneumaticHub ph = new PneumaticHub(Constants.REV.PHID);
 
@@ -138,7 +140,7 @@ public class RobotContainer {
 
         
         Trigger aim = new Trigger(() -> rotateStick.getRawButton(3));
-        aim.onTrue(new Aim(s_Swerve, new Limelight()));
+        aim.onTrue(new Aim(s_Swerve, blindingDevice));
  
 
         Trigger closeClaw = new Trigger(() -> driveStick.getRawButton(10));
