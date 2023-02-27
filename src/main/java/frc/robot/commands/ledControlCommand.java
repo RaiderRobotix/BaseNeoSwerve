@@ -29,8 +29,8 @@ public class ledControlCommand extends CommandBase
     }
 
 @Override
-public boolean isFinished() {
-    // TODO Auto-generated method stub
+public boolean isFinished()
+{
     return false;
 }
     

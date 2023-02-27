@@ -1,13 +1,10 @@
 package frc.robot.autos;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ScheduleCommand;
@@ -20,7 +17,6 @@ import frc.robot.Arm.NamedPose;
 import frc.robot.subsystems.Thumbwheel;
 import frc.robot.swerve.Swerve;
 import frc.robot.swerve.SwerveConfig;
-import frc.robot.swerve.command.AutoBalance;
 import frc.robot.swerve.command.LockSwerveCommand;
 
 public class AutoSelector 

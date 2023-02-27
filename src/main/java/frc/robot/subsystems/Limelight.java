@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-
 public class Limelight
 {
     // this class exists to give access to the limelight in a human readable way.

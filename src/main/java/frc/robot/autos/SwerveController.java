@@ -1,6 +1,5 @@
 package frc.robot.autos;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import edu.wpi.first.math.controller.PIDController;
