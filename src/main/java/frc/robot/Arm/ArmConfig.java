@@ -50,7 +50,7 @@ public final class ArmConfig
     public static final class Joint3
     {
         public static final double rampRate = 1;
-        public static final int gearRatio = 125;
+        public static final int gearRatio = 100;
 
         public static final IdleMode idleMode = IdleMode.kBrake;
 

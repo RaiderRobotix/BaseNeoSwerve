@@ -61,8 +61,8 @@ public class PoseList
       
         poseList[NamedPose.ScoreL2.ordinal()] = 
         new DoublePose(
-            new BasicPose(-23, 68, 10, false),
-            new BasicPose(-28, 108, 0,   false),
+            new BasicPose(-23, 72, 10, false),
+            new BasicPose(-27, 108, 0,   false),
             mode
         );
             

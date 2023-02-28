@@ -4,7 +4,7 @@ package frc.robot.swerve;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-
+import edu.wpi.first.wpilibj.DriverStation;
 import frc.lib.util.CTREModuleState;
 import frc.lib.util.SwerveModuleConstants;
 
@@ -13,6 +13,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.CANSparkMax.FaultID;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 /**
@@ -120,7 +121,7 @@ public class RevSwerveModule implements SwerveModule
         mDriveMotor.setIdleMode(SwerveConfig.driveIdleMode); 
     
        
-  
+       
        
     }
 
@@ -135,6 +136,16 @@ public class RevSwerveModule implements SwerveModule
         desiredState = CTREModuleState.optimize(desiredState, getState().angle); 
         setAngle(desiredState);
         setSpeed(desiredState, isOpenLoop);
+
+        if(mDriveMotor.getFault(FaultID.kSensorFault))
+        {
+            DriverStation.reportWarning("Sensor Fault on Drive Motor ID:"+mDriveMotor.getDeviceId(), false);
+        }
+
+        if(mAngleMotor.getFault(FaultID.kSensorFault))
+        {
+            DriverStation.reportWarning("Sensor Fault on Angle Motor ID:"+mAngleMotor.getDeviceId(), false);
+        }
     }
 
     private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop)

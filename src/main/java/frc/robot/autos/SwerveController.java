@@ -15,6 +15,10 @@ public class SwerveController extends CommandBase
     private final double i = 0.00;
     private final double d = 0.00;
 
+    private final double pRot = -.15;
+    private final double iRot = 0.00;
+    private final double dRot = 0.00;
+
     private PIDController pidX;
     private PIDController pidY;
     private PIDController pidRot;
@@ -30,7 +34,7 @@ public class SwerveController extends CommandBase
         driveBase = swerve;
         pidX = new PIDController(p, i, d);
         pidY = new PIDController(p, i, d);
-        pidRot = new PIDController(p, i, d);
+        pidRot = new PIDController(pRot, iRot, dRot);
 
         pidX.setTolerance(.5);
         pidY.setTolerance(.1);
@@ -80,7 +84,7 @@ public class SwerveController extends CommandBase
     {
         
 
-        System.out.println("running ppidpidpdip errr: "+pidX.atSetpoint()+"   "+poses.get(progress).getX());
+        //System.out.println("running ppidpidpdip errr: "+pidX.atSetpoint()+"   "+poses.get(progress).getX());
         if(atCurrentPose())
         {
             System.out.println("PROGRESS!!!");
@@ -98,7 +102,7 @@ public class SwerveController extends CommandBase
         double y = pidX.calculate(driveBase.getPose().getY() , poses.get(progress).getY() );
         double rot = pidRot.calculate(driveBase.getPose().getRotation().getDegrees() , poses.get(progress).getRotation().getDegrees());
 
-        driveBase.drive(new Translation2d(x,y), 0, true, false);
+        driveBase.drive(new Translation2d(x,y), rot, true, false);
 
     }
 

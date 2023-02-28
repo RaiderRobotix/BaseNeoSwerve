@@ -51,7 +51,7 @@ public class AutoSelector
             new SwerveController(swerve,  List.of(
                 new Pose2d(0,0,new Rotation2d(0)),
                 new Pose2d(4.5,0,new Rotation2d(0)),
-                new Pose2d(1.5,0,new Rotation2d(0))
+                new Pose2d(2,0,new Rotation2d(0))
             )),
           
             new LockSwerveCommand(swerve, ()->false)
@@ -76,6 +76,22 @@ public class AutoSelector
                
     }
 
+
+    private Command TestAuto(Arm arm, Swerve swerve)
+    {
+      
+
+
+        return new SwerveController(swerve,  List.of(
+                new Pose2d(0,0,new Rotation2d(0)),
+                new Pose2d(.1,0,Rotation2d.fromDegrees(90))
+            )
+        );
+            
+               
+    }
+
+
     private Command score(Arm arm)
     {
          return   new AutoPoseCommand( NamedPose.Travel, arm)
@@ -83,7 +99,7 @@ public class AutoSelector
         new InstantCommand(()->{arm.setClaw(false);}),
         new WaitCommand(.1),
         new AutoPoseCommand( NamedPose.PouncePreScore, arm),
-        new AutoPoseCommand(NamedPose.ScoreL3, arm), 
+        new AutoPoseCommand(NamedPose.ScoreL2, arm), 
         new WaitCommand(1),
         new InstantCommand(()->{arm.setClaw(true);}),
         new WaitCommand(.1),
@@ -105,7 +121,8 @@ public class AutoSelector
                 return new InstantCommand(()->mode.setPiece(GamePiece.cone)).andThen(balanceAuto);
             case 3:
                 return new InstantCommand(()->mode.setPiece(GamePiece.cone)).andThen(basicAuto(arm, swerve));
-
+            case 4:
+                return TestAuto(arm, swerve);
             default:
                 return new InstantCommand();
 
