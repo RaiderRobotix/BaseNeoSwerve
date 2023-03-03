@@ -99,7 +99,7 @@ public class AutoSelector
         new InstantCommand(()->{arm.setClaw(false);}),
         new WaitCommand(.1),
         new AutoPoseCommand( NamedPose.PouncePreScore, arm),
-        new AutoPoseCommand(NamedPose.ScoreL2, arm), 
+        new AutoPoseCommand(NamedPose.ScoreL3, arm), 
         new WaitCommand(1),
         new InstantCommand(()->{arm.setClaw(true);}),
         new WaitCommand(.1),
