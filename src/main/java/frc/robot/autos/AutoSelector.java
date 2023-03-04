@@ -51,7 +51,7 @@ public class AutoSelector
             new SwerveController(swerve,  List.of(
                 new Pose2d(0,0,new Rotation2d(0)),
                 new Pose2d(4.5,0,new Rotation2d(0)),
-                new Pose2d(2,0,new Rotation2d(0))
+                new Pose2d(2.3,0,new Rotation2d(0))
             )),
           
             new LockSwerveCommand(swerve, ()->false)

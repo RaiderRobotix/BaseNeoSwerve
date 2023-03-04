@@ -30,21 +30,21 @@ public class PoseList
 
         poseList[NamedPose.PickFromSubstation.ordinal()] = 
             new DoublePose(
-                new BasicPose(0,39, 69, false),
-                new BasicPose(-1, 53, 61,  false),
+                new BasicPose(0,41, 75, false),
+                new BasicPose(-1, 58, 61,  false),
                 mode
             );
       
         poseList[NamedPose.PickDriveUpWindow.ordinal()] = 
         new DoublePose(
-                new BasicPose(-4, 85, -13, false),
-                new BasicPose(-11, 101, -18, false),
+                new BasicPose(0, 79, -13, false),
+                new BasicPose(-9, 93, -18, false),
                 mode
             );
            
 
         poseList[NamedPose.PounceDriveUpWindow.ordinal()] = 
-        new BasicPose(0, 91, 84,  false);
+        new BasicPose(0, 87, 84,  false);
 
 
       

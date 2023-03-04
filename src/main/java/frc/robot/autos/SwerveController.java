@@ -102,7 +102,7 @@ public class SwerveController extends CommandBase
         double y = pidX.calculate(driveBase.getPose().getY() , poses.get(progress).getY() );
         double rot = pidRot.calculate(driveBase.getPose().getRotation().getDegrees() , poses.get(progress).getRotation().getDegrees());
 
-        driveBase.drive(new Translation2d(x,y), rot, true, false);
+        driveBase.drive(new Translation2d(x,y), rot, false, false);
 
     }
 

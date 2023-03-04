@@ -141,8 +141,8 @@ public class RobotContainer {
         lockSwerve.onTrue(new LockSwerveCommand(s_Swerve, ()->!lockSwerve.getAsBoolean()));
 
         
-        Trigger aim = new Trigger(() -> rotateStick.getRawButton(3));
-        aim.onTrue(new Aim(s_Swerve, blindingDevice));
+        //Trigger aim = new Trigger(() -> rotateStick.getRawButton(3));
+        //aim.onTrue(new Aim(s_Swerve, blindingDevice));
  
 
         Trigger closeClaw = new Trigger(() -> driveStick.getRawButton(10));
