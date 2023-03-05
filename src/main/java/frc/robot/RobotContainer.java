@@ -13,6 +13,7 @@ import frc.robot.Arm.Arm;
 import frc.robot.Arm.NamedPose;
 import frc.robot.Arm.command.ArmCommand;
 
+
 import frc.robot.autos.AutoSelector;
 import frc.robot.commands.Aim;
 import frc.robot.subsystems.Intake;
@@ -38,7 +39,7 @@ public class RobotContainer {
     private final Joystick rotateStick;
     private final XboxController controller;
     private final GenericHID buttonBoard;
-    private Limelight blindingDevice;
+    //private Limelight blindingDevice;
 
     /* Drive Controls */
     private final int translationAxis;
@@ -71,6 +72,10 @@ public class RobotContainer {
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() 
     {
+
+       // for(int port = 5800; port <=5805; port++)
+        //{
+        //}
         //blindingDevice = new Limelight();
        
         PneumaticHub ph = new PneumaticHub(Constants.REV.PHID);
@@ -140,7 +145,8 @@ public class RobotContainer {
         Trigger lockSwerve = new Trigger(() -> rotateStick.getRawButton(1));
         lockSwerve.onTrue(new LockSwerveCommand(s_Swerve, ()->!lockSwerve.getAsBoolean()));
 
-        
+        Trigger oneEightyGryo = new Trigger(() -> rotateStick.getRawButton(3));
+        oneEightyGryo.onTrue(new InstantCommand(()->s_Swerve.zeroGyro(180)));
         //Trigger aim = new Trigger(() -> rotateStick.getRawButton(3));
         //aim.onTrue(new Aim(s_Swerve, blindingDevice));
  

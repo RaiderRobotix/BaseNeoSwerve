@@ -27,7 +27,6 @@ public class AutoSelector
     private Arm arm;
     private Swerve swerve;
 
-    private Command balanceAuto;
     
     public AutoSelector(Thumbwheel th, Arm arm, Swerve swerve, PieceMode mode)
     {
@@ -35,52 +34,78 @@ public class AutoSelector
         wheel = th;
         this.mode = mode;
         this.swerve = swerve;
-
-
- 
-        TrajectoryConfig config =
-        new TrajectoryConfig(
-                Constants.AutoConstants.kMaxSpeedMetersPerSecond,
-                Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-            .setKinematics(SwerveConfig.swerveKinematics);
-
-        
-
-        balanceAuto =  score(arm).andThen(
-          
-            new SwerveController(swerve,  List.of(
-                new Pose2d(0,0,new Rotation2d(0)),
-                new Pose2d(4.5,0,new Rotation2d(0)),
-                new Pose2d(2.3,0,new Rotation2d(0))
-            )),
-          
-            new LockSwerveCommand(swerve, ()->false)
-        );
         
 
            
     }
 
-    private Command basicAuto(Arm arm, Swerve swerve)
+    private Command basicAuto()
     {
       
 
 
-        return score(arm).andThen(
+        return score().andThen(
             new SwerveController(swerve,  List.of(
                 new Pose2d(0,0,new Rotation2d(0)),
-                new Pose2d(3.85,0,new Rotation2d(0))
+                new Pose2d(4,0,new Rotation2d(0))
             ))
         );
             
                
     }
 
+    private Command doubleScore()
+    {
 
-    private Command TestAuto(Arm arm, Swerve swerve)
+        double dist = 3.5;
+        return score().andThen(
+            new SwerveController(swerve,  List.of(
+                new Pose2d(0,0,new Rotation2d(0)),
+                new Pose2d(dist-.1,0,new Rotation2d(0)),
+                new Pose2d(dist,0,new Rotation2d(180))
+            )).alongWith(
+                new WaitCommand(.3).andThen
+                (
+                    new AutoPoseCommand(NamedPose.FloorPick, arm),
+                new WaitCommand(1.5)
+                )),
+            
+            new AutoPoseCommand(NamedPose.Travel, arm),
+            new WaitCommand(.2),
+            new SwerveController(swerve,  List.of(
+                new Pose2d(dist,0,new Rotation2d(180)),
+                new Pose2d(dist-.1,0,new Rotation2d(0)),
+                new Pose2d(0,0,new Rotation2d(0))
+            )),
+            new AutoPoseCommand( NamedPose.PouncePreScore, arm),
+            new AutoPoseCommand(NamedPose.ScoreL2, arm), 
+            new WaitCommand(1.5),
+            new InstantCommand(()->{arm.setClaw(true);}),
+            new WaitCommand(.1),
+            new ScheduleCommand(new AutoPoseCommand(NamedPose.Travel, arm))
+        );
+    }
+    
+
+    private Command balanceAuto()
+    {
+        return score().andThen(
+          
+            new SwerveController(swerve,  List.of(
+                new Pose2d(0,0,new Rotation2d(0)),
+                new Pose2d(4.5,0,new Rotation2d(0)),
+                new Pose2d(2.2,0,new Rotation2d(0))
+            )),
+          
+            new LockSwerveCommand(swerve, ()->false)
+        );
+    }
+
+
+    private Command TestAuto()
     {
       
-
+//
 
         return new SwerveController(swerve,  List.of(
                 new Pose2d(0,0,new Rotation2d(0)),
@@ -92,7 +117,7 @@ public class AutoSelector
     }
 
 
-    private Command score(Arm arm)
+    private Command score()
     {
          return   new AutoPoseCommand( NamedPose.Travel, arm)
         .andThen( 
@@ -100,29 +125,50 @@ public class AutoSelector
         new WaitCommand(.1),
         new AutoPoseCommand( NamedPose.PouncePreScore, arm),
         new AutoPoseCommand(NamedPose.ScoreL3, arm), 
-        new WaitCommand(1),
+        new WaitCommand(1.5),
         new InstantCommand(()->{arm.setClaw(true);}),
         new WaitCommand(.1),
         new ScheduleCommand(new AutoPoseCommand(NamedPose.Travel, arm)));
     }
 
+    private Command init(GamePiece p)
+    {
+        return new InstantCommand(()->  
+        {  
+        swerve.zeroGyro();
+        swerve.resetOdometry(new Pose2d(0,0,new Rotation2d()));
+        mode.setPiece(p);
+        AutoPoseCommand.reset();
+        });
+     
+       
+    }
 
     public Command getAutonomousCommand()
     {
 
-
+       
         switch(wheel.getValue())
         {
             case 0: // we reseve zero to doing nothing.
                 return new InstantCommand();
             case 1:
-                return new InstantCommand(()->mode.setPiece(GamePiece.cone)).andThen(basicAuto(arm, swerve));
+                return init(GamePiece.cone).andThen(basicAuto());
             case 2:
-                return new InstantCommand(()->mode.setPiece(GamePiece.cone)).andThen(balanceAuto);
+                return init(GamePiece.cone) .andThen(balanceAuto());
             case 3:
-                return new InstantCommand(()->mode.setPiece(GamePiece.cone)).andThen(basicAuto(arm, swerve));
+                return init(GamePiece.cone).andThen(score());
             case 4:
-                return TestAuto(arm, swerve);
+                return init(GamePiece.cube).andThen(score());
+            case 5:
+                return init(GamePiece.cube).andThen(basicAuto());
+            case 6:
+                return init(GamePiece.cube) .andThen(balanceAuto());
+            case 14:
+                return init(GamePiece.cube) .andThen(doubleScore());
+            case 15:
+                return init(GamePiece.cube) .andThen(TestAuto());
+           
             default:
                 return new InstantCommand();
 

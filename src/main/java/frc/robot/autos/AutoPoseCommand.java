@@ -14,12 +14,27 @@ public class AutoPoseCommand extends CommandBase
     Arm arm;
     ArmPose pose;
     Command poseCommand;
+    private static ArmPose last;
 
     public AutoPoseCommand(NamedPose dest, Arm arm)
     {
         pose = arm.getPoseList().getArmPose(dest);
         this.arm = arm;
-        poseCommand = ArmCommand.PlotPath(dest, null, arm);
+
+        // warning new
+        if(last == null)
+        {
+            last=arm.getCurrentPose();
+        }
+
+        // change to null if problem.
+        poseCommand = ArmCommand.PlotPath(dest, last, arm);
+        last = pose;
+    }
+
+    public static void reset()
+    {
+        last=null;
     }
 
     @Override

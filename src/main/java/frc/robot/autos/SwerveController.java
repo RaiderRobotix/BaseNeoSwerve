@@ -5,19 +5,21 @@ import java.util.List;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.swerve.Swerve;
 
 public class SwerveController extends CommandBase
 {
  
-    private final double p = -7;
+    private final double p = -8;
     private final double i = 0.00;
     private final double d = 0.00;
 
-    private final double pRot = -.15;
+    private final double pRot = .05;
     private final double iRot = 0.00;
-    private final double dRot = 0.00;
+    private final double dRot = 0;
+    
 
     private PIDController pidX;
     private PIDController pidY;
@@ -36,13 +38,14 @@ public class SwerveController extends CommandBase
         pidY = new PIDController(p, i, d);
         pidRot = new PIDController(pRot, iRot, dRot);
 
-        pidX.setTolerance(.5);
-        pidY.setTolerance(.1);
+        pidX.setTolerance(.05);
+        pidY.setTolerance(.05);
         pidRot.setTolerance(1);
 
         pidX.setIntegratorRange(-.8, .8);
         pidY.setIntegratorRange(-.8, .8);
         pidRot.setIntegratorRange(-.3, .3);
+        pidRot.enableContinuousInput(0, 360);
 
         if(poses.size()<2)
         {
@@ -63,16 +66,23 @@ public class SwerveController extends CommandBase
 
     private boolean atCurrentPose()
     {
-        if(Math.abs(driveBase.getPose().getX()-poses.get(progress).getX())>.05 )
+        SmartDashboard.putNumber("Rotation Error:", pidRot.getPositionError());
+        if(Math.abs(driveBase.getPose().getX()-poses.get(progress).getX())>pidX.getPositionTolerance() )
         {
             return false;
         }
 
-        if(Math.abs(driveBase.getPose().getY()-poses.get(progress).getY())>.05)
+        if(Math.abs(driveBase.getPose().getY()-poses.get(progress).getY())>pidY.getPositionTolerance() )
         {
             return false;
         }
 
+        if(Math.abs
+            (driveBase.getPose().getRotation().getDegrees()-poses.get(progress).getRotation().getDegrees())
+            >pidRot.getPositionTolerance() )
+        {
+            return false;
+        }
         return true;
     }
 

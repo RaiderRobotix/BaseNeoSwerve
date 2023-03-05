@@ -19,7 +19,7 @@ public class SwerveConfig
     //
     public static final IdleMode driveIdleMode = IdleMode.kBrake;
     public static final IdleMode angleIdleMode = IdleMode.kBrake;
-    public static final double drivePower = .9;
+    public static final double drivePower = 1;
     public static final double anglePower = .9;
 
 

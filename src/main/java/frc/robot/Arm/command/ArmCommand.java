@@ -76,11 +76,12 @@ public class ArmCommand extends CommandBase
 
         ArrayList<Command> sequence = new ArrayList<Command>();
        
-        if( !to.getExtender())
+        
+        if( (!to.getExtender()) && from.getExtender())
         {
             System.out.println("Retracting");
             sequence.add(new InstantCommand(()->arm.setExtender(false)));
-            sequence.add(new WaitCommand(.5));
+            sequence.add(new WaitCommand(.5)); // TODO - resolve.
         }
 
 

@@ -1,6 +1,8 @@
 
 package frc.robot.Arm;
 
+import com.fasterxml.jackson.databind.introspect.TypeResolutionContext.Basic;
+
 import frc.lib.util.States.GamePieceSupplier;
 import frc.robot.Arm.command.ArmPose;
 import frc.robot.Arm.command.BasicPose;
@@ -31,29 +33,27 @@ public class PoseList
         poseList[NamedPose.PickFromSubstation.ordinal()] = 
             new DoublePose(
                 new BasicPose(0,41, 75, false),
-                new BasicPose(-1, 58, 61,  false),
+                new BasicPose(-3, 45, 67,  false),
                 mode
             );
       
         poseList[NamedPose.PickDriveUpWindow.ordinal()] = 
         new DoublePose(
-                new BasicPose(0, 79, -13, false),
-                new BasicPose(-9, 93, -18, false),
+                new BasicPose(-3, 74, 0, false),
+                new BasicPose(-5, 82, -8, false),
                 mode
             );
            
 
         poseList[NamedPose.PounceDriveUpWindow.ordinal()] = 
-        new BasicPose(0, 87, 84,  false);
+        new BasicPose(-5, 82, 84,  false);
 
 
       
         poseList[NamedPose.FloorPick.ordinal()] = 
-        new DoublePose(
-            new BasicPose(-53, 30, 3, false),
-            new BasicPose(-51, 27, 50,   false),
-            mode
-        );
+       
+            new BasicPose(-65, 37, 90, false);
+        
 
         
         poseList[NamedPose.ScoreL1.ordinal()] = 

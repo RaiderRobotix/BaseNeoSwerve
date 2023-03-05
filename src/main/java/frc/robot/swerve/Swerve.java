@@ -131,10 +131,16 @@ public class Swerve extends SubsystemBase
         return positions;
     }
 
+    public void zeroGyro(double deg)
+    {
+      
+        gyro.setYaw(deg);
+    }
+
     public void zeroGyro()
     {
       
-        gyro.setYaw(0);
+       zeroGyro(0);
     }
 
     public Rotation2d getYaw() 
