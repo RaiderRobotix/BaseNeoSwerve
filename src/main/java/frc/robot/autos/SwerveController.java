@@ -66,7 +66,7 @@ public class SwerveController extends CommandBase
 
     private boolean atCurrentPose()
     {
-        //SmartDashboard.putNumber("Rotation Error:", pidRot.getPositionError());
+        SmartDashboard.putNumber("Rotation Error:", pidRot.getPositionError());
         if(Math.abs(driveBase.getPose().getX()-poses.get(progress).getX())>pidX.getPositionTolerance() )
         {
             return false;
@@ -81,7 +81,7 @@ public class SwerveController extends CommandBase
             (driveBase.getPose().getRotation().getDegrees()-poses.get(progress).getRotation().getDegrees())
             >pidRot.getPositionTolerance() )
         {
-            //return false;
+            return false;
         }*/
         return true;
     }
@@ -94,7 +94,6 @@ public class SwerveController extends CommandBase
     {
         
 
-        //System.out.println("running ppidpidpdip errr: "+pidX.atSetpoint()+"   "+poses.get(progress).getX());
         if(atCurrentPose())
         {
             System.out.println("PROGRESS!!!");
