@@ -77,12 +77,12 @@ public class SwerveController extends CommandBase
             return false;
         }
 
-        /*if(Math.abs
+        if(Math.abs
             (driveBase.getPose().getRotation().getDegrees()-poses.get(progress).getRotation().getDegrees())
             >pidRot.getPositionTolerance() )
         {
-            //return false;
-        }*/
+            return false;
+        }
         return true;
     }
 
