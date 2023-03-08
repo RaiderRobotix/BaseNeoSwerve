@@ -118,7 +118,7 @@ public class AutoSelector
 
         return new SwerveController(swerve,  List.of(
                 new Pose2d(0,0,new Rotation2d(0)),
-                new Pose2d(.1,0,Rotation2d.fromDegrees(90))
+                new Pose2d(.01,0,Rotation2d.fromDegrees(180))
             )
         );
             

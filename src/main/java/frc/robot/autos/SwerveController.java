@@ -16,7 +16,7 @@ public class SwerveController extends CommandBase
     private final double i = 0.00;
     private final double d = 0.00;
 
-    private final double pRot = -.15;
+    private final double pRot = -.2;
     private final double iRot = 0.00;
     private final double dRot = 0.00;
     
@@ -45,7 +45,7 @@ public class SwerveController extends CommandBase
         pidX.setIntegratorRange(-.8, .8);
         pidY.setIntegratorRange(-.8, .8);
         pidRot.setIntegratorRange(-.3, .3);
-        //pidRot.enableContinuousInput(0, 360);
+        pidRot.enableContinuousInput(-180, 180);
 
         if(poses.size()<2)
         {
@@ -66,7 +66,7 @@ public class SwerveController extends CommandBase
 
     private boolean atCurrentPose()
     {
-        //SmartDashboard.putNumber("Rotation Error:", pidRot.getPositionError());
+       
         if(Math.abs(driveBase.getPose().getX()-poses.get(progress).getX())>pidX.getPositionTolerance() )
         {
             return false;
@@ -112,7 +112,10 @@ public class SwerveController extends CommandBase
         double y = pidX.calculate(driveBase.getPose().getY() , poses.get(progress).getY() );
         double rot = pidRot.calculate(driveBase.getPose().getRotation().getDegrees() , poses.get(progress).getRotation().getDegrees());
 
-        driveBase.drive(new Translation2d(x,y), rot, false, false);
+        SmartDashboard.putNumber("x", x);
+        SmartDashboard.putNumber("y", y);
+        SmartDashboard.putNumber("Rotation", rot);
+        driveBase.drive(new Translation2d(x,y), rot, true, false);
 
     }
 
