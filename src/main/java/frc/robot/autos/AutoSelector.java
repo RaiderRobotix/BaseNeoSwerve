@@ -57,7 +57,7 @@ public class AutoSelector
     private Command doubleScore()
     {
 
-        double dist = 3.5;
+        double dist = 4;
         return score().andThen(
 
 
@@ -66,32 +66,18 @@ public class AutoSelector
                 new Pose2d(0,0,new Rotation2d(0)),
                 new Pose2d(dist,0,new Rotation2d(0))//,
                 //new Pose2d(dist,0,new Rotation2d(180))
-            )).alongWith(
-                new WaitCommand(.3).andThen
-                (
-                    new AutoPoseCommand(NamedPose.FloorPick, arm),
-                    new WaitCommand(1.5)
-                )),
-
-            // close claw and get ready to move
-            new InstantCommand(()->{arm.setClaw(false);}),
-            new WaitCommand(.2),
-            new AutoPoseCommand(NamedPose.Travel, arm),
+            )),
+           
 
             // go back
             new SwerveController(swerve,  List.of(
                 new Pose2d(dist,0,new Rotation2d(180)),
-                new Pose2d(dist,0,new Rotation2d(0))//,
+                new Pose2d(.6,0,new Rotation2d(180)),
+                new Pose2d(0,.6,new Rotation2d(0))//,
                 //new Pose2d(0,0,new Rotation2d(0))
-            )),
+            ))
 
-            // score
-            new AutoPoseCommand( NamedPose.PouncePreScore, arm),
-            new AutoPoseCommand(NamedPose.ScoreL2, arm), 
-            new WaitCommand(1.5),
-            new InstantCommand(()->{arm.setClaw(true);}),
-            new WaitCommand(.1),
-            new ScheduleCommand(new AutoPoseCommand(NamedPose.Travel, arm))
+       
         );
     }
     
