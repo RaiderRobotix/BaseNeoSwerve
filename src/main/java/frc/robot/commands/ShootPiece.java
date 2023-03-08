@@ -1,50 +1,43 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Arm.Arm;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 
-public class TeleopIntake extends CommandBase
+public class ShootPiece extends CommandBase
 {
-
     final private Intake INTAKE;
+    final private Shooter SHOOTER;
     private boolean finished = false;
 
-    public TeleopIntake(Intake intake)
+    public ShootPiece(Intake intake, Shooter shooter)
     {
         INTAKE = intake;
-        
+        SHOOTER = shooter;
         addRequirements(INTAKE);
     }
 
     @Override
     public void initialize() 
     {
-        if(INTAKE.hasPiece()) 
+        if(SHOOTER.isUpToSpeed())
         {
-            INTAKE.startIntake();//only run if needs a piece
+            INTAKE.shoot();
         }
-        else
-        {
-            finished = true;
-            end(true);
-        }
+
     }
+
     @Override
     public void execute()
     {
-        if(INTAKE.hasPiece())
-        {
-            finished = true;
-        }
+        
     }
 
     @Override
     public void end(boolean inturrupted)
     {
-        
         INTAKE.stopIntake();
-
+        
     }
 
     @Override

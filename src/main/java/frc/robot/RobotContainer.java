@@ -16,9 +16,15 @@ import frc.robot.Arm.command.ArmCommand;
 
 import frc.robot.autos.AutoSelector;
 import frc.robot.commands.Aim;
+import frc.robot.commands.ShootPiece;
+import frc.robot.commands.SpinShooter;
+import frc.robot.commands.TeleopIntake;
+import frc.robot.commands.TeleopOuttake;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakeConfig;
 import frc.robot.subsystems.Leds;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Thumbwheel;
 import frc.robot.swerve.Swerve;
 import frc.robot.swerve.command.LockSwerveCommand;
@@ -60,6 +66,7 @@ public class RobotContainer {
     /* Subsystems */
     private final Swerve s_Swerve;
     private final Arm s_Arm;
+    private final Shooter s_Shooter;
     private final Thumbwheel s_Thumb;
     private final Leds s_leds;
 
@@ -107,6 +114,7 @@ public class RobotContainer {
         pieceMode = new PieceMode();
         s_Arm = new Arm(NamedPose.Home, ph, pieceMode);
         s_Intake = new Intake(ph);
+        s_Shooter = new Shooter();
        
         s_leds = new Leds(pieceMode);
    
@@ -149,6 +157,9 @@ public class RobotContainer {
         oneEightyGryo.onTrue(new InstantCommand(()->s_Swerve.zeroGyro(180)));
         //Trigger aim = new Trigger(() -> rotateStick.getRawButton(3));
         //aim.onTrue(new Aim(s_Swerve, blindingDevice));
+
+        Trigger shootCube = new Trigger(()-> rotateStick.getRawButton(6));
+        shootCube.whileTrue(new ShootPiece(s_Intake, s_Shooter));
  
 
         Trigger closeClaw = new Trigger(() -> driveStick.getRawButton(10));
@@ -202,43 +213,27 @@ public class RobotContainer {
 
         new Trigger(() -> buttonBoard.getRawButton(12))
             .onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.Travel, s_Arm)));
-
-      
-
-
-        // Xbox controller
-
-
-
+        
         Trigger resetOdometrey = new Trigger(()-> rotateStick.getRawButton(2));
         resetOdometrey.onTrue(new InstantCommand(()-> {s_Swerve.resetOdometry(new Pose2d(   /*wow*/));}));//this is normal
 
+        // Xbox controller
 
-        Trigger lBump = new Trigger(()->controller.getLeftBumper());
-        lBump.onTrue(new InstantCommand(()->
-        {
-           
-            s_Intake.setPresenter(false);
-        }));
+        Trigger intakeButton = new Trigger(()-> controller.getRightBumper());
+        intakeButton.whileTrue(new TeleopIntake(s_Intake));
 
-        // to Treavor's dismay:
-        Trigger startErection = new Trigger(()->controller.getRightBumper());
-        startErection.onTrue(
-            
-                new InstantCommand(()->
-                {
-                    s_Intake.setPresenter(true);
-                    //ArmCommand.PlotPath(NamedPose.FloorPick, s_Arm);
-                })
-        );
+        Trigger outtakeButton = new Trigger(()-> controller.getLeftBumper());
+        outtakeButton.whileTrue(new TeleopOuttake(s_Intake));
 
+        Trigger shootL1 = new Trigger(()-> controller.getAButton());
+        outtakeButton.whileTrue(new SpinShooter(s_Shooter, IntakeConfig.level1Speed));
+
+        Trigger shootL2 = new Trigger(()-> controller.getXButton());
+        outtakeButton.whileTrue(new SpinShooter(s_Shooter, IntakeConfig.level2Speed));
+
+        Trigger shootL3 = new Trigger(()-> controller.getYButton());
+        outtakeButton.whileTrue(new SpinShooter(s_Shooter, IntakeConfig.level3Speed));
         
-
-        Trigger X = new Trigger(()->controller.getXButton());
-        X.onTrue(new InstantCommand(()->s_Arm.setClaw(true)));
-
-        Trigger A = new Trigger(()->controller.getAButton());
-        A.onTrue(new InstantCommand(()->s_Arm.setClaw(false)));
     }
 
     /**
