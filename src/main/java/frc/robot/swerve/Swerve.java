@@ -193,6 +193,7 @@ public class Swerve extends SubsystemBase
         SmartDashboard.putNumber("Odo Pos X", pose.getX());
         SmartDashboard.putNumber("Odo Pos Y", pose.getY());
         SmartDashboard.putNumber("Odo Angle", pose.getRotation().getDegrees());
+        SmartDashboard.putNumber("Gyro Angle", getYaw().getDegrees());
 
         //SmartDashboard.putNumber("pitch", getPitchDegrees());
         //SmartDashboard.putNumber("roll", getRollDegrees());

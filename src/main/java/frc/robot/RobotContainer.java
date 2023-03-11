@@ -144,6 +144,11 @@ public class RobotContainer {
 
         Trigger lockSwerve = new Trigger(() -> rotateStick.getRawButton(1));
         lockSwerve.onTrue(new LockSwerveCommand(s_Swerve, ()->!lockSwerve.getAsBoolean()));
+        
+
+        Trigger TEST = new Trigger(() -> rotateStick.getRawButton(7));
+        TEST.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.PickFromSubstation, s_Arm)));
+
 
         Trigger oneEightyGryo = new Trigger(() -> rotateStick.getRawButton(3));
         oneEightyGryo.onTrue(new InstantCommand(()->s_Swerve.zeroGyro(180)));
