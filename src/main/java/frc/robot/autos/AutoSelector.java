@@ -64,8 +64,8 @@ public class AutoSelector
             // move to piece and get ready to grab
             new SwerveController(swerve,  List.of(
                 new Pose2d(0,0,new Rotation2d(0)),
-                new Pose2d(dist,0,new Rotation2d(0))//,
-                //new Pose2d(dist,0,new Rotation2d(180))
+                new Pose2d(dist-.1,0,new Rotation2d(0)),
+                new Pose2d(dist,0,new Rotation2d(180))
             )),
            
 
@@ -104,7 +104,7 @@ public class AutoSelector
 
         return new SwerveController(swerve,  List.of(
                 new Pose2d(0,0,new Rotation2d(0)),
-                new Pose2d(.01,0,Rotation2d.fromDegrees(180))
+                new Pose2d(.01,0,Rotation2d.fromDegrees(179))
             )
         );
             
@@ -130,10 +130,13 @@ public class AutoSelector
     {
         return new InstantCommand(()->  
         {  
-        swerve.zeroGyro();
-        swerve.resetOdometry(new Pose2d(0,0,new Rotation2d()));
-        mode.setPiece(p);
-        AutoPoseCommand.reset();
+            //swerve.zeroGyro();
+            swerve.resetOdometry(new Pose2d());
+           // swerve.zeroGyro();
+            mode.setPiece(p);
+            
+            AutoPoseCommand.reset();
+           
         });
      
        
@@ -147,18 +150,10 @@ public class AutoSelector
         {
             case 0: // we reseve zero to doing nothing.
                 return new InstantCommand();
-            case 1:
-                return init(GamePiece.cone).andThen(basicAuto());
-            case 2:
-                return init(GamePiece.cone) .andThen(balanceAuto());
             case 3:
                 return init(GamePiece.cone).andThen(score());
             case 4:
                 return init(GamePiece.cube).andThen(score());
-            case 5:
-                return init(GamePiece.cube).andThen(basicAuto());
-            case 6:
-                return init(GamePiece.cube) .andThen(balanceAuto());
             case 14:
                 return init(GamePiece.cube) .andThen(doubleScore());
             case 15:

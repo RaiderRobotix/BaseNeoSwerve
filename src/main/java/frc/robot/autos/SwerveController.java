@@ -16,7 +16,7 @@ public class SwerveController extends CommandBase
     private final double i = 0.00;
     private final double d = 0.00;
 
-    private final double pRot = -.2;
+    private final double pRot = -.3;
     private final double iRot = 0.00;
     private final double dRot = 0.00;
     
@@ -66,11 +66,7 @@ public class SwerveController extends CommandBase
 
     private boolean atCurrentPose()
     {
-<<<<<<< HEAD
-        SmartDashboard.putNumber("Rotation Error:", pidRot.getPositionError());
-=======
        
->>>>>>> rotationTesting
         if(Math.abs(driveBase.getPose().getX()-poses.get(progress).getX())>pidX.getPositionTolerance() )
         {
             return false;
@@ -86,11 +82,7 @@ public class SwerveController extends CommandBase
             >pidRot.getPositionTolerance() )
         {
             return false;
-<<<<<<< HEAD
-        }*/
-=======
         }
->>>>>>> rotationTesting
         return true;
     }
 
