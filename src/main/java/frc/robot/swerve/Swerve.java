@@ -12,10 +12,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -45,14 +42,7 @@ public class Swerve extends SubsystemBase
         };
 
         swerveOdometry = new SwerveDriveOdometry(SwerveConfig.swerveKinematics, getYaw(), getModulePositions());
-
-        ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
-
-
-        addDashboardEntries(tab.getLayout("Odo", BuiltInLayouts.kList)
-             .withSize(2, 4)
-             .withPosition(0, 0), swerveOdometry.getPoseMeters());
-             
+     
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) 
@@ -106,6 +96,7 @@ public class Swerve extends SubsystemBase
 
     public void resetOdometry(Pose2d pose) 
     {
+        zeroGyro(pose.getRotation().getDegrees());
         swerveOdometry.resetPosition(Rotation2d.fromDegrees(gyro.getYaw()), getModulePositions(), pose);
        
     }
@@ -134,14 +125,21 @@ public class Swerve extends SubsystemBase
     public void zeroGyro(double deg)
     {
       
+        if(SwerveConfig.invertGyro)
+        {
+            deg = -deg;
+        }
         gyro.setYaw(deg);
+        swerveOdometry.update(getYaw(), getModulePositions());  
     }
 
     public void zeroGyro()
     {
       
        zeroGyro(0);
+     
     }
+    
 
     public Rotation2d getYaw() 
     {
@@ -195,19 +193,14 @@ public class Swerve extends SubsystemBase
         SmartDashboard.putNumber("Odo Pos X", pose.getX());
         SmartDashboard.putNumber("Odo Pos Y", pose.getY());
         SmartDashboard.putNumber("Odo Angle", pose.getRotation().getDegrees());
+        SmartDashboard.putNumber("Gyro Angle", getYaw().getDegrees());
 
         //SmartDashboard.putNumber("pitch", getPitchDegrees());
         //SmartDashboard.putNumber("roll", getRollDegrees());
         
     }
 
-    // slight witchcra%ft
-    private void addDashboardEntries(ShuffleboardContainer container, Pose2d pose) 
-    {
-        container.addNumber("Pos X", () -> pose.getX());
-        container.addNumber("Pos Y",()-> pose.getY());
-        container.addNumber("Angle", ()->pose.getRotation().getDegrees());
-    }
+   
 
   
 }
