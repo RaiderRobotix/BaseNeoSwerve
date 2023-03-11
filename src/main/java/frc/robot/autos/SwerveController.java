@@ -12,11 +12,11 @@ import frc.robot.swerve.Swerve;
 public class SwerveController extends CommandBase
 {
  
-    private final double p = -8;
+    private final double p = -9;
     private final double i = 0.00;
     private final double d = 0.00;
 
-    private final double pRot = -.3;
+    private final double pRot = -.4;
     private final double iRot = 0.00;
     private final double dRot = 0.00;
     
@@ -42,9 +42,9 @@ public class SwerveController extends CommandBase
         pidY.setTolerance(.05);
         pidRot.setTolerance(1);
 
-        pidX.setIntegratorRange(-.8, .8);
-        pidY.setIntegratorRange(-.8, .8);
-        pidRot.setIntegratorRange(-.3, .3);
+        //pidX.setIntegratorRange(-.8, .8);
+        //pidY.setIntegratorRange(-.8, .8);
+        //pidRot.setIntegratorRange(-.3, .3);
         pidRot.enableContinuousInput(-180, 180);
 
         if(poses.size()<2)
@@ -69,21 +69,45 @@ public class SwerveController extends CommandBase
        
         if(Math.abs(driveBase.getPose().getX()-poses.get(progress).getX())>pidX.getPositionTolerance() )
         {
+            System.out.println("X NO GOOD");
             return false;
         }
 
         if(Math.abs(driveBase.getPose().getY()-poses.get(progress).getY())>pidY.getPositionTolerance() )
         {
+            System.out.println("Y NO GOOD");
             return false;
         }
 
-        if(Math.abs
+        /*Math.abs
             (driveBase.getPose().getRotation().getDegrees()-poses.get(progress).getRotation().getDegrees())
-            >pidRot.getPositionTolerance() )
+            >pidRot.getPositionTolerance() 
+            &&
+            Math.abs(Math.abs(poses.get(progress).getRotation().getDegrees())-180)
+            ) */
+        if(!isAtRotationSetpoint(driveBase.getPose().getRotation().getDegrees(), poses.get(progress).getRotation().getDegrees())) 
         {
+
+            System.out.println("ROT NO GOOD");
             return false;
         }
         return true;
+    }
+
+    private boolean isAtRotationSetpoint(double current, double setpoint)
+    {
+        double tol = pidRot.getPositionTolerance();
+        if(Math.abs(current-setpoint)<tol)
+        {
+            return true;
+        }
+
+        double curdistfrom180 = Math.abs(Math.abs(current)-180);
+        double setdistfrom180 = Math.abs(Math.abs(setpoint)-180);
+
+        System.out.println("DIST"+curdistfrom180+setdistfrom180);
+        return curdistfrom180+setdistfrom180<tol;
+
     }
 
     /**
@@ -109,11 +133,14 @@ public class SwerveController extends CommandBase
         double x = pidX.calculate(driveBase.getPose().getX() , poses.get(progress).getX() );
       
         double y = pidX.calculate(driveBase.getPose().getY() , poses.get(progress).getY() );
-        double rot = pidRot.calculate(driveBase.getPose().getRotation().getDegrees() , poses.get(progress).getRotation().getDegrees());
+        pidRot.setSetpoint(poses.get(progress).getRotation().getDegrees());
+        double rot = pidRot.calculate(driveBase.getPose().getRotation().getDegrees());
 
         SmartDashboard.putNumber("x", x);
         SmartDashboard.putNumber("y", y);
         SmartDashboard.putNumber("Rotation", rot);
+        SmartDashboard.putNumber("Rot error", pidRot.getPositionError());
+        SmartDashboard.putNumber("Rot setpoint", pidRot.getSetpoint());
         driveBase.drive(new Translation2d(x,y), rot, true, false);
 
     }

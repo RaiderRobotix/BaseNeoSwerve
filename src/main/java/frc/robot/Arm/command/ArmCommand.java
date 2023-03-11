@@ -3,11 +3,13 @@ package frc.robot.Arm.command;
 
 import java.util.ArrayList;
 
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Arm.Arm;
 import frc.robot.Arm.NamedPose;
@@ -54,7 +56,12 @@ public class ArmCommand extends CommandBase
     }
 
 
-   
+    public static Command PlotPathAndSchedule(NamedPose dest, Arm arm, PowerDistribution pd)
+    {
+        CommandScheduler.getInstance().schedule(new InstantCommand(()->pd.setSwitchableChannel(false)));
+        return ArmCommand.PlotPathAndSchedule(dest, arm.getCurrentPose(), arm);
+    }
+
 
     public static Command PlotPathAndSchedule(NamedPose dest, Arm arm)
     {
@@ -71,7 +78,7 @@ public class ArmCommand extends CommandBase
 
     public static Command PlotPath( NamedPose dest, ArmPose from, Arm arm)
     {
-        System.out.println("Plotting path");
+        System.out.println("Plotting path FROM: "+from);
         ArmPose to = arm.getPoseList().getArmPose(dest);
 
         ArrayList<Command> sequence = new ArrayList<Command>();

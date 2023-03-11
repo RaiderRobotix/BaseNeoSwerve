@@ -127,7 +127,7 @@ public class Arm extends SubsystemBase
      */
     public ArmPose getCurrentPose()
     {
-        return new BasicPose(J1.getEncoder().getPosition(), J2.getEncoder().getPosition(), J3.getEncoder().getPosition(), getClaw());
+        return new BasicPose(J1.getEncoder().getPosition(), J2.getEncoder().getPosition(), J3.getEncoder().getPosition(), getExtender());
     }
 
 
@@ -214,7 +214,7 @@ public class Arm extends SubsystemBase
 
     public boolean getExtender()
     {
-        return extender.get() == Value.kForward;
+        return extender.get() != Value.kForward;
     }
 
     // in revolutions
@@ -277,33 +277,7 @@ public class Arm extends SubsystemBase
         return Math.abs(a-b)<within;
     }
 
-    public void jogJoint(int joint, boolean forward)
-    {
-        final double JOG_BY = 1;
-        double jog = (forward)? JOG_BY : -JOG_BY;
-
-        System.out.println("jogging motor by " + jog + " degrees");
-
-        Double pos1 = currentPose.getJ1();
-        Double pos2 = currentPose.getJ2();
-        Double pos3 = currentPose.getJ3();
-
-        switch (joint)
-        {
-            case 1:
-                pos1 += jog;
-                break;
-            case 2:
-                pos2 += jog;
-                break;
-            case 3:
-                pos3 += jog;
-                break;
-
-        }
-
-        adoptPose(new BasicPose(pos1, pos2, pos3, getExtender()));
-    }
+   
 
     
 }

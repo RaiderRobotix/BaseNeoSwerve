@@ -10,6 +10,7 @@ import com.ctre.phoenix.sensors.Pigeon2;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
@@ -31,7 +32,7 @@ public class Swerve extends SubsystemBase
         
         gyro = new Pigeon2(Constants.REV.pigeonID);
         gyro.configFactoryDefault();
-        zeroGyro();
+     
 
         mSwerveMods = new SwerveModule[] {
            
@@ -42,7 +43,7 @@ public class Swerve extends SubsystemBase
         };
 
         swerveOdometry = new SwerveDriveOdometry(SwerveConfig.swerveKinematics, getYaw(), getModulePositions());
-     
+        zeroGyro();
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) 
@@ -56,8 +57,8 @@ public class Swerve extends SubsystemBase
                                     getYaw()
                                 )
                                 : new ChassisSpeeds(
-                                    translation.getX(), 
-                                    translation.getY(), 
+                                    -translation.getX(), 
+                                    -translation.getY(), 
                                     rotation)
                                 );
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, SwerveConfig.maxSpeed);
@@ -96,8 +97,9 @@ public class Swerve extends SubsystemBase
 
     public void resetOdometry(Pose2d pose) 
     {
+        
+        swerveOdometry.resetPosition(new Rotation2d(), getModulePositions(), pose);
         zeroGyro(pose.getRotation().getDegrees());
-        swerveOdometry.resetPosition(Rotation2d.fromDegrees(gyro.getYaw()), getModulePositions(), pose);
        
     }
 
@@ -195,12 +197,27 @@ public class Swerve extends SubsystemBase
         SmartDashboard.putNumber("Odo Angle", pose.getRotation().getDegrees());
         SmartDashboard.putNumber("Gyro Angle", getYaw().getDegrees());
 
-        //SmartDashboard.putNumber("pitch", getPitchDegrees());
+        SmartDashboard.putNumber("field pitch", gyro.getPitch());
+        SmartDashboard.putNumber("robo pitch", robotRelativeOrientation().getY());
+        SmartDashboard.putNumber("robo roll", robotRelativeOrientation().getY());
+        SmartDashboard.putNumber("robo yaw", robotRelativeOrientation().getZ());
         //SmartDashboard.putNumber("roll", getRollDegrees());
         
     }
 
    
+    public Rotation3d robotRelativeOrientation()
+    {
+        Rotation3d orient = new Rotation3d(0,0,-getPose().getRotation().getRadians());
 
+        Rotation3d floppy = new Rotation3d(
+            Rotation2d.fromDegrees(gyro.getRoll()).getRadians(),
+            Rotation2d.fromDegrees(gyro.getPitch()).getRadians(),
+            Rotation2d.fromDegrees(gyro.getYaw()).getRadians()
+        );
+
+        Rotation3d actual = floppy.rotateBy(orient);
+        return actual;
+    }
   
 }

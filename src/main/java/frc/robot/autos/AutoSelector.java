@@ -57,25 +57,21 @@ public class AutoSelector
     private Command doubleScore()
     {
 
-        double dist = 4;
+        double dist = 4.5;
         return score().andThen(
 
 
             // move to piece and get ready to grab
             new SwerveController(swerve,  List.of(
                 new Pose2d(0,0,new Rotation2d(0)),
-                new Pose2d(dist-.1,0,new Rotation2d(0)),
-                new Pose2d(dist,0,new Rotation2d(180))
-            )),
+                new Pose2d(.6,.8,new Rotation2d(0)),
+                new Pose2d(dist,.8,new Rotation2d(0)),
+                new Pose2d(dist,.81, Rotation2d.fromDegrees(180)),
+                new Pose2d(0,.8,Rotation2d.fromDegrees(180))
+               
+            ))
            
 
-            // go back
-            new SwerveController(swerve,  List.of(
-                new Pose2d(dist,0,new Rotation2d(180)),
-                new Pose2d(.6,0,new Rotation2d(180)),
-                new Pose2d(0,.6,new Rotation2d(0))//,
-                //new Pose2d(0,0,new Rotation2d(0))
-            ))
 
        
         );
@@ -102,10 +98,14 @@ public class AutoSelector
       
 //
 
-        return new SwerveController(swerve,  List.of(
-                new Pose2d(0,0,new Rotation2d(0)),
-                new Pose2d(.01,0,Rotation2d.fromDegrees(179))
-            )
+        return  
+        new SwerveController(swerve,  List.of(
+            new Pose2d(0,0,new Rotation2d(0)),
+            new Pose2d(0,0,Rotation2d.fromDegrees(180))//,
+            //new Pose2d(3,0,new Rotation2d(0))
+        )
+
+
         );
             
                
@@ -120,7 +120,7 @@ public class AutoSelector
         new WaitCommand(.1),
         new AutoPoseCommand( NamedPose.PouncePreScore, arm),
         new AutoPoseCommand(NamedPose.ScoreL3, arm), 
-        new WaitCommand(1.5),
+        new WaitCommand(.7),
         new InstantCommand(()->{arm.setClaw(true);}),
         new WaitCommand(.1),
         new ScheduleCommand(new AutoPoseCommand(NamedPose.Travel, arm)));
@@ -155,9 +155,9 @@ public class AutoSelector
             case 4:
                 return init(GamePiece.cube).andThen(score());
             case 14:
-                return init(GamePiece.cube) .andThen(doubleScore());
+                return init(GamePiece.cone).andThen(doubleScore());
             case 15:
-                return init(GamePiece.cube) .andThen(TestAuto());
+                return init(GamePiece.cone) .andThen(TestAuto());
            
             default:
                 return new InstantCommand();
