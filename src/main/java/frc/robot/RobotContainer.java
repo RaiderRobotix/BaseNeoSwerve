@@ -158,7 +158,7 @@ public class RobotContainer {
         //Trigger aim = new Trigger(() -> rotateStick.getRawButton(3));
         //aim.onTrue(new Aim(s_Swerve, blindingDevice));
 
-        Trigger shootCube = new Trigger(()-> rotateStick.getRawButton(6));
+        Trigger shootCube = new Trigger(()-> rotateStick.getRawButton(7));
         shootCube.whileTrue(new ShootPiece(s_Intake, s_Shooter));
  
 
