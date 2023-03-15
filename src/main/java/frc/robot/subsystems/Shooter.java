@@ -1,6 +1,6 @@
 package frc.robot.subsystems;
 
-import com.fasterxml.jackson.databind.ser.std.CalendarSerializer;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -8,9 +8,11 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+
 public class Shooter extends SubsystemBase
 {
     private CANSparkMax shooterMotor;
+
     
     private double targetSpeed;
 
@@ -20,6 +22,7 @@ public class Shooter extends SubsystemBase
 
         shooterMotor.setIdleMode(IdleMode.kCoast);
         shooterMotor.setSmartCurrentLimit(40, 15);
+        shooterMotor.burnFlash();
 
     }
 
@@ -38,6 +41,4 @@ public class Shooter extends SubsystemBase
     {
         setSpeed(0);
     }   
-
-    
 }
