@@ -1,13 +1,14 @@
 package frc.robot;
 
-import java.time.Instant;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PneumaticHub;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -59,7 +60,7 @@ public class RobotContainer {
      * private final int rotationAxis = XboxController.Axis.kRightX.value;
      */
 
-    /* Driver Buttons */
+    /* Driver Buttons */ // TODO get rid of
     private final Trigger zeroGyro;
     private final Trigger robotCentric;
 
@@ -73,6 +74,7 @@ public class RobotContainer {
 
 
 
+    private PowerDistribution powerBoard;
     private PieceMode pieceMode;
     // TODO uncomment once intake exists
      private final Intake s_Intake;
@@ -85,7 +87,7 @@ public class RobotContainer {
         //{
         //}
         //blindingDevice = new Limelight();
-       
+        powerBoard = new PowerDistribution(20, ModuleType.kRev);
         PneumaticHub ph = new PneumaticHub(Constants.REV.PHID);
         CameraServer.startAutomaticCapture();
 
@@ -154,6 +156,9 @@ public class RobotContainer {
 
         Trigger lockSwerve = new Trigger(() -> rotateStick.getRawButton(1));
         lockSwerve.onTrue(new LockSwerveCommand(s_Swerve, ()->!lockSwerve.getAsBoolean()));
+        
+
+
 
         Trigger oneEightyGryo = new Trigger(() -> rotateStick.getRawButton(3));
         oneEightyGryo.onTrue(new InstantCommand(()->s_Swerve.zeroGyro(180)));
@@ -170,25 +175,20 @@ public class RobotContainer {
         Trigger openClaw= new Trigger(() -> driveStick.getRawButton(11));
         openClaw.onTrue(new InstantCommand(()->s_Arm.setClaw(false)));
 
-        // TODO uncomment once intake... exists.
-        // intakeButton.onTrue(new TeleopIntake(s_Intake, s_Arm));
-        // outtakeButton.onTrue(new TeleopOuttake(s_Intake));
-
-        // coneButton.onTrue(new InstantCommand(() -> s_Intake.wantsCone()));
-        // cubeButton.onTrue(new InstantCommand(() -> s_Intake.wantsCube()));
+    
 
         // Button board (this is terrible)
         Trigger BB1 = new Trigger(() -> buttonBoard.getRawButton(1));
-        BB1.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.PouncePreScore, s_Arm)));
+        BB1.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.PouncePreScore, s_Arm,powerBoard)));
 
         Trigger BB2 = new Trigger(() -> buttonBoard.getRawButton(2));
-        BB2.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.ScoreL1, s_Arm)));
+        BB2.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.ScoreL1, s_Arm,powerBoard)));
 
         Trigger BB3 = new Trigger(() -> buttonBoard.getRawButton(7));
-        BB3.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.ScoreL2, s_Arm)));
+        BB3.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.ScoreL2, s_Arm,powerBoard)));
 
         Trigger BB4 = new Trigger(() -> buttonBoard.getRawButton(4));
-        BB4.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.ScoreL3, s_Arm)));
+        BB4.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.ScoreL3, s_Arm,powerBoard)));
 
 
         Trigger BB5 = new Trigger(() -> buttonBoard.getRawButton(5));
@@ -199,23 +199,33 @@ public class RobotContainer {
 
 
         Trigger BB7 = new Trigger(() -> buttonBoard.getRawButton(3));
-        BB7.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.FloorPick, s_Arm)));
+        BB7.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.FloorPick, s_Arm,powerBoard)));
 
         Trigger BB8 = new Trigger(() -> buttonBoard.getRawButton(8));
-        BB8.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.PounceDriveUpWindow, s_Arm)));
+        BB8.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.PounceDriveUpWindow, s_Arm,powerBoard)));
 
         Trigger BB9 = new Trigger(() -> buttonBoard.getRawButton(9));
-        BB9.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.PickDriveUpWindow, s_Arm)));
+        BB9.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.PickDriveUpWindow, s_Arm,powerBoard)));
 
         Trigger BB10 = new Trigger(() -> buttonBoard.getRawButton(10));
-        BB10.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.PickFromSubstation, s_Arm)));
+        BB10.onTrue(new InstantCommand(()->
+        {
+            ArmCommand.PlotPathAndSchedule( NamedPose.PickFromSubstation, s_Arm);
+            powerBoard.setSwitchableChannel(true); // TODO test code - make a proper solution!
+        }
+        ));
 
         Trigger home = new Trigger(() -> buttonBoard.getRawButton(11));
-        home.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.Home, s_Arm)));
+        home.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.Home, s_Arm,powerBoard)));
 
         new Trigger(() -> buttonBoard.getRawButton(12))
-            .onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.Travel, s_Arm)));
-        
+            .onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.Travel, s_Arm,powerBoard)));
+
+
+        // Xbox controller
+
+
+
         Trigger resetOdometrey = new Trigger(()-> rotateStick.getRawButton(2));
         resetOdometrey.onTrue(new InstantCommand(()-> {s_Swerve.resetOdometry(new Pose2d(   /*wow*/));}));//this is normal
 
@@ -237,6 +247,7 @@ public class RobotContainer {
         shootL3.whileTrue(new SpinShooter(s_Shooter, IntakeConfig.level3Speed));
         
     }
+
 
     /*// excuse me for this hack
     private InstantCommand shootCube()
