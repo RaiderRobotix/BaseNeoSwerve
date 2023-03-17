@@ -226,13 +226,13 @@ public class RobotContainer {
         outtakeButton.whileTrue(new TeleopOuttake(s_Intake));
 
         Trigger shootL1 = new Trigger(()-> controller.getAButton());
-        outtakeButton.whileTrue(new SpinShooter(s_Shooter, IntakeConfig.level1Speed));
-
+        shootL1.whileTrue(/*new SpinShooter(s_Shooter, IntakeConfig.level1Speed)*/new InstantCommand(()->{s_Intake.startIntake(); s_Shooter.setSpeed(.5);}));
+        shootL1.onFalse(new InstantCommand(()->{s_Shooter.setSpeed(0); s_Intake.stopIntake();}));
         Trigger shootL2 = new Trigger(()-> controller.getXButton());
-        outtakeButton.whileTrue(new SpinShooter(s_Shooter, IntakeConfig.level2Speed));
+        shootL2.whileTrue(new SpinShooter(s_Shooter, IntakeConfig.level2Speed));
 
         Trigger shootL3 = new Trigger(()-> controller.getYButton());
-        outtakeButton.whileTrue(new SpinShooter(s_Shooter, IntakeConfig.level3Speed));
+        shootL3.whileTrue(new SpinShooter(s_Shooter, IntakeConfig.level3Speed));
         
     }
 

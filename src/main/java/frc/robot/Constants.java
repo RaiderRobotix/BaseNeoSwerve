@@ -72,18 +72,19 @@ public final class Constants
 
     public static final class Intake
     {
-        public static final int intakeMotorID = 9;
+        public static final int intakeMotorID = 21;
+        public static final int overIntakeMotorID = 22;
 
         public static final int intakeArmsUpChannel = 4;
         public static final int intakeArmsDownChannel = 5;
 
 
-        public static final int sensorChannel = 0;
+        public static final int sensorChannel = 5;
     }
 
     public static final class Shooter
     {
-        public static final int shooterMotorID = 20;
+        public static final int shooterMotorID = 9;
     }
 
     public static final class Arm

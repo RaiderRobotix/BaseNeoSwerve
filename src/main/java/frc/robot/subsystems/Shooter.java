@@ -25,7 +25,7 @@ public class Shooter extends SubsystemBase
         shooterMotor.burnFlash();
 
     }
-
+      
     public void setSpeed(double speed)
     {
         targetSpeed = speed;

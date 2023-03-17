@@ -13,6 +13,7 @@ public class SpinShooter extends CommandBase
     {
         SHOOTER = shooter;
         this.speed = speed;
+        addRequirements(shooter);
     }
 
     @Override

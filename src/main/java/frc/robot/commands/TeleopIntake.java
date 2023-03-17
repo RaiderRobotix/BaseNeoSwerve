@@ -20,9 +20,10 @@ public class TeleopIntake extends CommandBase
     @Override
     public void initialize() 
     {
-        if(INTAKE.hasPiece()) 
+        if(!INTAKE.hasPiece()) 
         {
             INTAKE.startIntake();//only run if needs a piece
+            System.out.println("starting intake");
         }
         else
         {
