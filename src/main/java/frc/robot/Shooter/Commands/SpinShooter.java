@@ -1,7 +1,7 @@
-package frc.robot.commands;
+package frc.robot.Shooter.Commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Shooter;
+import frc.robot.Shooter.Shooter;
 
 public class SpinShooter extends CommandBase
 {
@@ -19,13 +19,13 @@ public class SpinShooter extends CommandBase
     @Override
     public void initialize() 
     {
-        SHOOTER.setSpeed(speed);
+        
     }
 
     @Override
     public void execute()
     {
-        
+        SHOOTER.setSpeed(speed);
     }
 
     @Override

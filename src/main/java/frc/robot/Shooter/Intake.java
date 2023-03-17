@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package frc.robot.Shooter;
 
 import frc.robot.Constants;
 
@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase
 {
-    private final double SPEED = 0.5;
+   
     //motors
     private CANSparkMax intakeMotor;
     private CANSparkMax overIntakeMotor;
@@ -55,7 +55,7 @@ public class Intake extends SubsystemBase
 
     public void startIntake()
     {
-        intakeMotor.set(SPEED);
+        intakeMotor.set(IntakeConfig.intakeSpeed);
         //intakeArms.set(Value.kForward);
         //overIntakeMotor.set(SPEED);
     }
@@ -69,16 +69,16 @@ public class Intake extends SubsystemBase
 
     public boolean hasPiece()
     {
-        return sensor.get();
+        return !sensor.get();
     }
 
     public void outtake()
     {
-        intakeMotor.set(-SPEED);
+        intakeMotor.set(IntakeConfig.outtakeSpeed);
     }
     
     public void shoot()
     {
-        intakeMotor.set(SPEED);
+        intakeMotor.set(IntakeConfig.shootSpeed);
     }
 }

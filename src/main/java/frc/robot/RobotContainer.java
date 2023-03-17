@@ -1,5 +1,8 @@
 package frc.robot;
 
+import java.time.Instant;
+
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -12,19 +15,17 @@ import frc.lib.util.States.GamePiece;
 import frc.robot.Arm.Arm;
 import frc.robot.Arm.NamedPose;
 import frc.robot.Arm.command.ArmCommand;
-
-
+import frc.robot.Shooter.Intake;
+import frc.robot.Shooter.IntakeConfig;
+import frc.robot.Shooter.Shooter;
+import frc.robot.Shooter.Commands.ShootPiece;
+import frc.robot.Shooter.Commands.SpinShooter;
+import frc.robot.Shooter.Commands.TeleopIntake;
+import frc.robot.Shooter.Commands.TeleopOuttake;
 import frc.robot.autos.AutoSelector;
 import frc.robot.commands.Aim;
-import frc.robot.commands.ShootPiece;
-import frc.robot.commands.SpinShooter;
-import frc.robot.commands.TeleopIntake;
-import frc.robot.commands.TeleopOuttake;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.IntakeConfig;
 import frc.robot.subsystems.Leds;
 import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Thumbwheel;
 import frc.robot.swerve.Swerve;
 import frc.robot.swerve.command.LockSwerveCommand;
@@ -86,6 +87,7 @@ public class RobotContainer {
         //blindingDevice = new Limelight();
        
         PneumaticHub ph = new PneumaticHub(Constants.REV.PHID);
+        CameraServer.startAutomaticCapture();
 
         /* Controllers */
         driveStick = new Joystick(0);
@@ -160,7 +162,7 @@ public class RobotContainer {
 
         Trigger shootCube = new Trigger(()-> rotateStick.getRawButton(7));
         shootCube.whileTrue(new ShootPiece(s_Intake, s_Shooter));
- 
+     
 
         Trigger closeClaw = new Trigger(() -> driveStick.getRawButton(10));
         closeClaw.onTrue(new InstantCommand(()->s_Arm.setClaw(true)));
@@ -226,8 +228,8 @@ public class RobotContainer {
         outtakeButton.whileTrue(new TeleopOuttake(s_Intake));
 
         Trigger shootL1 = new Trigger(()-> controller.getAButton());
-        shootL1.whileTrue(/*new SpinShooter(s_Shooter, IntakeConfig.level1Speed)*/new InstantCommand(()->{s_Intake.startIntake(); s_Shooter.setSpeed(.5);}));
-        shootL1.onFalse(new InstantCommand(()->{s_Shooter.setSpeed(0); s_Intake.stopIntake();}));
+        shootL1.whileTrue(new SpinShooter(s_Shooter, IntakeConfig.level1Speed));
+
         Trigger shootL2 = new Trigger(()-> controller.getXButton());
         shootL2.whileTrue(new SpinShooter(s_Shooter, IntakeConfig.level2Speed));
 
@@ -235,6 +237,22 @@ public class RobotContainer {
         shootL3.whileTrue(new SpinShooter(s_Shooter, IntakeConfig.level3Speed));
         
     }
+
+    /*// excuse me for this hack
+    private InstantCommand shootCube()
+    {
+        return new InstantCommand(()->{
+       
+        s_Intake.shoot();});
+    }
+
+    private InstantCommand stopShooting()
+    {
+        return new InstantCommand(()->{
+   
+            s_Intake.stopIntake();
+        });
+    }*/
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.

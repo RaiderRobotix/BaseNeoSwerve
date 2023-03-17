@@ -1,7 +1,8 @@
-package frc.robot.commands;
+package frc.robot.Shooter.Commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.Shooter.Intake;
+
 
 public class TeleopOuttake extends CommandBase
 {
@@ -17,13 +18,13 @@ public class TeleopOuttake extends CommandBase
     @Override
     public void initialize() 
     {
-        INTAKE.outtake();
+        
     }
 
     @Override
     public void execute()
     {
-        
+        INTAKE.outtake();   
     }
 
     @Override

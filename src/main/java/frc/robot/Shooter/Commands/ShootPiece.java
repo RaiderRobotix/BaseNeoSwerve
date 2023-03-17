@@ -1,8 +1,10 @@
-package frc.robot.commands;
+package frc.robot.Shooter.Commands;
+
+import javax.lang.model.util.ElementScanner14;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Shooter;
+import frc.robot.Shooter.Intake;
+import frc.robot.Shooter.Shooter;
 
 public class ShootPiece extends CommandBase
 {
@@ -14,23 +16,27 @@ public class ShootPiece extends CommandBase
     {
         INTAKE = intake;
         SHOOTER = shooter;
-        addRequirements(INTAKE);
+        //addRequirements(INTAKE);
     }
 
     @Override
     public void initialize() 
     {
-        if(SHOOTER.isUpToSpeed())
-        {
-            INTAKE.shoot();
-        }
+        
 
     }
 
     @Override
     public void execute()
     {
-        
+        //if(SHOOTER.isUpToSpeed())
+        {
+            INTAKE.shoot();
+        }
+       /*else
+        {
+            INTAKE.stopIntake();
+        }*/
     }
 
     @Override
