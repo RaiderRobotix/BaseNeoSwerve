@@ -32,6 +32,7 @@ public class Swerve extends SubsystemBase
         
         gyro = new Pigeon2(Constants.REV.pigeonID);
         gyro.configFactoryDefault();
+        
      
 
         mSwerveMods = new SwerveModule[] {
@@ -44,6 +45,7 @@ public class Swerve extends SubsystemBase
 
         swerveOdometry = new SwerveDriveOdometry(SwerveConfig.swerveKinematics, getYaw(), getModulePositions());
         zeroGyro();
+
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) 
@@ -132,6 +134,7 @@ public class Swerve extends SubsystemBase
             deg = -deg;
         }
         gyro.setYaw(deg);
+        
         swerveOdometry.update(getYaw(), getModulePositions());  
     }
 
@@ -197,27 +200,18 @@ public class Swerve extends SubsystemBase
         SmartDashboard.putNumber("Odo Angle", pose.getRotation().getDegrees());
         SmartDashboard.putNumber("Gyro Angle", getYaw().getDegrees());
 
-        SmartDashboard.putNumber("field pitch", gyro.getPitch());
-        SmartDashboard.putNumber("robo pitch", robotRelativeOrientation().getY());
-        SmartDashboard.putNumber("robo roll", robotRelativeOrientation().getY());
-        SmartDashboard.putNumber("robo yaw", robotRelativeOrientation().getZ());
-        //SmartDashboard.putNumber("roll", getRollDegrees());
+
+        SmartDashboard.putNumber("robo pitch", getTilt());
+    
+        SmartDashboard.putNumber("roll", gyro.getRoll());
+        SmartDashboard.putNumber()
         
     }
 
    
-    public Rotation3d robotRelativeOrientation()
+    public double getTilt()
     {
-        Rotation3d orient = new Rotation3d(0,0,-getPose().getRotation().getRadians());
-
-        Rotation3d floppy = new Rotation3d(
-            Rotation2d.fromDegrees(gyro.getRoll()).getRadians(),
-            Rotation2d.fromDegrees(gyro.getPitch()).getRadians(),
-            Rotation2d.fromDegrees(gyro.getYaw()).getRadians()
-        );
-
-        Rotation3d actual = floppy.rotateBy(orient);
-        return actual;
+        return Math.sqrt(Math.pow(gyro.getPitch(), 2)+Math.pow(gyro.getRoll(), 2));
     }
   
 }
