@@ -1,5 +1,6 @@
 package frc.robot.swerve.command;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.swerve.Swerve;
@@ -8,12 +9,16 @@ public class AutoBalance extends CommandBase
 {
     
     final private Swerve SWERVE;
-    private boolean posX; // whether we are coming from the positive x direction
+    private final double P = -.15;
+    private final double I = 0;
+    private final double D = 0;
+    private PIDController controller;
 
-    public AutoBalance(Swerve swerve, boolean PosX )
+
+    public AutoBalance(Swerve swerve)
     {
         SWERVE = swerve;
-        this.posX = PosX;
+        controller = new PIDController(P, I, D);
        
         addRequirements(SWERVE);
     }
@@ -21,14 +26,17 @@ public class AutoBalance extends CommandBase
     @Override
     public void initialize() 
     {
-       
+       controller.setSetpoint(0);
+       controller.setTolerance(2.25, .05);
     }
+
     @Override
     public void execute()
     {
        // meters / second 
-       double speed = 1*(posX?1:-1);
-       SWERVE.drive(new Translation2d(speed, 0), 0, true, false);
+       double drive = controller.calculate(SWERVE.getTilt());
+       System.out.println("BALANCE VAL: "+drive);
+       SWERVE.drive(new Translation2d(drive, 0), 0, true, false);
 
 
     }
@@ -42,9 +50,8 @@ public class AutoBalance extends CommandBase
     @Override
     public boolean isFinished()
     {
-       double tolerance = 8;
-       return Math.abs(SWERVE.getRollDegrees())<tolerance 
-              &&Math.abs( SWERVE.getPitchDegrees())<tolerance;
+       
+       return controller.atSetpoint();
     }
 
     

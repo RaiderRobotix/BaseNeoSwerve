@@ -41,7 +41,8 @@ import frc.robot.swerve.command.TeleopSwerve;
  * the robot (including
  * subsystems, commands, and button mappings) should be declared here.
  */
-public class RobotContainer {
+public class RobotContainer 
+{
     /* Controllers */
     private final Joystick driveStick;
     private final Joystick rotateStick;
@@ -83,9 +84,6 @@ public class RobotContainer {
     public RobotContainer() 
     {
 
-       // for(int port = 5800; port <=5805; port++)
-        //{
-        //}
         //blindingDevice = new Limelight();
         powerBoard = new PowerDistribution(20, ModuleType.kRev);
         PneumaticHub ph = new PneumaticHub(Constants.REV.PHID);

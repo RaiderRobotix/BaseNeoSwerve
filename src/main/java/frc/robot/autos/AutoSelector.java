@@ -17,6 +17,7 @@ import frc.robot.Arm.NamedPose;
 import frc.robot.subsystems.Thumbwheel;
 import frc.robot.swerve.Swerve;
 import frc.robot.swerve.SwerveConfig;
+import frc.robot.swerve.command.AutoBalance;
 import frc.robot.swerve.command.LockSwerveCommand;
 
 public class AutoSelector 
@@ -80,14 +81,14 @@ public class AutoSelector
 
     private Command balanceAuto()
     {
-        return score().andThen(
+        return new InstantCommand().andThen(
           
             new SwerveController(swerve,  List.of(
                 new Pose2d(0,0,new Rotation2d(0)),
                 new Pose2d(4.5,0,new Rotation2d(0)),
-                new Pose2d(2.2,0,new Rotation2d(0))
+                new Pose2d(2.5,0,new Rotation2d(0))
             )),
-          
+            new AutoBalance(swerve),
             new LockSwerveCommand(swerve, ()->false)
         );
     }
@@ -150,6 +151,8 @@ public class AutoSelector
         {
             case 0: // we reseve zero to doing nothing.
                 return new InstantCommand();
+            case 1: // we reseve zero to doing nothing.
+                return init(GamePiece.cone).andThen(balanceAuto());
             case 3:
                 return init(GamePiece.cone).andThen(score());
             case 4:

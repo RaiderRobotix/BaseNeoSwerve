@@ -69,13 +69,13 @@ public class SwerveController extends CommandBase
        
         if(Math.abs(driveBase.getPose().getX()-poses.get(progress).getX())>pidX.getPositionTolerance() )
         {
-            System.out.println("X NO GOOD");
+            //System.out.println("X NO GOOD");
             return false;
         }
 
         if(Math.abs(driveBase.getPose().getY()-poses.get(progress).getY())>pidY.getPositionTolerance() )
         {
-            System.out.println("Y NO GOOD");
+            //System.out.println("Y NO GOOD");
             return false;
         }
 
