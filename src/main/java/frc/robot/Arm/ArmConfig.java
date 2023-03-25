@@ -60,7 +60,7 @@ public final class ArmConfig
         //J3 PID
         public static final double pValue = 0.03;
         public static final double iValue = 0;
-        public static final double dValue = 0.003;
+        public static final double dValue = 0.005;
         public static final double ffValue = 0;
         
         public static final double maxPower = 1;

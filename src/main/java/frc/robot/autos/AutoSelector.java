@@ -58,7 +58,7 @@ public class AutoSelector
         return score().andThen(
             new SwerveController(swerve,speed, List.of(
                 new Pose2d(0,0,new Rotation2d(0)),
-                new Pose2d(6.2,.32*(invertY?-1:1),new Rotation2d(0))
+                new Pose2d(6.2,.8*(invertY?-1:1),new Rotation2d(0))
             )).alongWith(new TeleopIntake(intake))
         );
             
@@ -71,20 +71,22 @@ public class AutoSelector
     private Command doubleScore(boolean invertY)
     {
 
+        //.32, .7
         double speed = .2;
         return basicAuto(invertY).andThen(
             new InstantCommand(()->{CommandScheduler.getInstance()
             .schedule(new SpinShooter(shooter, IntakeConfig.level2Speed)); System.out.println("heyo");}),
 
             new SwerveController(swerve, speed, List.of(
-            new Pose2d(6.2,.32*(invertY?-1:1),new Rotation2d(0)),
-            new Pose2d(3,.32*(invertY?-1:1),Rotation2d.fromDegrees(180)),
-            new Pose2d(1,.7*(invertY?-1:1),Rotation2d.fromDegrees(180)))
+            new Pose2d(6.2,.8*(invertY?-1:1),new Rotation2d(0)),
+            new Pose2d(3,.5*(invertY?-1:1),Rotation2d.fromDegrees(180)),
+            new Pose2d(1,.8*(invertY?-1:1),Rotation2d.fromDegrees(180)))
             ),
             new WaitCommand(1),
             new ShootPiece(intake, shooter).raceWith(new WaitCommand(1.5)),
+            // finish up
             new SwerveController(swerve, speed, List.of(
-                new Pose2d(1,.7*(invertY?-1:1),Rotation2d.fromDegrees(180)),
+                new Pose2d(1,.8*(invertY?-1:1),Rotation2d.fromDegrees(180)),
                 new Pose2d(5.5,.5*(invertY?-1:1),Rotation2d.fromDegrees(180))
             ))
             //new SpinShooter(shooter, 0)
@@ -105,12 +107,11 @@ public class AutoSelector
                 new Pose2d(4,0,new Rotation2d(0))
                
             )),
-            new TeleopIntake(intake).alongWith(
-                new SwerveController(swerve,  List.of(
+            new SwerveController(swerve,  List.of(
                     new Pose2d(4,0,new Rotation2d(0)),
                     new Pose2d(5.5,0,new Rotation2d(0))
                   
-            ))),
+            )).alongWith( new WaitCommand(2).raceWith(new TeleopIntake(intake))),
             new SwerveController(swerve, List.of(
                 new Pose2d(5.4,0,new Rotation2d(0)),
                 new Pose2d(2.4,0,new Rotation2d(0))
