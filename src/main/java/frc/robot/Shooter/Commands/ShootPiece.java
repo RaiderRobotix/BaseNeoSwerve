@@ -1,7 +1,5 @@
 package frc.robot.Shooter.Commands;
 
-import javax.lang.model.util.ElementScanner14;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Shooter.Intake;
 import frc.robot.Shooter.Shooter;

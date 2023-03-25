@@ -12,7 +12,7 @@ import frc.robot.swerve.Swerve;
 public class SwerveController extends CommandBase
 {
  
-    private final double p = -9;
+    private final double p = -13;
     private final double i = 0.00;
     private final double d = 0.00;
 
@@ -29,6 +29,7 @@ public class SwerveController extends CommandBase
     private List<Pose2d> poses;
 
     int progress;
+    private double power;
 
     public SwerveController(Swerve swerve, List<Pose2d> poses)
     {
@@ -41,7 +42,7 @@ public class SwerveController extends CommandBase
         pidX.setTolerance(.05);
         pidY.setTolerance(.05);
         pidRot.setTolerance(1);
-
+        power = 1;
         //pidX.setIntegratorRange(-.8, .8);
         //pidY.setIntegratorRange(-.8, .8);
         //pidRot.setIntegratorRange(-.3, .3);
@@ -56,6 +57,15 @@ public class SwerveController extends CommandBase
        progress = 1;
        
        addRequirements(swerve);
+    }
+
+
+    public SwerveController(Swerve swerve, double power, List<Pose2d> poses)
+    {
+        
+        this(swerve, poses);
+        this.power = power;
+        
     }
 
 
@@ -130,9 +140,9 @@ public class SwerveController extends CommandBase
             return;
         }
 
-        double x = pidX.calculate(driveBase.getPose().getX() , poses.get(progress).getX() );
+        double x = power*pidX.calculate(driveBase.getPose().getX() , poses.get(progress).getX() );
       
-        double y = pidX.calculate(driveBase.getPose().getY() , poses.get(progress).getY() );
+        double y = power*pidX.calculate(driveBase.getPose().getY() , poses.get(progress).getY() );
         pidRot.setSetpoint(poses.get(progress).getRotation().getDegrees());
         double rot = pidRot.calculate(driveBase.getPose().getRotation().getDegrees());
 

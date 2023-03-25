@@ -24,15 +24,14 @@ import frc.robot.Shooter.Commands.SpinShooter;
 import frc.robot.Shooter.Commands.TeleopIntake;
 import frc.robot.Shooter.Commands.TeleopOuttake;
 import frc.robot.autos.AutoSelector;
-import frc.robot.commands.Aim;
 import frc.robot.subsystems.Leds;
-import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Thumbwheel;
 import frc.robot.swerve.Swerve;
 import frc.robot.swerve.command.LockSwerveCommand;
 import frc.robot.swerve.command.TeleopSwerve;
 
 /**
+ * WPILIB:
  * This class is where the bulk of the robot should be declared. Since
  * Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in
@@ -40,6 +39,18 @@ import frc.robot.swerve.command.TeleopSwerve;
  * periodic methods (other than the scheduler calls). Instead, the structure of
  * the robot (including
  * subsystems, commands, and button mappings) should be declared here.
+ * 
+ * ME:
+ * For all intents and purposes, this is the primary file in the robot code.
+ * I'll say outright that this code is not *amazingly* structured, but it gets the job done and isn't a huge mess.
+ * Think you can do better? Good! Make it happen. You've got something to work off of! I didn't really have that.
+ * Actual relevant advice though:
+ * It's probably not wise to include a huge amount of logic here either.
+ * This class currently does about three things:
+ *      Creates/initializes all subsytems
+ *      Sets up commands to run in teleop when certain buttons are pressed
+ *      creates an instance of AutoSelector, which creates the command used for auto.
+ * and schedules an auto accordingly.
  */
 public class RobotContainer 
 {
@@ -55,72 +66,61 @@ public class RobotContainer
     private final int strafeAxis;
     private final int rotationAxis;
 
-    /*
-     * private final int translationAxis = XboxController.Axis.kLeftY.value;
-     * private final int strafeAxis = XboxController.Axis.kLeftX.value;
-     * private final int rotationAxis = XboxController.Axis.kRightX.value;
-     */
-
-    /* Driver Buttons */ // TODO get rid of
-    private final Trigger zeroGyro;
-    private final Trigger robotCentric;
-
 
     /* Subsystems */
     private final Swerve s_Swerve;
     private final Arm s_Arm;
     private final Shooter s_Shooter;
     private final Thumbwheel s_Thumb;
-    private final Leds s_leds;
+    
 
 
 
     private PowerDistribution powerBoard;
     private PieceMode pieceMode;
-    // TODO uncomment once intake exists
-     private final Intake s_Intake;
+    private final Intake s_Intake;
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() 
     {
 
-        //blindingDevice = new Limelight();
-        powerBoard = new PowerDistribution(20, ModuleType.kRev);
-        PneumaticHub ph = new PneumaticHub(Constants.REV.PHID);
         CameraServer.startAutomaticCapture();
 
         /* Controllers */
         driveStick = new Joystick(0);
         rotateStick = new Joystick(1);
-
         controller = new XboxController(2);
         buttonBoard = new GenericHID(3);
 
 
-     
 
+        /* Subsystems */
+
+        // we use the powerboard and pnumatics board on the robot for various things, so we instantiate them here.
+        powerBoard = new PowerDistribution(20, ModuleType.kRev);
+        PneumaticHub ph = new PneumaticHub(Constants.REV.PHID);
+
+        // here we instantiate every subsytem on the robot
+        // aside from the limelight, mostly because we didn't get the time to set it up
+        // and because it probably wouldn't have been be super useful, at least at first.
+        pieceMode = new PieceMode();
+        s_Swerve = new Swerve();
+        s_Thumb = new Thumbwheel();
+        s_Arm = new Arm(NamedPose.Home, ph, pieceMode);
+        s_Intake = new Intake(ph);
+        s_Shooter = new Shooter();
+        new Leds(pieceMode);
+        //blindingDevice = new Limelight();
+        
+        
         /* Drive Controls */
         translationAxis = Joystick.AxisType.kY.value;
         strafeAxis = Joystick.AxisType.kX.value;
         rotationAxis = Joystick.AxisType.kX.value;
 
-        /* Driver Buttons */
-        zeroGyro = new Trigger(()->driveStick.getRawButton(1));
-        robotCentric = new Trigger(()-> driveStick.getRawButton(2));
+        
+        Trigger robotCentric = new Trigger(()-> driveStick.getRawButton(2));
 
-        /* Subsystems */
-        s_Swerve = new Swerve();
-        s_Thumb = new Thumbwheel();
-
-     
-        pieceMode = new PieceMode();
-        s_Arm = new Arm(NamedPose.Home, ph, pieceMode);
-        s_Intake = new Intake(ph);
-        s_Shooter = new Shooter();
-       
-        s_leds = new Leds(pieceMode);
-   
-        Command c;
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
                 s_Swerve, 
@@ -130,9 +130,8 @@ public class RobotContainer
                 () -> robotCentric.getAsBoolean()
             )
         );
-       // s_leds.setDefaultCommand(new ledControlCommand(s_leds, rotateStick));
         
-        // Configure the button bindings
+        // Configure the button bindings ( what a useful comment)
         configureButtonBindings();
         
     }
@@ -150,6 +149,7 @@ public class RobotContainer
     private void configureButtonBindings() {
 
         /* Driver Buttons */
+        Trigger zeroGyro = new Trigger(()->driveStick.getRawButton(1));
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
 
         Trigger lockSwerve = new Trigger(() -> rotateStick.getRawButton(1));
@@ -209,7 +209,7 @@ public class RobotContainer
         BB10.onTrue(new InstantCommand(()->
         {
             ArmCommand.PlotPathAndSchedule( NamedPose.PickFromSubstation, s_Arm);
-            powerBoard.setSwitchableChannel(true); // TODO test code - make a proper solution!
+            powerBoard.setSwitchableChannel(true); 
         }
         ));
 
@@ -246,23 +246,6 @@ public class RobotContainer
         
     }
 
-
-    /*// excuse me for this hack
-    private InstantCommand shootCube()
-    {
-        return new InstantCommand(()->{
-       
-        s_Intake.shoot();});
-    }
-
-    private InstantCommand stopShooting()
-    {
-        return new InstantCommand(()->{
-   
-            s_Intake.stopIntake();
-        });
-    }*/
-
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
      *
@@ -270,7 +253,7 @@ public class RobotContainer
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        AutoSelector auto =new AutoSelector(s_Thumb, s_Arm, s_Swerve, pieceMode);
+        AutoSelector auto = new AutoSelector(s_Thumb, s_Arm, s_Swerve, s_Intake, s_Shooter, pieceMode);
         return auto.getAutonomousCommand();
     }
 }

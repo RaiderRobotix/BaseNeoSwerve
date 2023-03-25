@@ -2,16 +2,12 @@ package frc.robot.Shooter;
 
 import frc.robot.Constants;
 
-import java.util.ArrayList;
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticHub;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -69,7 +65,7 @@ public class Intake extends SubsystemBase
 
     public boolean hasPiece()
     {
-        return !sensor.get();
+        return sensor.get();
     }
 
     public void outtake()

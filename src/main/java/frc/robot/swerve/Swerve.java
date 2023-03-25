@@ -10,10 +10,8 @@ import com.ctre.phoenix.sensors.Pigeon2;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -166,7 +164,7 @@ public class Swerve extends SubsystemBase
         // 0,3  1,2
         SwerveModuleState sms = new SwerveModuleState(.1, Rotation2d.fromDegrees(45));
     
-        System.out.println("LOCKING");
+        //System.out.println("LOCKING");
         mSwerveMods[0].setDesiredState(sms, false);
         mSwerveMods[3].setDesiredState(sms, false);
 
@@ -203,8 +201,7 @@ public class Swerve extends SubsystemBase
 
         SmartDashboard.putNumber("robo pitch", getTilt());
     
-        SmartDashboard.putNumber("roll", gyro.getRoll());
-        SmartDashboard.putNumber()
+       
         
     }
 

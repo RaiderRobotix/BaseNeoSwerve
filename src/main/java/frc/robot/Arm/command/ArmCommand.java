@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Arm.Arm;
 import frc.robot.Arm.NamedPose;
@@ -88,7 +87,7 @@ public class ArmCommand extends CommandBase
         {
             System.out.println("Retracting");
             sequence.add(new InstantCommand(()->arm.setExtender(false)));
-            sequence.add(new WaitCommand(.5)); // TODO - resolve.
+            sequence.add(new WaitCommand(.5)); 
         }
 
 
