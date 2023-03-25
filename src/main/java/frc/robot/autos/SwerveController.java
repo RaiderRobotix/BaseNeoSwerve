@@ -12,7 +12,7 @@ import frc.robot.swerve.Swerve;
 public class SwerveController extends CommandBase
 {
  
-    private final double p = -13;
+    private final double p = -16;
     private final double i = 0.00;
     private final double d = 0.00;
 

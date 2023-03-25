@@ -113,12 +113,12 @@ public class AutoSelector
             ))),
             new SwerveController(swerve, List.of(
                 new Pose2d(5.4,0,new Rotation2d(0)),
-                new Pose2d(2.5,0,new Rotation2d(0))
+                new Pose2d(2.4,0,new Rotation2d(0))
             )),
             new AutoBalance(swerve),
             new SwerveController(swerve,  List.of(
                 new Pose2d(2,0,new Rotation2d(0)),
-                new Pose2d(2.07,0,new Rotation2d(0))
+                new Pose2d(2.25,0,new Rotation2d(0))
             )),
             new LockSwerveCommand(swerve, ()->false)
         );

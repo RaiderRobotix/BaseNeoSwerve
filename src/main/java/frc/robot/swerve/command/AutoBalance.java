@@ -8,7 +8,7 @@ public class AutoBalance extends CommandBase
 {
     
     final private Swerve SWERVE;
-    private double tol = 3;
+    private double tol = 2;
     private double oldTilt;
     private boolean finished;
 
@@ -37,7 +37,7 @@ public class AutoBalance extends CommandBase
        if(oldTilt-tol<SWERVE.getTilt())
        {
             //System.out.println("Actually going!");
-            SWERVE.drive(new Translation2d(.4, 0), 0, true, true);
+            SWERVE.drive(new Translation2d(.6, 0), 0, true, true);
             return;
        }
        //System.out.println("NO GO");

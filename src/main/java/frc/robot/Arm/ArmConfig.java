@@ -58,7 +58,7 @@ public final class ArmConfig
         public static final float lowerLimit = -25;
 
         //J3 PID
-        public static final double pValue = 0.025;
+        public static final double pValue = 0.03;
         public static final double iValue = 0;
         public static final double dValue = 0.003;
         public static final double ffValue = 0;
