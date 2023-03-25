@@ -7,6 +7,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -53,15 +54,11 @@ public class AutoSelector
     {
       
 
-        double speed = 1.5;
+        double speed = .2;
         return score().andThen(
             new SwerveController(swerve,speed, List.of(
                 new Pose2d(0,0,new Rotation2d(0)),
-                new Pose2d(5,0,new Rotation2d(0))
-            )),
-            new SwerveController(swerve, speed,   List.of(
-                new Pose2d(5,0,new Rotation2d(0)),
-                new Pose2d(5.4,.2*(invertY?-1:1),new Rotation2d(0))
+                new Pose2d(6.2,.32*(invertY?-1:1),new Rotation2d(0))
             )).alongWith(new TeleopIntake(intake))
         );
             
@@ -74,14 +71,23 @@ public class AutoSelector
     private Command doubleScore(boolean invertY)
     {
 
-        double speed = 1.5;
+        double speed = .2;
         return basicAuto(invertY).andThen(
+            new InstantCommand(()->{CommandScheduler.getInstance()
+            .schedule(new SpinShooter(shooter, IntakeConfig.level2Speed)); System.out.println("heyo");}),
+
             new SwerveController(swerve, speed, List.of(
-            new Pose2d(5.4,.2*(invertY?-1:1),new Rotation2d(0)),
-            new Pose2d(5,.2*(invertY?-1:1),Rotation2d.fromDegrees(180)),
-            new Pose2d(0,.2*(invertY?-1:1),Rotation2d.fromDegrees(180)))
-            ).raceWith(new SpinShooter(shooter, IntakeConfig.level2Speed), new WaitCommand(1)),
-            new ShootPiece(intake, shooter)
+            new Pose2d(6.2,.32*(invertY?-1:1),new Rotation2d(0)),
+            new Pose2d(3,.32*(invertY?-1:1),Rotation2d.fromDegrees(180)),
+            new Pose2d(1,.7*(invertY?-1:1),Rotation2d.fromDegrees(180)))
+            ),
+            new WaitCommand(1),
+            new ShootPiece(intake, shooter).raceWith(new WaitCommand(1.5)),
+            new SwerveController(swerve, speed, List.of(
+                new Pose2d(1,.7*(invertY?-1:1),Rotation2d.fromDegrees(180)),
+                new Pose2d(5.5,.5*(invertY?-1:1),Rotation2d.fromDegrees(180))
+            ))
+            //new SpinShooter(shooter, 0)
         );
 
 
@@ -91,7 +97,8 @@ public class AutoSelector
 
     private Command balanceAuto()
     {
-        return new InstantCommand().andThen(
+    
+        return score().andThen(
           
             new SwerveController(swerve,  List.of(
                 new Pose2d(0,0,new Rotation2d(0)),
@@ -101,15 +108,15 @@ public class AutoSelector
             new TeleopIntake(intake).alongWith(
                 new SwerveController(swerve,  List.of(
                     new Pose2d(4,0,new Rotation2d(0)),
-                    new Pose2d(5.4,0,new Rotation2d(0))
+                    new Pose2d(5.5,0,new Rotation2d(0))
                   
             ))),
-            new SwerveController(swerve,  List.of(
+            new SwerveController(swerve, List.of(
                 new Pose2d(5.4,0,new Rotation2d(0)),
-                new Pose2d(2.1,0,new Rotation2d(0))
+                new Pose2d(2.5,0,new Rotation2d(0))
             )),
             new AutoBalance(swerve),
-            new SwerveController(swerve, .4,  List.of(
+            new SwerveController(swerve,  List.of(
                 new Pose2d(2,0,new Rotation2d(0)),
                 new Pose2d(2.07,0,new Rotation2d(0))
             )),
@@ -145,7 +152,7 @@ public class AutoSelector
         new WaitCommand(.1),
         new AutoPoseCommand( NamedPose.PouncePreScore, arm),
         new AutoPoseCommand(NamedPose.ScoreL3, arm), 
-        new WaitCommand(.7),
+        new WaitCommand(.9),
         new InstantCommand(()->{arm.setClaw(true);}),
         new WaitCommand(.1),
         new ScheduleCommand(new AutoPoseCommand(NamedPose.Travel, arm)));
@@ -176,6 +183,7 @@ public class AutoSelector
             case 0: // we reseve zero to doing nothing.
                 return new InstantCommand();
 
+            // TODO init with cube DOES NOT WORK! this is likely due to a oversight in arm scheduling code. fix?
             // basic set
             case 1: 
                 return init(GamePiece.cone).andThen(basicAuto(false));

@@ -1,7 +1,6 @@
 package frc.robot.Shooter.Commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Arm.Arm;
 import frc.robot.Shooter.Intake;
 
 public class TeleopIntake extends CommandBase
@@ -28,12 +27,12 @@ public class TeleopIntake extends CommandBase
         if(!INTAKE.hasPiece())
         {
             INTAKE.startIntake();//only run if needs a piece
-            System.out.println("intake!!!!");
+            //System.out.println("intake!!!!");
             finished = false;
             return;
         }
        
-        System.out.println("NO!");
+        //System.out.println("NO!");
         INTAKE.stopIntake(); 
         finished = true;  
         
@@ -42,8 +41,8 @@ public class TeleopIntake extends CommandBase
     @Override
     public void end(boolean inturrupted)
     {
-        System.out.println("Dead..."+inturrupted);
-        Thread.dumpStack();
+        //System.out.println("Dead..."+inturrupted);
+        //Thread.dumpStack();
         INTAKE.stopIntake();
 
     }

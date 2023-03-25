@@ -4,6 +4,15 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import frc.lib.util.SwerveModuleConstants;
 
+
+/**
+ * This file comes with command robot projects, and is intended to contain
+ * configuration information.
+ * I think it would be prudent if this file only contained CanIDs, because it
+ * is useful to have all the ids for the whole robot in one place.
+ * other configuration goes into subsystem specific configuration files,
+ * to make sure this one isn't cluttered.
+ */
 public final class Constants 
 {
     public static final double stickDeadband = 0.1;
@@ -101,19 +110,4 @@ public final class Constants
         public static int reverseClawChannel = 3;
     }
 
-    public static final class AutoConstants { 
-        public static final double kMaxSpeedMetersPerSecond = 4.5;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 3;
-        public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
-        public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
-    
-        public static final double kPXController = -40;
-        public static final double kPYController = -40;
-        public static final double kPThetaController = 1;
-    
-        /* Constraint for the motion profilied robot angle controller */
-        public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
-            new TrapezoidProfile.Constraints(
-                kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
-    }
 }

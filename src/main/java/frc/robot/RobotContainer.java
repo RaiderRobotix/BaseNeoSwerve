@@ -61,24 +61,25 @@ public class RobotContainer
     private final GenericHID buttonBoard;
     //private Limelight blindingDevice;
 
-    /* Drive Controls */
-    private final int translationAxis;
-    private final int strafeAxis;
-    private final int rotationAxis;
+  
 
 
     /* Subsystems */
+    // the code we were using used the prefix s_ for all of the names of subsystems here.
+    // personally, this seems useless, and I would avoid it if I were you
+    // I mean it would take like 30 seconds to fix honestly but whatever
     private final Swerve s_Swerve;
     private final Arm s_Arm;
     private final Shooter s_Shooter;
     private final Thumbwheel s_Thumb;
-    
+    private final Intake s_Intake;
 
 
 
     private PowerDistribution powerBoard;
-    private PieceMode pieceMode;
-    private final Intake s_Intake;
+    private PieceMode pieceMode; // the piecemode class essentially controls whether the arm is in cone or cube mode. 
+                                 //the arm doesn't know about it though
+
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() 
@@ -111,13 +112,26 @@ public class RobotContainer
         s_Shooter = new Shooter();
         new Leds(pieceMode);
         //blindingDevice = new Limelight();
-        
-        
-        /* Drive Controls */
-        translationAxis = Joystick.AxisType.kY.value;
-        strafeAxis = Joystick.AxisType.kX.value;
-        rotationAxis = Joystick.AxisType.kX.value;
 
+        // Configure the button bindings ( what a useful comment)
+        configureDriverControls();
+        configureOperatorControls();
+
+        // turn off the light, because it starts on
+        //powerBoard.setSwitchableChannel(false); 
+        
+    }
+
+    /** defines teleop driving and controls on the joysticks. */
+    private void configureDriverControls()
+    {
+
+         /* Drive Controls */
+         // this code sets up driving in teleop.
+
+        int translationAxis = Joystick.AxisType.kY.value;
+        int strafeAxis = Joystick.AxisType.kX.value;
+        int rotationAxis = Joystick.AxisType.kX.value;
         
         Trigger robotCentric = new Trigger(()-> driveStick.getRawButton(2));
 
@@ -130,42 +144,10 @@ public class RobotContainer
                 () -> robotCentric.getAsBoolean()
             )
         );
-        
-        // Configure the button bindings ( what a useful comment)
-        configureButtonBindings();
-        
-    }
 
-
-   
-    /**
-     * Use this method to define your button->command mappings. Buttons can be
-     * created by
-     * instantiating a {@link GenericHID} or one of its subclasses ({@link
-     * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
-     * it to a {@link
-     * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-     */
-    private void configureButtonBindings() {
-
-        /* Driver Buttons */
+        // drive stick
         Trigger zeroGyro = new Trigger(()->driveStick.getRawButton(1));
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-
-        Trigger lockSwerve = new Trigger(() -> rotateStick.getRawButton(1));
-        lockSwerve.onTrue(new LockSwerveCommand(s_Swerve, ()->!lockSwerve.getAsBoolean()));
-        
-
-
-
-        Trigger oneEightyGryo = new Trigger(() -> rotateStick.getRawButton(3));
-        oneEightyGryo.onTrue(new InstantCommand(()->s_Swerve.zeroGyro(180)));
-        //Trigger aim = new Trigger(() -> rotateStick.getRawButton(3));
-        //aim.onTrue(new Aim(s_Swerve, blindingDevice));
-
-        Trigger shootCube = new Trigger(()-> rotateStick.getRawButton(7));
-        shootCube.whileTrue(new ShootPiece(s_Intake, s_Shooter));
-     
 
         Trigger closeClaw = new Trigger(() -> driveStick.getRawButton(10));
         closeClaw.onTrue(new InstantCommand(()->s_Arm.setClaw(true)));
@@ -173,7 +155,29 @@ public class RobotContainer
         Trigger openClaw= new Trigger(() -> driveStick.getRawButton(11));
         openClaw.onTrue(new InstantCommand(()->s_Arm.setClaw(false)));
 
-    
+
+        // rotate stick
+        Trigger lockSwerve = new Trigger(() -> rotateStick.getRawButton(1));
+        lockSwerve.onTrue(new LockSwerveCommand(s_Swerve, ()->!lockSwerve.getAsBoolean()));
+
+        Trigger resetOdometrey = new Trigger(()-> rotateStick.getRawButton(2));
+        resetOdometrey.onTrue(new InstantCommand(()-> {s_Swerve.resetOdometry(new Pose2d(   /*wow*/));}));//this is normal
+        
+        Trigger oneEightyGryo = new Trigger(() -> rotateStick.getRawButton(3));
+        oneEightyGryo.onTrue(new InstantCommand(()->s_Swerve.zeroGyro(180)));
+
+        Trigger shootCube = new Trigger(()-> rotateStick.getRawButton(7));
+        shootCube.whileTrue(new ShootPiece(s_Intake, s_Shooter));
+     
+
+        
+
+    }
+   
+  
+    /** Defines controls for the button board and controller */
+    private void configureOperatorControls()
+     {
 
         // Button board (this is terrible)
         Trigger BB1 = new Trigger(() -> buttonBoard.getRawButton(1));
@@ -222,18 +226,11 @@ public class RobotContainer
 
         // Xbox controller
 
-
-
-        Trigger resetOdometrey = new Trigger(()-> rotateStick.getRawButton(2));
-        resetOdometrey.onTrue(new InstantCommand(()-> {s_Swerve.resetOdometry(new Pose2d(   /*wow*/));}));//this is normal
-
-        // Xbox controller
-
         Trigger intakeButton = new Trigger(()-> controller.getRightBumper());
         intakeButton.whileTrue(new TeleopIntake(s_Intake));
 
         Trigger outtakeButton = new Trigger(()-> controller.getLeftBumper());
-        outtakeButton.whileTrue(new TeleopOuttake(s_Intake));
+        outtakeButton.whileTrue(new TeleopOuttake(s_Intake, s_Shooter));
 
         Trigger shootL1 = new Trigger(()-> controller.getAButton());
         shootL1.whileTrue(new SpinShooter(s_Shooter, IntakeConfig.level1Speed));
@@ -245,6 +242,7 @@ public class RobotContainer
         shootL3.whileTrue(new SpinShooter(s_Shooter, IntakeConfig.level3Speed));
         
     }
+
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
