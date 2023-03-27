@@ -75,18 +75,18 @@ public class AutoSelector
         double speed = .2;
         return basicAuto(invertY).andThen(
             new InstantCommand(()->{CommandScheduler.getInstance()
-            .schedule(new SpinShooter(shooter, IntakeConfig.level2Speed)); System.out.println("heyo");}),
+            .schedule(new SpinShooter(shooter, IntakeConfig.MediumSpeed)); System.out.println("heyo");}),
 
             new SwerveController(swerve, speed, List.of(
             new Pose2d(6.2,.8*(invertY?-1:1),new Rotation2d(0)),
             new Pose2d(3,.5*(invertY?-1:1),Rotation2d.fromDegrees(180)),
-            new Pose2d(1,.8*(invertY?-1:1),Rotation2d.fromDegrees(180)))
+            new Pose2d(1,1.1*(invertY?-1:1),Rotation2d.fromDegrees(180)))
             ),
             new WaitCommand(1),
             new ShootPiece(intake, shooter).raceWith(new WaitCommand(1.5)),
             // finish up
             new SwerveController(swerve, speed, List.of(
-                new Pose2d(1,.8*(invertY?-1:1),Rotation2d.fromDegrees(180)),
+                new Pose2d(1,1.1*(invertY?-1:1),Rotation2d.fromDegrees(180)),
                 new Pose2d(5.5,.5*(invertY?-1:1),Rotation2d.fromDegrees(180))
             ))
             //new SpinShooter(shooter, 0)

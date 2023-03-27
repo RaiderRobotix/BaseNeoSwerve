@@ -82,9 +82,9 @@ public class RobotContainer
 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
-    public RobotContainer() 
+    public RobotContainer(PowerDistribution pd) 
     {
-
+        powerBoard = pd;
         CameraServer.startAutomaticCapture();
 
         /* Controllers */
@@ -98,7 +98,7 @@ public class RobotContainer
         /* Subsystems */
 
         // we use the powerboard and pnumatics board on the robot for various things, so we instantiate them here.
-        powerBoard = new PowerDistribution(20, ModuleType.kRev);
+       
         PneumaticHub ph = new PneumaticHub(Constants.REV.PHID);
 
         // here we instantiate every subsytem on the robot
@@ -166,7 +166,7 @@ public class RobotContainer
         Trigger oneEightyGryo = new Trigger(() -> rotateStick.getRawButton(3));
         oneEightyGryo.onTrue(new InstantCommand(()->s_Swerve.zeroGyro(180)));
 
-        Trigger shootCube = new Trigger(()-> rotateStick.getRawButton(7));
+        Trigger shootCube = new Trigger(()-> rotateStick.getRawButton(6));
         shootCube.whileTrue(new ShootPiece(s_Intake, s_Shooter));
      
 
@@ -233,16 +233,18 @@ public class RobotContainer
         outtakeButton.whileTrue(new TeleopOuttake(s_Intake, s_Shooter));
 
         Trigger shootL1 = new Trigger(()-> controller.getAButton());
-        shootL1.whileTrue(new SpinShooter(s_Shooter, IntakeConfig.level1Speed));
+        shootL1.whileTrue(new SpinShooter(s_Shooter, IntakeConfig.slowSpeed));
 
         Trigger shootL2 = new Trigger(()-> controller.getXButton());
-        shootL2.whileTrue(new SpinShooter(s_Shooter, IntakeConfig.level2Speed));
+        shootL2.whileTrue(new SpinShooter(s_Shooter, IntakeConfig.MediumSpeed));
 
         Trigger shootL3 = new Trigger(()-> controller.getYButton());
-        shootL3.whileTrue(new SpinShooter(s_Shooter, IntakeConfig.level3Speed));
+        shootL3.whileTrue(new SpinShooter(s_Shooter, IntakeConfig.FastSpeed));
+          //  .andThen(ArmCommand.PlotPathAndSchedule(NamedPose.HelpShoot, s_Arm)));
+        //shootL3.onFalse(ArmCommand.PlotPathAndSchedule(NamedPose.Travel, s_Arm));
         
     }
-
+//todd was here
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.

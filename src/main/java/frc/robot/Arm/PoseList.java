@@ -21,6 +21,9 @@ public class PoseList
         // General
         poseList[NamedPose.Home.ordinal()] = 
             new BasicPose(0, 0, 0,  false);
+
+        poseList[NamedPose.HelpShoot.ordinal()] = 
+            new BasicPose(0, -10, 50,  false);
       
         poseList[NamedPose.PouncePreScore.ordinal()] = 
             new BasicPose(0, 88, 0,  false);
