@@ -75,7 +75,7 @@ public class AutoSelector
         double speed = .2;
         return basicAuto(invertY).andThen(
             new InstantCommand(()->{CommandScheduler.getInstance()
-            .schedule(new SpinShooter(shooter, IntakeConfig.MediumSpeed)); System.out.println("heyo");}),
+            .schedule(new SpinShooter(shooter, IntakeConfig.FastSpeed)); System.out.println("heyo");}),
 
             new SwerveController(swerve, speed, List.of(
             new Pose2d(6.2,.8*(invertY?-1:1),new Rotation2d(0)),

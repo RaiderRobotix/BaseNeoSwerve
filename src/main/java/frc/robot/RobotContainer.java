@@ -166,7 +166,7 @@ public class RobotContainer
         Trigger oneEightyGryo = new Trigger(() -> rotateStick.getRawButton(3));
         oneEightyGryo.onTrue(new InstantCommand(()->s_Swerve.zeroGyro(180)));
 
-        Trigger shootCube = new Trigger(()-> rotateStick.getRawButton(6));
+        Trigger shootCube = new Trigger(()-> rotateStick.getRawButton(7));
         shootCube.whileTrue(new ShootPiece(s_Intake, s_Shooter));
      
 
@@ -240,6 +240,9 @@ public class RobotContainer
 
         Trigger shootL3 = new Trigger(()-> controller.getYButton());
         shootL3.whileTrue(new SpinShooter(s_Shooter, IntakeConfig.FastSpeed));
+
+        Trigger shootFAST= new Trigger(()-> controller.getBButton());
+        shootFAST.whileTrue(new SpinShooter(s_Shooter, 1));
           //  .andThen(ArmCommand.PlotPathAndSchedule(NamedPose.HelpShoot, s_Arm)));
         //shootL3.onFalse(ArmCommand.PlotPathAndSchedule(NamedPose.Travel, s_Arm));
         
