@@ -255,8 +255,12 @@ public class RobotContainer
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
-        AutoSelector auto = new AutoSelector(s_Thumb, s_Arm, s_Swerve, s_Intake, s_Shooter, pieceMode);
+       
+        // this is disgusting.
+        AutoSelector auto = new AutoSelector
+            (s_Thumb, s_Arm, s_Swerve, s_Intake, s_Shooter, powerBoard, pieceMode);
         return auto.getAutonomousCommand();
+
+        // I can change whate
     }
 }
