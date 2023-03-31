@@ -183,7 +183,7 @@ public class AutoSelector
     public Command getAutonomousCommand()
     {
 
-       
+       // test
         switch(wheel.getValue())
         {
             case 0: // we reseve zero to doing nothing.
