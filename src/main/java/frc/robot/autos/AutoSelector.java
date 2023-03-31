@@ -73,7 +73,8 @@ public class AutoSelector
   
 
     private Command doubleScore(boolean invertY, double dist, double rampAvoid, double target)
-    {
+    {   
+    
 
         //.32, .7
         double speed = .2;
