@@ -84,13 +84,13 @@ public class AutoSelector
             new SwerveController(swerve, speed, List.of(
             new Pose2d(6.2,dist*(invertY?-1:1),new Rotation2d(0)),
             new Pose2d(3,rampAvoid*(invertY?-1:1),Rotation2d.fromDegrees(180)),
-            new Pose2d(1,target*(invertY?-1:1),Rotation2d.fromDegrees(180)))
+            new Pose2d(1.1,target*(invertY?-1:1),Rotation2d.fromDegrees(180)))
             ),
             new WaitCommand(1),
             new ShootPiece(intake, shooter).raceWith(new WaitCommand(1.5)),
             // finish up
             new SwerveController(swerve, speed, List.of(
-                new Pose2d(1,target*(invertY?-1:1),Rotation2d.fromDegrees(180)),
+                new Pose2d(1.1,target*(invertY?-1:1),Rotation2d.fromDegrees(180)),
                 new Pose2d(5.5,rampAvoid*(invertY?-1:1),Rotation2d.fromDegrees(180))
             ))
             //new SpinShooter(shooter, 0)

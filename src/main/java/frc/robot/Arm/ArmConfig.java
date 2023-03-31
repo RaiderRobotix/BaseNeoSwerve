@@ -36,7 +36,7 @@ public final class ArmConfig
         public static final IdleMode idleMode = IdleMode.kCoast;
 
         public static final float upperLimit = 155;
-        public static final float lowerLimit = 0;
+        public static final float lowerLimit = -15;
 
         //J2 PID
         public static final double pValue = 0.045;
