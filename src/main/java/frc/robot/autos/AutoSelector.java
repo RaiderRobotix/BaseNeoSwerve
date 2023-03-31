@@ -69,7 +69,7 @@ public class AutoSelector
 
   
 
-    private Command doubleScore(boolean invertY, double dist)
+    private Command doubleScore(boolean invertY, double dist, double rampAvoid, double target)
     {
 
         //.32, .7
@@ -80,15 +80,15 @@ public class AutoSelector
 
             new SwerveController(swerve, speed, List.of(
             new Pose2d(6.2,dist*(invertY?-1:1),new Rotation2d(0)),
-            new Pose2d(3,.5*(invertY?-1:1),Rotation2d.fromDegrees(180)),
-            new Pose2d(1,1.1*(invertY?-1:1),Rotation2d.fromDegrees(180)))
+            new Pose2d(3,rampAvoid*(invertY?-1:1),Rotation2d.fromDegrees(180)),
+            new Pose2d(1,target*(invertY?-1:1),Rotation2d.fromDegrees(180)))
             ),
             new WaitCommand(1),
             new ShootPiece(intake, shooter).raceWith(new WaitCommand(1.5)),
             // finish up
             new SwerveController(swerve, speed, List.of(
-                new Pose2d(1,1.1*(invertY?-1:1),Rotation2d.fromDegrees(180)),
-                new Pose2d(5.5,.5*(invertY?-1:1),Rotation2d.fromDegrees(180))
+                new Pose2d(1,target*(invertY?-1:1),Rotation2d.fromDegrees(180)),
+                new Pose2d(5.5,rampAvoid*(invertY?-1:1),Rotation2d.fromDegrees(180))
             ))
             //new SpinShooter(shooter, 0)
         );
@@ -188,27 +188,28 @@ public class AutoSelector
             // TODO init with cube DOES NOT WORK! this is likely due to a oversight in arm scheduling code. fix?
             // basic set
             case 1: 
-                return init(GamePiece.cone).andThen(basicAuto(false, .8));
+                return init(GamePiece.cone).andThen(basicAuto(false, .4));
             case 2:
                 return init(GamePiece.cone).andThen(balanceAuto());
             case 3:
                 return init(GamePiece.cone).andThen(basicAuto(true, .8));
 
-            // double scoring.
+            // blue autos
             case 4:
-                return init(GamePiece.cone).andThen(doubleScore(false , .4));
+                return init(GamePiece.cone).andThen(doubleScore(false , .31, .3, .6));
             case 5:
                 return init(GamePiece.cone).andThen(balanceAuto());
             case 6:
-                return init(GamePiece.cone).andThen(doubleScore(true, .8));
+                return init(GamePiece.cone).andThen(doubleScore(true, .78, .5, .8));
 
 
+            // red autos
             case 7:
-                return init(GamePiece.cone).andThen(doubleScore(true, .4));
+                return init(GamePiece.cone).andThen(doubleScore(false, .78, .5, .8));
             case 8:
                 return init(GamePiece.cone).andThen(balanceAuto());
             case 9:
-                return init(GamePiece.cone).andThen(doubleScore(false, .8));
+                return init(GamePiece.cone).andThen(doubleScore(true, .31, .3, .6));
 
                 
             case 13:
