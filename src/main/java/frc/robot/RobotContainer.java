@@ -242,9 +242,9 @@ public class RobotContainer
         shootL3.whileTrue(new SpinShooter(s_Shooter, IntakeConfig.FastSpeed));
 
         Trigger shootFAST= new Trigger(()-> controller.getBButton());
-        shootFAST.whileTrue(new SpinShooter(s_Shooter, 1));
-          //  .andThen(ArmCommand.PlotPathAndSchedule(NamedPose.HelpShoot, s_Arm)));
-        //shootL3.onFalse(ArmCommand.PlotPathAndSchedule(NamedPose.Travel, s_Arm));
+        shootFAST.whileTrue(new SpinShooter(s_Shooter, 1)
+        .alongWith(ArmCommand.PlotPathAndSchedule(NamedPose.HelpShoot, s_Arm)));
+        shootFAST.onFalse(ArmCommand.PlotPathAndSchedule(NamedPose.Travel, s_Arm));
         
     }
 //todd was here
