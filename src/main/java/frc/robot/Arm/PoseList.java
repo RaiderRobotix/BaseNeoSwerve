@@ -72,7 +72,7 @@ public class PoseList
         new DoublePose(
             new BasicPose(-39, 116, 0, false),
             new BasicPose(-43, 151, -26,   true),
-            mode
+            mode // new 43, 140
         );
 
        
