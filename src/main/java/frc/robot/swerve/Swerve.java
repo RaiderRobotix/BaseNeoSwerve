@@ -36,7 +36,7 @@ public class Swerve extends SubsystemBase
         mSwerveMods = new SwerveModule[] {
            
             new RevSwerveModule(0, Constants.Mod0.constants),
-           new RevSwerveModule(1, Constants.Mod1.constants),
+            new RevSwerveModule(1, Constants.Mod1.constants),
             new RevSwerveModule(2, Constants.Mod2.constants),
             new RevSwerveModule(3, Constants.Mod3.constants)
         };
