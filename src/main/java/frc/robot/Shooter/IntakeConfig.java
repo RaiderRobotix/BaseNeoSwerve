@@ -10,4 +10,7 @@ public final class IntakeConfig
     public static final double intakeSpeed = 0.7;
     public static final double outtakeSpeed = -1;
     public static final double shootSpeed = 1;
+
+    public static final double armIntakeSpeed = 0.7;
+    public static final double armOuttakeSpeed = -1;
 }
