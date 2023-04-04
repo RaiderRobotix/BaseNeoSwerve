@@ -7,7 +7,9 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticHub;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -18,8 +20,8 @@ public class Intake extends SubsystemBase
     private CANSparkMax intakeMotor;
     private CANSparkMax overIntakeMotor;
 
-    // hello????
-    //private DoubleSolenoid intakeArms;
+
+    private DoubleSolenoid intakeArms;
 
     private DigitalInput sensor;
 
@@ -38,8 +40,8 @@ public class Intake extends SubsystemBase
         intakeMotor.burnFlash();
         overIntakeMotor.burnFlash();
 
-        //initialize solinoids.
-        //intakeArms = ph.makeDoubleSolenoid(Constants.Intake.intakeArmsDownChannel, Constants.Intake.intakeArmsUpChannel);
+        //initialize solinoids
+        intakeArms = ph.makeDoubleSolenoid(Constants.Intake.intakeArmsUpChannel, Constants.Intake.intakeArmsDownChannel);
 
         sensor = new DigitalInput(Constants.Intake.sensorChannel);
     }
@@ -50,18 +52,34 @@ public class Intake extends SubsystemBase
         SmartDashboard.putBoolean("Has Piece", hasPiece());
     }
 
+    public void setArms(boolean out)
+    {
+        if(out)
+        {
+            intakeArms.set(Value.kForward);
+            return;
+        }
+        intakeArms.set(Value.kReverse);
+    }
+
     public void startIntake()
     {
         intakeMotor.set(IntakeConfig.intakeSpeed);
-        //intakeArms.set(Value.kForward);
-        //overIntakeMotor.set(SPEED);
+    }
+
+    public void startArms()
+    {
+        overIntakeMotor.set(IntakeConfig.armIntakeSpeed);
     }
 
     public void stopIntake()
     {
         intakeMotor.set(0);
-        //intakeArms.set(Value.kReverse);
-        //overIntakeMotor.set(0);
+    }
+
+    public void stopArms()
+    {
+        overIntakeMotor.set(0);
     }
 
     public boolean hasPiece()

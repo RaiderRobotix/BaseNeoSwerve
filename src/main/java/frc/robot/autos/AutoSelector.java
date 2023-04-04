@@ -21,7 +21,7 @@ import frc.robot.Shooter.IntakeConfig;
 import frc.robot.Shooter.Shooter;
 import frc.robot.Shooter.Commands.ShootPiece;
 import frc.robot.Shooter.Commands.SpinShooter;
-import frc.robot.Shooter.Commands.TeleopIntake;
+import frc.robot.Shooter.Commands.RunIntake;
 import frc.robot.subsystems.Thumbwheel;
 import frc.robot.swerve.Swerve;
 import frc.robot.swerve.command.AutoBalance;
@@ -63,7 +63,7 @@ public class AutoSelector
             new SwerveController(swerve,speed, List.of(
                 new Pose2d(0,0,new Rotation2d(0)),
                 new Pose2d(6.2,dist*(invertY?-1:1),new Rotation2d(0))
-            )).alongWith(new TeleopIntake(intake))
+            )).alongWith(new RunIntake(intake, true))
         );
             
                
@@ -80,7 +80,7 @@ public class AutoSelector
         double speed = .2;
         return basicAuto(invertY, dist).andThen(
             new InstantCommand(()->{CommandScheduler.getInstance()
-            .schedule(new SpinShooter(shooter, IntakeConfig.FastSpeed)); System.out.println("heyo");}),
+            .schedule(new SpinShooter(shooter, intake, IntakeConfig.FastSpeed)); System.out.println("heyo");}),
 
             new SwerveController(swerve, speed, List.of(
             new Pose2d(6.2,dist*(invertY?-1:1),new Rotation2d(0)),
@@ -116,7 +116,7 @@ public class AutoSelector
                     new Pose2d(4,0,new Rotation2d(0)),
                     new Pose2d(5.5,0,new Rotation2d(0))
                   
-            )).alongWith( new WaitCommand(2).raceWith(new TeleopIntake(intake))),
+            )).alongWith( new WaitCommand(2).raceWith(new RunIntake(intake, true))),
             new SwerveController(swerve, List.of(
                 new Pose2d(5.4,0,new Rotation2d(0)),
                 new Pose2d(2.4,0,new Rotation2d(0))
@@ -157,7 +157,7 @@ public class AutoSelector
         new InstantCommand(()->{arm.setClaw(false);}),
         new WaitCommand(.1),
         new AutoPoseCommand( NamedPose.PouncePreScore, arm),
-        new AutoPoseCommand(NamedPose.ScoreL3, arm), 
+        new AutoPoseCommand(NamedPose.ScoreL3Auto, arm), 
         new WaitCommand(.9),
         new InstantCommand(()->{arm.setClaw(true);}),
         new WaitCommand(.1),

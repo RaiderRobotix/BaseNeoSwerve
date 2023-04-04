@@ -21,7 +21,7 @@ import frc.robot.Shooter.IntakeConfig;
 import frc.robot.Shooter.Shooter;
 import frc.robot.Shooter.Commands.ShootPiece;
 import frc.robot.Shooter.Commands.SpinShooter;
-import frc.robot.Shooter.Commands.TeleopIntake;
+import frc.robot.Shooter.Commands.RunIntake;
 import frc.robot.Shooter.Commands.TeleopOuttake;
 import frc.robot.autos.AutoSelector;
 import frc.robot.subsystems.Leds;
@@ -227,24 +227,27 @@ public class RobotContainer
         // Xbox controller
 
         Trigger intakeButton = new Trigger(()-> controller.getRightBumper());
-        intakeButton.whileTrue(new TeleopIntake(s_Intake));
+        intakeButton.whileTrue(new RunIntake(s_Intake, true));
 
         Trigger outtakeButton = new Trigger(()-> controller.getLeftBumper());
         outtakeButton.whileTrue(new TeleopOuttake(s_Intake, s_Shooter));
 
         Trigger shootL1 = new Trigger(()-> controller.getAButton());
-        shootL1.whileTrue(new SpinShooter(s_Shooter, IntakeConfig.slowSpeed));
+        shootL1.whileTrue(new SpinShooter(s_Shooter, s_Intake, IntakeConfig.slowSpeed));
 
         Trigger shootL2 = new Trigger(()-> controller.getXButton());
-        shootL2.whileTrue(new SpinShooter(s_Shooter, IntakeConfig.MediumSpeed));
+        shootL2.whileTrue(new SpinShooter(s_Shooter, s_Intake, IntakeConfig.MediumSpeed));
 
         Trigger shootL3 = new Trigger(()-> controller.getYButton());
-        shootL3.whileTrue(new SpinShooter(s_Shooter, IntakeConfig.FastSpeed));
+        shootL3.whileTrue(new SpinShooter(s_Shooter, s_Intake, IntakeConfig.FastSpeed));
 
         Trigger shootFAST= new Trigger(()-> controller.getBButton());
-        shootFAST.whileTrue(new SpinShooter(s_Shooter, 1)
+        shootFAST.whileTrue(new SpinShooter(s_Shooter, s_Intake, 1)
         .alongWith(ArmCommand.PlotPathAndSchedule(NamedPose.HelpShoot, s_Arm)));
         shootFAST.onFalse(ArmCommand.PlotPathAndSchedule(NamedPose.Travel, s_Arm));
+
+        Trigger intakeNoArms = new Trigger(()-> controller.getStartButton());
+        intakeNoArms.whileTrue(new RunIntake(s_Intake, false));
         
     }
 //todd was here

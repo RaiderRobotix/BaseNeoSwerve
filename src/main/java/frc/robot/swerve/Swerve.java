@@ -183,13 +183,13 @@ public class Swerve extends SubsystemBase
           
         swerveOdometry.update(getYaw(), getModulePositions());  
         
-        /*for(SwerveModule mod : mSwerveMods)
+        for(SwerveModule mod : mSwerveMods)
         {
             
-            SmartDashboard.putNumber("Mod " + mod.getModuleNumber() + " Cancoder", mod.getCanCoder().getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.getModuleNumber() + " Integrated", mod.getPosition().angle.getDegrees());
+            //SmartDashboard.putNumber("Mod " + mod.getModuleNumber() + " Cancoder", mod.getCanCoder().getDegrees());
+            //SmartDashboard.putNumber("Mod " + mod.getModuleNumber() + " Integrated", mod.getPosition().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.getModuleNumber() + " Velocity", mod.getState().speedMetersPerSecond);    
-        }*/
+        }
         Pose2d pose = getPose();
         
         
