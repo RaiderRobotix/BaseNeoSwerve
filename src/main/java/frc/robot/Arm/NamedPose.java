@@ -9,6 +9,7 @@ public enum NamedPose
     ScoreL1,
     ScoreL2,
     ScoreL3,
+    ScoreL3Auto,
     Travel,
     PickFromSubstation,
     PounceDriveUpWindow,

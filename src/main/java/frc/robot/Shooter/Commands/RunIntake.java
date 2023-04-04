@@ -14,6 +14,7 @@ public class RunIntake extends CommandBase
     {
         INTAKE = intake;
         finished = false;
+        this.useArms = useArms;
         //addRequirements(INTAKE);
     }
 
@@ -22,7 +23,7 @@ public class RunIntake extends CommandBase
     {
         if(useArms)
         {
-            INTAKE.setArms(true);
+            INTAKE.setArms(false);
         }
     }
     @Override
@@ -50,7 +51,7 @@ public class RunIntake extends CommandBase
     {
         INTAKE.stopIntake();
         INTAKE.stopArms();
-        INTAKE.setArms(false);
+        INTAKE.setArms(true);
 
     }
 

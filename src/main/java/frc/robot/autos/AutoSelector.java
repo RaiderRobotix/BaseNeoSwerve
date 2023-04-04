@@ -80,7 +80,7 @@ public class AutoSelector
         double speed = .2;
         return basicAuto(invertY, dist).andThen(
             new InstantCommand(()->{CommandScheduler.getInstance()
-            .schedule(new SpinShooter(shooter, IntakeConfig.FastSpeed)); System.out.println("heyo");}),
+            .schedule(new SpinShooter(shooter, intake, IntakeConfig.FastSpeed)); System.out.println("heyo");}),
 
             new SwerveController(swerve, speed, List.of(
             new Pose2d(6.2,dist*(invertY?-1:1),new Rotation2d(0)),
@@ -157,7 +157,7 @@ public class AutoSelector
         new InstantCommand(()->{arm.setClaw(false);}),
         new WaitCommand(.1),
         new AutoPoseCommand( NamedPose.PouncePreScore, arm),
-        new AutoPoseCommand(NamedPose.ScoreL3, arm), 
+        new AutoPoseCommand(NamedPose.ScoreL3Auto, arm), 
         new WaitCommand(.9),
         new InstantCommand(()->{arm.setClaw(true);}),
         new WaitCommand(.1),

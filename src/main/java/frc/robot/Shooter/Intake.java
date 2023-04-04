@@ -41,7 +41,7 @@ public class Intake extends SubsystemBase
         overIntakeMotor.burnFlash();
 
         //initialize solinoids
-        intakeArms = ph.makeDoubleSolenoid(Constants.Intake.intakeArmsDownChannel, Constants.Intake.intakeArmsUpChannel);
+        intakeArms = ph.makeDoubleSolenoid(Constants.Intake.intakeArmsUpChannel, Constants.Intake.intakeArmsDownChannel);
 
         sensor = new DigitalInput(Constants.Intake.sensorChannel);
     }

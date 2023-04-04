@@ -233,16 +233,16 @@ public class RobotContainer
         outtakeButton.whileTrue(new TeleopOuttake(s_Intake, s_Shooter));
 
         Trigger shootL1 = new Trigger(()-> controller.getAButton());
-        shootL1.whileTrue(new SpinShooter(s_Shooter, IntakeConfig.slowSpeed));
+        shootL1.whileTrue(new SpinShooter(s_Shooter, s_Intake, IntakeConfig.slowSpeed));
 
         Trigger shootL2 = new Trigger(()-> controller.getXButton());
-        shootL2.whileTrue(new SpinShooter(s_Shooter, IntakeConfig.MediumSpeed));
+        shootL2.whileTrue(new SpinShooter(s_Shooter, s_Intake, IntakeConfig.MediumSpeed));
 
         Trigger shootL3 = new Trigger(()-> controller.getYButton());
-        shootL3.whileTrue(new SpinShooter(s_Shooter, IntakeConfig.FastSpeed));
+        shootL3.whileTrue(new SpinShooter(s_Shooter, s_Intake, IntakeConfig.FastSpeed));
 
         Trigger shootFAST= new Trigger(()-> controller.getBButton());
-        shootFAST.whileTrue(new SpinShooter(s_Shooter, 1)
+        shootFAST.whileTrue(new SpinShooter(s_Shooter, s_Intake, 1)
         .alongWith(ArmCommand.PlotPathAndSchedule(NamedPose.HelpShoot, s_Arm)));
         shootFAST.onFalse(ArmCommand.PlotPathAndSchedule(NamedPose.Travel, s_Arm));
 
