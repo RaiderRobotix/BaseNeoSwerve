@@ -92,9 +92,15 @@ public class AutoSelector
             // finish up
             new SwerveController(swerve, speed, List.of(
                 new Pose2d(1.05,target*(invertY?-1:1),Rotation2d.fromDegrees(180)),
-                new Pose2d(5.5,rampAvoid*(invertY?-1:1),Rotation2d.fromDegrees(180))
-            ))
-            //new SpinShooter(shooter, 0)
+                new Pose2d(3,rampAvoid*(invertY?-1:1),Rotation2d.fromDegrees(180))
+            )),
+            new InstantCommand(()->{CommandScheduler.getInstance()
+            .schedule(new SpinShooter(shooter, intake, 0));}),
+              new SwerveController(swerve, speed, List.of(
+                new Pose2d(3,rampAvoid*(invertY?-1:1),Rotation2d.fromDegrees(180)),
+                new Pose2d(6.2,1.8*(invertY?-1:1),Rotation2d.fromDegrees(270))
+            )).alongWith(new RunIntake(intake, true))
+
         );
 
 
@@ -105,8 +111,10 @@ public class AutoSelector
     private Command balanceAuto()
     {
     
+        
         return score().andThen(
           
+         
             new SwerveController(swerve,  List.of(
                 new Pose2d(0,0,new Rotation2d(0)),
                 new Pose2d(4,0,new Rotation2d(0))
@@ -114,15 +122,15 @@ public class AutoSelector
             )),
             new SwerveController(swerve,  List.of(
                     new Pose2d(4,0,new Rotation2d(0)),
-                    new Pose2d(5.5,0,new Rotation2d(0))
+                    new Pose2d(6.2,0,new Rotation2d(0))
                   
             )).alongWith( new WaitCommand(2).raceWith(new RunIntake(intake, true))),
             new SwerveController(swerve, List.of(
-                new Pose2d(5.4,0,new Rotation2d(0)),
+                new Pose2d(6.2,0,new Rotation2d(0)),
                 new Pose2d(2.4,0,new Rotation2d(0))
             )),
             new AutoBalance(swerve),
-            new SwerveController(swerve,  List.of(
+            new SwerveController(swerve, .05f,  List.of(
                 new Pose2d(2,0,new Rotation2d(0)),
                 new Pose2d(2.25,0,new Rotation2d(0))
             )),

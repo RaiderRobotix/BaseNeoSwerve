@@ -85,7 +85,7 @@ public class SwerveConfig
     public static final double angleKF = 0;
 
     /* Drive Motor PID Values */
-    public static final double driveKP = 0.1; 
+    public static final double driveKP = 0.2; 
     public static final double driveKI = 0.0;
     public static final double driveKD = 0.0;
     public static final double driveKF = 0.0;
