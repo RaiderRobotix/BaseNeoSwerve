@@ -41,7 +41,7 @@ public class SwerveController extends CommandBase
 
         pidX.setTolerance(.05);
         pidY.setTolerance(.05);
-        pidRot.setTolerance(1);
+        pidRot.setTolerance(2);
         power = -1;
         //pidX.setIntegratorRange(-.8, .8);
         //pidY.setIntegratorRange(-.8, .8);

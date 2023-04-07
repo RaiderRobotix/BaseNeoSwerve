@@ -85,21 +85,22 @@ public class AutoSelector
             new SwerveController(swerve, speed, List.of(
             new Pose2d(6.2,dist*(invertY?-1:1),new Rotation2d(0)),
             new Pose2d(3,rampAvoid*(invertY?-1:1),Rotation2d.fromDegrees(180)),
-            new Pose2d(1.05,target*(invertY?-1:1),Rotation2d.fromDegrees(180)))
+            new Pose2d(.9,target*(invertY?-1:1),Rotation2d.fromDegrees(180)))
             ),
             new WaitCommand(1),
             new ShootPiece(intake, shooter).raceWith(new WaitCommand(1.5)),
             // finish up
             new SwerveController(swerve, speed, List.of(
-                new Pose2d(1.05,target*(invertY?-1:1),Rotation2d.fromDegrees(180)),
-                new Pose2d(3,rampAvoid*(invertY?-1:1),Rotation2d.fromDegrees(180))
-            )),
-            new InstantCommand(()->{CommandScheduler.getInstance()
+                new Pose2d(.9,target*(invertY?-1:1),Rotation2d.fromDegrees(180)),
+                new Pose2d(.9, .2*(invertY?-1:1),Rotation2d.fromDegrees(180)),
+                new Pose2d(6.2,-.5*(invertY?-1:1),Rotation2d.fromDegrees(180))
+            ))
+            /*new InstantCommand(()->{CommandScheduler.getInstance()
             .schedule(new SpinShooter(shooter, intake, 0));}),
               new SwerveController(swerve, speed, List.of(
-                new Pose2d(3,rampAvoid*(invertY?-1:1),Rotation2d.fromDegrees(180)),
+                new Pose2d(3.3,rampAvoid*(invertY?-1:1),Rotation2d.fromDegrees(180)),
                 new Pose2d(6.2,1.8*(invertY?-1:1),Rotation2d.fromDegrees(270))
-            )).alongWith(new RunIntake(intake, true))
+            )).alongWith(new RunIntake(intake, true))*/
 
         );
 
@@ -117,11 +118,11 @@ public class AutoSelector
          
             new SwerveController(swerve,  List.of(
                 new Pose2d(0,0,new Rotation2d(0)),
-                new Pose2d(4,0,new Rotation2d(0))
+                new Pose2d(4.5,0,new Rotation2d(0))
                
             )),
             new SwerveController(swerve,  List.of(
-                    new Pose2d(4,0,new Rotation2d(0)),
+                    new Pose2d(4.5,0,new Rotation2d(0)),
                     new Pose2d(6.2,0,new Rotation2d(0))
                   
             )).alongWith( new WaitCommand(2).raceWith(new RunIntake(intake, true))),
@@ -132,7 +133,7 @@ public class AutoSelector
             new AutoBalance(swerve),
             new SwerveController(swerve, .05f,  List.of(
                 new Pose2d(2,0,new Rotation2d(0)),
-                new Pose2d(2.25,0,new Rotation2d(0))
+                new Pose2d(2.05,0,new Rotation2d(0))
             )),
             new LockSwerveCommand(swerve, ()->false)
         );
@@ -202,25 +203,25 @@ public class AutoSelector
             // TODO init with cube DOES NOT WORK! this is likely due to a oversight in arm scheduling code. fix?
            
             // basic set (blue) 
-            case 1: 
+            case 1: // dunno
                 return init(GamePiece.cone).andThen(basicAuto(false, .31));
             case 2:
                 return init(GamePiece.cone).andThen(balanceAuto());
-            case 3:
-                return init(GamePiece.cone).andThen(basicAuto(true, .76));
+            case 3: // dunno
+                return init(GamePiece.cone).andThen(basicAuto(true, .6));
 
             // blue autos
             case 4: // dunno
                 return init(GamePiece.cone).andThen(doubleScore(false , .31, .3, .6));
-            case 5: // working?
+            case 5: // dunno
                 return init(GamePiece.cone).andThen(balanceAuto());
-            case 6: // working
-                return init(GamePiece.cone).andThen(doubleScore(true, .76, .5, .8));
+            case 6: // dunno prev .76 dist
+                return init(GamePiece.cone).andThen(doubleScore(true, .45, 0, .7));
 
 
             // red autos
             case 7: // dunno
-                return init(GamePiece.cone).andThen(doubleScore(false, .76, .5, .8));
+                return init(GamePiece.cone).andThen(doubleScore(false, .4, -.5, .6));
             case 8: 
                 return init(GamePiece.cone).andThen(balanceAuto());
             case 9: // dunno

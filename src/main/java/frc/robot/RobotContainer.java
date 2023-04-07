@@ -247,8 +247,7 @@ public class RobotContainer
         shootFAST.onFalse(ArmCommand.PlotPathAndSchedule(NamedPose.Travel, s_Arm));
 
         Trigger intakeNoArms = new Trigger(()-> controller.getStartButton());
-        intakeNoArms.whileTrue(new RunIntake(s_Intake, false));
-        
+        intakeNoArms.whileTrue(new RunIntake(s_Intake, false));      
     }
 //todd was here
 
