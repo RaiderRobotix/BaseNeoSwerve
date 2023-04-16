@@ -71,8 +71,9 @@ public class AutoSelector
 
 
   
+    // this is terrible
 
-    private Command doubleScore(boolean invertY, double dist, double rampAvoid, double target)
+    private Command doubleScore(boolean invertY, double dist, double rampAvoid, double target, double endPoint)
     {   
     
 
@@ -91,9 +92,9 @@ public class AutoSelector
             new ShootPiece(intake, shooter).raceWith(new WaitCommand(1.5)),
             // finish up
             new SwerveController(swerve, speed, List.of(
-                new Pose2d(.9,target*(invertY?-1:1),Rotation2d.fromDegrees(180)),
-                new Pose2d(.9, .2*(invertY?-1:1),Rotation2d.fromDegrees(180)),
-                new Pose2d(6.2,-.5*(invertY?-1:1),Rotation2d.fromDegrees(180))
+                new Pose2d(1,target*(invertY?-1:1),Rotation2d.fromDegrees(180)),
+                new Pose2d(1.3, .2*(invertY?-1:1),Rotation2d.fromDegrees(180)),
+                new Pose2d(6.2,endPoint*(invertY?-1:1),Rotation2d.fromDegrees(180))
             ))
             /*new InstantCommand(()->{CommandScheduler.getInstance()
             .schedule(new SpinShooter(shooter, intake, 0));}),
@@ -165,7 +166,7 @@ public class AutoSelector
          return   new AutoPoseCommand( NamedPose.Travel, arm)
         .andThen( 
         new InstantCommand(()->{arm.setClaw(false);}),
-        new WaitCommand(.1),
+        new WaitCommand(.5),
         new AutoPoseCommand( NamedPose.PouncePreScore, arm),
         new AutoPoseCommand(NamedPose.ScoreL3Auto, arm), 
         new WaitCommand(.9),
@@ -212,20 +213,20 @@ public class AutoSelector
 
             // blue autos
             case 4: // dunno
-                return init(GamePiece.cone).andThen(doubleScore(false , .31, .3, .6));
+                return init(GamePiece.cone).andThen(doubleScore(false , .31, .3, .7, .5));
             case 5: // dunno
                 return init(GamePiece.cone).andThen(balanceAuto());
             case 6: // dunno prev .76 dist
-                return init(GamePiece.cone).andThen(doubleScore(true, .45, -.15, .7));
+                return init(GamePiece.cone).andThen(doubleScore(true, .45, -.15, .7, -.5));
 
 
             // red autos
             case 7: // dunno
-                return init(GamePiece.cone).andThen(doubleScore(false, .4, -.15, .6));
+                return init(GamePiece.cone).andThen(doubleScore(false, .4, -.15, .6, -.5));
             case 8: 
                 return init(GamePiece.cone).andThen(balanceAuto());
             case 9: // dunno
-                return init(GamePiece.cone).andThen(doubleScore(true, .31, .3, .6));
+                return init(GamePiece.cone).andThen(doubleScore(true, .31, .3, .7, .5));
 
 
             // test autos
