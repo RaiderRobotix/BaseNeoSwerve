@@ -25,3 +25,9 @@ public final class Main
     RobotBase.startRobot(Robot::new);
   }
 }
+// list = 
+// 
+
+//poo, neee, 881, 9.5]
+// list(1) = 
+// (double)5

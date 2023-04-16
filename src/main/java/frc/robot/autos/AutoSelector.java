@@ -216,12 +216,12 @@ public class AutoSelector
             case 5: // dunno
                 return init(GamePiece.cone).andThen(balanceAuto());
             case 6: // dunno prev .76 dist
-                return init(GamePiece.cone).andThen(doubleScore(true, .45, 0, .7));
+                return init(GamePiece.cone).andThen(doubleScore(true, .45, -.15, .7));
 
 
             // red autos
             case 7: // dunno
-                return init(GamePiece.cone).andThen(doubleScore(false, .4, -.5, .6));
+                return init(GamePiece.cone).andThen(doubleScore(false, .4, -.15, .6));
             case 8: 
                 return init(GamePiece.cone).andThen(balanceAuto());
             case 9: // dunno
