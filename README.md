@@ -1,4 +1,4 @@
-# BaseFalconSwerve </br>
+# BaseNeoSwerve </br>
 
 **Basic Swerve Code for a Swerve Module using Neo Motors, a CTRE CANCoder, and a NavX Gyro** </br>
 This version was designed for Swerve Drive Specialties MK4 modules.</br>
