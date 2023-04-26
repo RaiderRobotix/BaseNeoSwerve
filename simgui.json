@@ -1,0 +1,8 @@
+{
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/default/autoMode": "String Chooser"
+    }
+  }
+}

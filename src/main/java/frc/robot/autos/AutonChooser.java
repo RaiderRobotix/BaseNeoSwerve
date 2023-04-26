@@ -32,7 +32,8 @@ public class AutonChooser {
         ShuffleboardTab autoTab = Shuffleboard.getTab("default");
 
         autonomousModeChooser = new SendableChooser<>();
-        autonomousModeChooser.setDefaultOption("Do Nothing", AutonomousMode.doNothing);  
+        autonomousModeChooser.setDefaultOption("Do Nothing", AutonomousMode.doNothing);
+        autonomousModeChooser.addOption("Test Routine 1", AutonomousMode.routine1);  
         autoTab.add("autoMode", autonomousModeChooser).withSize(5, 2);
     }
     
