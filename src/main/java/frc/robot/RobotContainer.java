@@ -28,7 +28,6 @@ public class RobotContainer {
 
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
-    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
@@ -38,11 +37,12 @@ public class RobotContainer {
     public RobotContainer() {
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
-                s_Swerve, 
-                () -> -driver.getRawAxis(translationAxis), 
-                () -> -driver.getRawAxis(strafeAxis), 
-                () -> -driver.getRawAxis(rotationAxis), 
-                () -> robotCentric.getAsBoolean()
+                s_Swerve,
+                driver, 
+                () -> Math.pow(-driver.getRawAxis(translationAxis), 2), 
+                () -> Math.pow(-driver.getRawAxis(strafeAxis), 2),
+                () -> Math.pow(-driver.getRawAxis(rotationAxis), 2), 
+                () -> false
             )
         );
 
