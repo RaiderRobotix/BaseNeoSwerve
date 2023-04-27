@@ -1,6 +1,7 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -85,8 +86,8 @@ public final class Constants {
         public static final double maxAngularVelocity = 30.0;
 
         /* Neutral Modes */
-        public static final NeutralMode angleNeutralMode = NeutralMode.Coast;
-        public static final NeutralMode driveNeutralMode = NeutralMode.Brake;
+        public static final IdleMode angleNeutralMode = IdleMode.kCoast;
+        public static final IdleMode driveNeutralMode = IdleMode.kBrake;
 
         /* Module Specific Constants */
         /* Front Left Module - Module 0 */
