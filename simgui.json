@@ -1,0 +1,15 @@
+{
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/DriveSubsystem/Field": "Field2d"
+    },
+    "windows": {
+      "/Shuffleboard/DriveSubsystem/Field": {
+        "window": {
+          "visible": true
+        }
+      }
+    }
+  }
+}

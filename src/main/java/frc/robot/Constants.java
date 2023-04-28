@@ -22,8 +22,8 @@ public final class Constants {
             COTSFalconSwerveConstants.SDSMK4i(COTSFalconSwerveConstants.driveGearRatios.SDSMK4i_L3);
 
         /* Drivetrain Constants */
-        public static final double trackWidth = Units.inchesToMeters(24); //TODO: This must be tuned to specific robot
-        public static final double wheelBase = Units.inchesToMeters(25.5); //TODO: This must be tuned to specific robot
+        public static final double trackWidth = Units.inchesToMeters(21.73); //TODO: This must be tuned to specific robot
+        public static final double wheelBase = Units.inchesToMeters(21.73); //TODO: This must be tuned to specific robot
         public static final double wheelCircumference = chosenModule.wheelCircumference;
 
         /* Swerve Kinematics 
@@ -62,10 +62,10 @@ public final class Constants {
         public static final double closedLoopRamp = 0.0;
 
         /* Angle Motor PID Values */
-        public static final double angleKP = chosenModule.angleKP;
-        public static final double angleKI = chosenModule.angleKI;
-        public static final double angleKD = chosenModule.angleKD;
-        public static final double angleKF = chosenModule.angleKF;
+        public static final double angleKP = 1.0;
+        public static final double angleKI = 0.0;
+        public static final double angleKD = 0.1;
+        public static final double angleKF = 0.0;
 
         /* Drive Motor PID Values */
         public static final double driveKP = 0.05; //TODO: This must be tuned to specific robot
