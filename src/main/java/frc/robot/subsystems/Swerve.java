@@ -16,7 +16,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -26,7 +26,7 @@ public class Swerve extends SubsystemBase {
     public AHRS gyro;
 
     public Swerve() {
-        gyro = new AHRS(Port.kMXP);
+        gyro = new AHRS(Port.kUSB);
         gyro.calibrate();
         zeroGyro();
 
@@ -53,7 +53,7 @@ public class Swerve extends SubsystemBase {
                                     translation.getX(), 
                                     translation.getY(), 
                                     rotation, 
-                                    getYaw()
+                                    geRotation2dIEEE()
                                 )
                                 : new ChassisSpeeds(
                                     translation.getX(), 
@@ -124,6 +124,7 @@ public class Swerve extends SubsystemBase {
 
     @Override
     public void periodic(){
+        SmartDashboard.putString("Gyro", getYaw().toString());
         swerveOdometry.update(geRotation2dIEEE(), getModulePositions());  
 
         for(SwerveModule mod : mSwerveMods){

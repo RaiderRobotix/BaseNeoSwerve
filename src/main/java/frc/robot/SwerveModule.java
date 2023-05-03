@@ -89,6 +89,7 @@ public class SwerveModule {
         
         mAngleMotor.getPIDController().setReference(angle.getDegrees(), ControlType.kPosition);
         lastAngle = angle;
+
     }
 
     private Rotation2d getAngle(){
@@ -106,6 +107,7 @@ public class SwerveModule {
     private void configAngleEncoder(){        
         absoluteEncoder.configFactoryDefault();
         absoluteEncoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
+        // absoluteEncoder.configMagnetOffset(angleOffset.getDegrees());
     }
 
     private void configAngleMotor(){
@@ -124,7 +126,7 @@ public class SwerveModule {
         anglePIDController.setD(Constants.Swerve.angleKD);
         anglePIDController.setFF(Constants.Swerve.angleKF);
 
-        mAngleMotor.getPIDController().setOutputRange(-0.25, 0.25);
+        // mAngleMotor.getPIDController().setOutputRange(-0.25, 0.25);
     }
 
     private void configDriveMotor(){        
