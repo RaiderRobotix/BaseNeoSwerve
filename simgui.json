@@ -2,7 +2,14 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
-      "/Shuffleboard/default/autoMode": "String Chooser"
+      "/Shuffleboard/DriveSubsystem/Field": "Field2d"
+    },
+    "windows": {
+      "/Shuffleboard/DriveSubsystem/Field": {
+        "window": {
+          "visible": true
+        }
+      }
     }
   }
 }
