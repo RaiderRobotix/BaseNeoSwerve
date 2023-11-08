@@ -37,8 +37,8 @@ public class Constants {
   /** All swerve constants. */
   public static class kSwerve {
     /** Constants that apply to the whole drive train. */
-    public static final double TRACK_WIDTH = Units.inchesToMeters(19.5); // Width of the drivetrain measured from the middle of the wheels.
-    public static final double WHEEL_BASE = Units.inchesToMeters(19.5); // Length of the drivetrain measured from the middle of the wheels.
+    public static final double TRACK_WIDTH = Units.inchesToMeters(21.73); // Width of the drivetrain measured from the middle of the wheels.
+    public static final double WHEEL_BASE = Units.inchesToMeters(21.73); // Length of the drivetrain measured from the middle of the wheels.
     public static final double WHEEL_DIAMETER = Units.inchesToMeters(4);
     public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI;
 
@@ -49,7 +49,7 @@ public class Constants {
       new Translation2d(-WHEEL_BASE / 2.0, -TRACK_WIDTH / 2.0)
     );
 
-    public static final double DRIVE_GEAR_RATIO = 6.75 / 1.0; // 6.75:1
+    public static final double DRIVE_GEAR_RATIO = 6.12 / 1.0; // 6.75:1
     public static final double DRIVE_ROTATIONS_TO_METERS = WHEEL_CIRCUMFERENCE / DRIVE_GEAR_RATIO;
     public static final double DRIVE_RPM_TO_METERS_PER_SECOND = DRIVE_ROTATIONS_TO_METERS / 60.0;
     public static final double ANGLE_GEAR_RATIO = 12.8 / 1.0; // 12.8:1
@@ -76,9 +76,9 @@ public class Constants {
     public static final double DRIVE_KA = 0.46034;
 
     /** Angle motor PID values. */
-    public static final double ANGLE_KP = 1.5;
+    public static final double ANGLE_KP = 0.05;
     public static final double ANGLE_KI = 0.0;
-    public static final double ANGLE_KD = 0.1;
+    public static final double ANGLE_KD = 0.0;
     public static final double ANGLE_KF = 0.0;
     
     /** Swerve constraints. */
@@ -88,7 +88,7 @@ public class Constants {
     /** Inversions. */
     public static final boolean DRIVE_MOTOR_INVERSION = true;
     public static final boolean ANGLE_MOTOR_INVERSION = false;
-    public static final boolean CANCODER_INVERSION = false;
+    public static final boolean CANCODER_INVERSION = true;
 
     /** Idle modes. */
     public static final IdleMode DRIVE_IDLE_MODE = IdleMode.kBrake;
@@ -100,31 +100,31 @@ public class Constants {
      * This is to make offset slightly more accurate and easier to measure.
      */
     public static final SwerveModuleConstants MOD_0_Constants = new SwerveModuleConstants(
-      1,
-      2,
-      3,
-      203.115234
+      10,
+      20,
+      0,
+      296.89
     );
 
     public static final SwerveModuleConstants MOD_1_Constants = new SwerveModuleConstants(
-      4,
-      5,
-      6,
-      191.074219  
+      11,
+      21,
+      1,
+      214.01 
     );
 
     public static final SwerveModuleConstants MOD_2_Constants = new SwerveModuleConstants(
-      7,
-      8,
-      9,
-      203.906250
+      12,
+      22,
+      2,
+      40.25
     );
 
     public static final SwerveModuleConstants MOD_3_Constants = new SwerveModuleConstants(
-      10,
-      11,
-      12,
-      155.214844
+      13,
+      23,
+      4,
+      0
     );
   }
 

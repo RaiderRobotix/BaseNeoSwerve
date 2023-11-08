@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.Swerve;
@@ -17,10 +18,14 @@ public class RobotContainer {
 
   public final Swerve swerve;
 
+  private final int translationAxis = XboxController.Axis.kLeftY.value;
+  private final int strafeAxis = XboxController.Axis.kLeftX.value;
+  private final int rotationAxis = XboxController.Axis.kRightX.value;
+
   public final AutoCommands auto;
 
   public RobotContainer() {
-    driver = new Joystick(Constants.kControls.DRIVE_JOYSTICK_ID);
+    driver = new Joystick(0);
 
     swerve = new Swerve();
 
@@ -38,14 +43,14 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     swerve.setDefaultCommand(swerve.drive(
-      () -> -Constants.kControls.X_DRIVE_LIMITER.calculate(driver.getRawAxis(Constants.kControls.TRANSLATION_Y_AXIS)),
-      () -> -Constants.kControls.Y_DRIVE_LIMITER.calculate(driver.getRawAxis(Constants.kControls.TRANSLATION_X_AXIS)), 
-      () -> -Constants.kControls.THETA_DRIVE_LIMITER.calculate(driver.getRawAxis(Constants.kControls.ROTATION_AXIS)),
+      () -> -Constants.kControls.X_DRIVE_LIMITER.calculate(driver.getRawAxis(translationAxis)),
+      () -> -Constants.kControls.Y_DRIVE_LIMITER.calculate(driver.getRawAxis(strafeAxis)), 
+      () -> -Constants.kControls.THETA_DRIVE_LIMITER.calculate(driver.getRawAxis(rotationAxis)),
       true,
       false
     ));
 
-    new JoystickButton(driver, Constants.kControls.GYRO_RESET_BUTTON)
+    new JoystickButton(driver, XboxController.Button.kY.value)
       .onTrue(swerve.zeroGyroCommand());
   }
 

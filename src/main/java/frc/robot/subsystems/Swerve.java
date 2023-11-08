@@ -12,6 +12,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -128,6 +129,15 @@ public class Swerve extends SubsystemBase {
   @Override
   public void periodic() {
     swerveOdometry.update(getYaw(), getPositions());
+
+
+    for(SwerveModule mod : modules){
+      SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoderAngle().getDegrees());
+      SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
+      SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);  
+     
+  }
+  SmartDashboard.putNumber("Gyro", getYaw().getDegrees());  
   }
 
   @Override
