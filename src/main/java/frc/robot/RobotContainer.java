@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.lib.util.States.GamePiece;
 import frc.robot.autos.exampleAuto;
@@ -74,7 +75,7 @@ public class RobotContainer
         CameraServer.startAutomaticCapture();
 
         /* Controllers */
-       // driveStick = new Joystick(2);
+        //driveStick = new Joystick(2);
         // rotateStick = new Joystick(1);
         controller = new XboxController(2);
         // buttonBoard = new GenericHID(3);
@@ -115,6 +116,7 @@ public class RobotContainer
         int strafeAxis = XboxController.Axis.kLeftX.value;
         int rotationAxis = XboxController.Axis.kRightX.value;
 
+        JoystickButton zeroGyro = new JoystickButton(controller, XboxController.Button.kY.value);
 
         
         //Trigger robotCentric = new Trigger(()-> controller.getRawButton(2));
@@ -129,9 +131,11 @@ public class RobotContainer
             )
         );
 
-        // drive stick
-        Trigger zeroGyro = new Trigger(()->controller.getYButtonPressed());
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+
+        // drive stick
+        // Trigger zeroGyro = new Trigger(()->controller.getYButtonPressed());
+        // zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
 
         // Trigger closeClaw = new Trigger(() -> driveStick.getRawButton(10));
         // closeClaw.onTrue(new InstantCommand(()->s_Arm.setClaw(true)));
