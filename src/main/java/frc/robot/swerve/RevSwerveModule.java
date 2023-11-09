@@ -144,7 +144,7 @@ public class RevSwerveModule implements SwerveModule
 
         if(mAngleMotor.getFault(FaultID.kSensorFault))
         {
-            DriverStation.reportWarning("Sensor Fault on Angle Motor ID:"+mAngleMotor.getDeviceId(), false);
+            DriverStation.reportWarning("Sensor Fault on Angle Motor ID:"+mAngleMotor.getDeviceId(), true);
         }
     }
 

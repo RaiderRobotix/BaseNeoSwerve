@@ -26,7 +26,7 @@ public class SwerveConfig
     public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
 
     public static final COTSFalconSwerveConstants chosenModule =  
-        COTSFalconSwerveConstants.SDSMK4i(COTSFalconSwerveConstants.driveGearRatios.SDSMK4i_L2);
+        COTSFalconSwerveConstants.SDSMK4i(COTSFalconSwerveConstants.driveGearRatios.SDSMK4i_L3);
 
     /* Drivetrain Constants */
     public static final double trackWidth = Units.inchesToMeters(23.75); 
@@ -79,7 +79,7 @@ public class SwerveConfig
     public static final double closedLoopRamp = 0.0;
 
     /* Angle Motor PID Values */
-    public static final double angleKP = 0.05;
+    public static final double angleKP = 0.005;
     public static final double angleKI = 0;
     public static final double angleKD = 0;
     public static final double angleKF = 0;

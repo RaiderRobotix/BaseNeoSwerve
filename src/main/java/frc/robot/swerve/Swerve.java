@@ -7,11 +7,13 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 
 import com.ctre.phoenix.sensors.Pigeon2;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -21,15 +23,17 @@ public class Swerve extends SubsystemBase
 
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
-    public Pigeon2 gyro;
+    public AHRS gyro;
 
 
 
     public Swerve() 
     {
         
-        gyro = new Pigeon2(Constants.REV.pigeonID);
-        gyro.configFactoryDefault();
+        gyro = new AHRS(Port.kUSB);
+        //gyro.configFactoryDefault();
+        gyro.calibrate();
+        
         
      
 
@@ -99,7 +103,8 @@ public class Swerve extends SubsystemBase
     {
         
         swerveOdometry.resetPosition(new Rotation2d(), getModulePositions(), pose);
-        zeroGyro(pose.getRotation().getDegrees());
+        //zeroGyro(pose.getRotation().getDegrees());
+        zeroGyro();
        
     }
 
@@ -124,22 +129,22 @@ public class Swerve extends SubsystemBase
         return positions;
     }
 
-    public void zeroGyro(double deg)
-    {
+    // public void zeroGyro(double deg)
+    // {
       
-        if(SwerveConfig.invertGyro)
-        {
-            deg = -deg;
-        }
-        gyro.setYaw(deg);
+    //     if(SwerveConfig.invertGyro)
+    //     {
+    //         deg = -deg;
+    //     }
+    //     gyro.setYaw(deg);
         
-        swerveOdometry.update(getYaw(), getModulePositions());  
-    }
+    //     swerveOdometry.update(getYaw(), getModulePositions());  
+    // }
 
     public void zeroGyro()
     {
       
-       zeroGyro(0);
+       gyro.zeroYaw();;
      
     }
     
@@ -186,8 +191,8 @@ public class Swerve extends SubsystemBase
         for(SwerveModule mod : mSwerveMods)
         {
             
-            //SmartDashboard.putNumber("Mod " + mod.getModuleNumber() + " Cancoder", mod.getCanCoder().getDegrees());
-            //SmartDashboard.putNumber("Mod " + mod.getModuleNumber() + " Integrated", mod.getPosition().angle.getDegrees());
+            SmartDashboard.putNumber("Mod " + mod.getModuleNumber() + " Cancoder", mod.getCanCoder().getDegrees());
+            SmartDashboard.putNumber("Mod " + mod.getModuleNumber() + " Integrated", mod.getPosition().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.getModuleNumber() + " Velocity", mod.getState().speedMetersPerSecond);    
         }
         Pose2d pose = getPose();
@@ -200,6 +205,8 @@ public class Swerve extends SubsystemBase
 
 
         SmartDashboard.putNumber("robo pitch", getTilt());
+
+        
     
        
         
