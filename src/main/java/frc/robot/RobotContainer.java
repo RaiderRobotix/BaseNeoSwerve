@@ -139,8 +139,9 @@ public class RobotContainer
         );
 
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        roller.whileTrue(new InstantCommand(() -> s_roller.setSpeed(1.0)));
-        stopRoller.whileTrue(new InstantCommand(() -> s_roller.setSpeed(0)));
+        roller.whileTrue(new InstantCommand(() -> s_roller.setSpeed(1.0,0.65)));
+
+        stopRoller.whileTrue(new InstantCommand(() -> s_roller.setSpeed(0,0)));
 
 
         // drive sticksee

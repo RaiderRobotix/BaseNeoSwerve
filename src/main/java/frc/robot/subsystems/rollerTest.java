@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -18,12 +19,14 @@ public class rollerTest extends SubsystemBase {
   public rollerTest() {
     this.Lroller = new TalonFX(9);
     this.Rroller = new TalonFX(0);
+
+    this.Rroller.setNeutralMode(NeutralModeValue.Coast);
     
   }
 
-  public void setSpeed(double speed){
-    Lroller.set(speed);
-    Rroller.set(-speed);
+  public void setSpeed(double Lspeed, double Rspeed){
+    Lroller.set(Lspeed);
+    Rroller.set(-Rspeed); //ALWAYS SUPPOSED TO BE NEGATIVE
   }
 
 
