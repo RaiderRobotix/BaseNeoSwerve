@@ -4,8 +4,11 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.math.filter.MedianFilter;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -22,12 +25,36 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot 
 {
   
+  private boolean m_enabled;
+  public void setEnabled(boolean enable){
+    m_enabled = enable;
+ }
+ public void setAutomaticMode(boolean enabled){
+    enabled = true;
+ }
+
+//  front_sensor.setEnabled();
+//  right_sensor.setEnabled();
+//  left_sensor.setEnabled();
+//  back_sensor.setEnabled();
+
 
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
 
-  private PowerDistribution pd;
+   private PowerDistribution pd;
+
+/*  THIS CODE IS FOR THE SONIC SENSOR     */
+
+//   static final int SonicPingPort = 1;
+//   static final int SonicEchoPort = 2;
+
+//   private final MedianFilter m_filter = new MedianFilter(5);
+
+// private final Ultrasonic sensor1 = new Ultrasonic(SonicPingPort, SonicEchoPort);
+
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -79,12 +106,61 @@ public class Robot extends TimedRobot
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
+
     }
+      CameraServer.startAutomaticCapture();
+
+    //  front_sensor.setEnabled();
+    //  right_sensor.setEnabled();
+    //  left_sensor.setEnabled();
+    //  back_sensor.setEnabled();
+
+    //  front_sensor.setAutomaticMode(true);
+
+
+    
   }
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+
+  LimelightHelpers.setLEDMode_PipelineControl("");
+  LimelightHelpers.setLEDMode_ForceBlink("");
+  LimelightHelpers.setCropWindow("",-1,1,-1,1);
+  double tx = LimelightHelpers.getTX("");
+  double ty = LimelightHelpers.getTY("");
+  double ta = LimelightHelpers.getTA("");
+  double[] botpose = LimelightHelpers.getBotPose("");
+
+  System.out.println("horizontal distance: " + tx);
+  System.out.println("vertical distance: " + ty);
+  System.out.println("target area: " + ta);
+  System.out.println(botpose);
+
+  while (1==1){
+    tx = LimelightHelpers.getTX("");
+    ty = LimelightHelpers.getTY("");
+    ta = LimelightHelpers.getTA("");
+
+   botpose = LimelightHelpers.getBotPose("");
+    System.out.println(tx);
+    System.out.println(ty);
+    System.out.println(ta);
+    System.out.println(botpose);
+  }
+    
+
+
+  //Code below should tell the position of the bot.
+
+  // our defaut limelight name is "limelight". it's automatically added if limelight name is empty.
+  
+  // front_sensor.setOversampleBits(4);
+
+
+
+  }
 
   @Override
   public void teleopInit() 

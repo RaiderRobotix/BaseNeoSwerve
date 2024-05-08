@@ -1,12 +1,22 @@
 package frc.robot;
 
 
+import javax.sound.sampled.AudioFileFormat.Type;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -15,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.lib.util.States.GamePiece;
 import frc.robot.autos.exampleAuto;
+import frc.robot.subsystems.LimeLight;
 import frc.robot.subsystems.rollerTest;
 import frc.robot.swerve.Swerve;
 import frc.robot.swerve.command.LockSwerveCommand;
@@ -51,11 +62,23 @@ public class RobotContainer
     private final Joystick operator;
     // private final GenericHID buttonBoard;
 
-    
-    //private Limelight blindingDevice;
+    // Limelight IS NOT A TYPE
 
-  
+    // LIMELIGHT
+    private NetworkTable Limelight;
 
+
+    /*  THIS CODE IS FOR THE SONIC SENSOR     */
+    //Ultrasonic sensor below
+    //  public final AnalogInput front_sensor;
+    //  public final AnalogInput left_sensor;
+    //  public final AnalogInput right_sensor;
+    //  public final AnalogInput back_sensor;  
+
+    // Made all above public for testing reasons
+
+
+    private Ultrasonic test;
 
     /* Subsystems */
     // the code we were using used the prefix s_ for all of the names of subsystems here.
@@ -75,15 +98,59 @@ public class RobotContainer
     public RobotContainer(PowerDistribution pd) 
     {
         powerBoard = pd;
-        CameraServer.startAutomaticCapture();
+     //   CameraServer.startAutomaticCapture();
 
         /* Controllers */
         //driveStick = new Joystick(2);
         // rotateStick = new Joystick(1);
         controller = new XboxController(0);
         operator = new Joystick(1);
-        // buttonBoard = new GenericHID(3);
+        
+        /*  THIS CODE IS FOR THE SONIC SENSOR     */
+        
 
+            
+        AnalogInput front_sensor = new AnalogInput(1);
+            /*TEST WITH SENSOR METHOD */
+         //    front_sensor.setEnabled();
+         // A bunch of samples get thrown, and a sort of mean/median is returned
+         front_sensor.setOversampleBits(4);
+         
+        // front_sensor.initSendable("front_sensor");
+        
+         // This DOES NOT work over at robot.java, so maybe try adding all of this there, too.
+
+        AnalogInput left_sensor = new AnalogInput(2);
+        AnalogInput right_sensor = new AnalogInput(3);
+        AnalogInput back_sensor = new AnalogInput(4);
+
+        //                      LIMELIGHT TERRITORY             LIMELIGHT TERRITORY                 LIMELIGHT TERRITORY
+
+        /* LIMELIGHT DOWN HERE*/ 
+
+        //private Limelight blindingDevice = new LimeLight();        
+
+        
+        
+        
+        /*  OTHER Test LIMELIGHT               INSTANCES AT ROBOT.JAVA
+        
+        Limelight = new NetworkTable( "", "test path");
+
+        */
+
+        //COde from limelight lib
+
+        
+
+
+
+
+
+
+        //                      END                 END             END                     END
+
+        // buttonBoard = new GenericHID(3);
 
 
         /* Subsystems */
@@ -222,6 +289,7 @@ public class RobotContainer
         //     .onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule( NamedPose.Travel, s_Arm,powerBoard)));
 
 
+
         // // Xbox controller
 
         // Trigger intakeButton = new Trigger(()-> controller.getRightBumper());
@@ -262,3 +330,5 @@ public class RobotContainer
         // I can change whate
     }
 }
+
+
