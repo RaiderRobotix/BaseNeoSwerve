@@ -125,31 +125,18 @@ public class Robot extends TimedRobot
   @Override
   public void autonomousPeriodic() {
 
-  LimelightHelpers.setLEDMode_PipelineControl("");
-  LimelightHelpers.setLEDMode_ForceBlink("");
-  LimelightHelpers.setCropWindow("",-1,1,-1,1);
-  double tx = LimelightHelpers.getTX("");
-  double ty = LimelightHelpers.getTY("");
-  double ta = LimelightHelpers.getTA("");
-  double[] botpose = LimelightHelpers.getBotPose("");
+  LimelightHelpers.setLEDMode_PipelineControl("raiders");
+  LimelightHelpers.setLEDMode_ForceBlink("raiders");
+  LimelightHelpers.setCropWindow("raiders",-1,1,-1,1);
+  double tx = LimelightHelpers.getTX("raiders");
+  double ty = LimelightHelpers.getTY("raiders");
+  double ta = LimelightHelpers.getTA("raiders");
+  double[] botpose = LimelightHelpers.getBotPose("raiders");
 
   System.out.println("horizontal distance: " + tx);
   System.out.println("vertical distance: " + ty);
   System.out.println("target area: " + ta);
-  System.out.println(botpose);
-
-  while (1==1){
-    tx = LimelightHelpers.getTX("");
-    ty = LimelightHelpers.getTY("");
-    ta = LimelightHelpers.getTA("");
-
-   botpose = LimelightHelpers.getBotPose("");
-    System.out.println(tx);
-    System.out.println(ty);
-    System.out.println(ta);
-    System.out.println(botpose);
-  }
-    
+  System.out.println("botpose: " + botpose);
 
 
   //Code below should tell the position of the bot.
@@ -157,7 +144,6 @@ public class Robot extends TimedRobot
   // our defaut limelight name is "limelight". it's automatically added if limelight name is empty.
   
   // front_sensor.setOversampleBits(4);
-
 
 
   }

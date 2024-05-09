@@ -65,7 +65,7 @@ public class RobotContainer
     // Limelight IS NOT A TYPE
 
     // LIMELIGHT
-    private NetworkTable Limelight;
+    // private NetworkTable Limelight;
 
 
     /*  THIS CODE IS FOR THE SONIC SENSOR     */
@@ -133,11 +133,12 @@ public class RobotContainer
         
         
         
-        /*  OTHER Test LIMELIGHT               INSTANCES AT ROBOT.JAVA
+        /*  OTHER Test LIMELIGHT               INSTANCES AT ROBOT.JAVA      */
         
-        Limelight = new NetworkTable( "", "test path");
+       // Limelight = new NetworkTable( "raiders", "test path");
+        NetworkTable LimeLight1 = NetworkTableInstance.getDefault().getTable("raiders");
 
-        */
+        
 
         //COde from limelight lib
 
