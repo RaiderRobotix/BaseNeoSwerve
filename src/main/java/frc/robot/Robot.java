@@ -9,6 +9,7 @@ import edu.wpi.first.math.filter.MedianFilter;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -125,18 +126,24 @@ public class Robot extends TimedRobot
   @Override
   public void autonomousPeriodic() {
 
-  LimelightHelpers.setLEDMode_PipelineControl("raiders");
-  LimelightHelpers.setLEDMode_ForceBlink("raiders");
-  LimelightHelpers.setCropWindow("raiders",-1,1,-1,1);
-  double tx = LimelightHelpers.getTX("raiders");
-  double ty = LimelightHelpers.getTY("raiders");
-  double ta = LimelightHelpers.getTA("raiders");
-  double[] botpose = LimelightHelpers.getBotPose("raiders");
 
-  System.out.println("horizontal distance: " + tx);
-  System.out.println("vertical distance: " + ty);
-  System.out.println("target area: " + ta);
-  System.out.println("botpose: " + botpose);
+    /*   COMMENTED CODE BELOW IS FROM LIMELIGHT HELPERS. THIS IS A FAILED ATTEMPT */
+     LimelightHelpers.setLEDMode_PipelineControl("raiders");
+  // LimelightHelpers.setLEDMode_ForceBlink("raiders");
+  // LimelightHelpers.setCropWindow("raiders",-1,1,-1,1);
+  // double tx = LimelightHelpers.getTX("raiders");
+  // double ty = LimelightHelpers.getTY("raiders");
+  // double ta = LimelightHelpers.getTA("raiders");
+  // double[] botpose = LimelightHelpers.getBotPose("raiders");
+
+  // System.out.println("horizontal distance: " + tx);
+  // System.out.println("vertical distance: " + ty);
+  // System.out.println("target area: " + ta);
+  // System.out.println("botpose: " + botpose);
+
+
+        // CURRENT LIMELIGHT CODE TEST BELOW
+
 
 
   //Code below should tell the position of the bot.

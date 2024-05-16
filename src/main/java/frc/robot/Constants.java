@@ -1,7 +1,11 @@
 package frc.robot;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.util.Units;
+import frc.lib.util.COTSFalconSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
 
 
@@ -26,6 +30,32 @@ public final class Constants
         public static final int pigeonID = 10;
 
         public static final int PHID = 30;
+
+
+                                                                    // The second part of this line has some work to be dealt with; COTSFalcon
+       //public static final COTSFalconSwerveConstants chosenModule = COTSFalconSwerveConstantsNeoTalonFX
+        /*DriveStation Constraits */            
+        
+        //TODO: All must be tuned to specific robot
+        public static final double trackWidth = Units.inchesToMeters(18.75);
+        public static final double wheelBase = Units.inchesToMeters(20.25);
+     
+            // Chosen
+        //   public static final double wheelCircumference = chosenModule.wheelCircumference;
+
+        /*Swerve Kinematics */
+
+        public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
+
+        new Translation2d(wheelBase / 2.0, trackWidth / 2.0),
+        new Translation2d(wheelBase / 2.0, -trackWidth / 2.0),
+        new Translation2d(-wheelBase / 2.0, trackWidth / 2.0),
+        new Translation2d(-wheelBase / 2.0, -trackWidth / 2.0));
+
+
+
+
+        
         
         
     }

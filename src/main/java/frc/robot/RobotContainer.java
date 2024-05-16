@@ -136,9 +136,27 @@ public class RobotContainer
         /*  OTHER Test LIMELIGHT               INSTANCES AT ROBOT.JAVA      */
         
        // Limelight = new NetworkTable( "raiders", "test path");
-        NetworkTable LimeLight1 = NetworkTableInstance.getDefault().getTable("raiders");
+        NetworkTable RaidersLimeLight = NetworkTableInstance.getDefault().getTable("raiders");
+        NetworkTableEntry tx = RaidersLimeLight.getEntry("tx");
+        NetworkTableEntry ty = RaidersLimeLight.getEntry("ty");
+        NetworkTableEntry ta = RaidersLimeLight.getEntry("ta");
 
-        
+        double x = tx.getDouble(0.0);
+        double y = ty.getDouble(0.0);
+        double area = ta.getDouble(0.0);
+
+        //post to smart dashboard periodically
+        SmartDashboard.putNumber("LimelightX", x);
+        SmartDashboard.putNumber("LimelightY", y);
+        SmartDashboard.putNumber("LimelightArea", area);
+
+
+        System.out.println(tx);
+        System.out.println(ty);
+        System.out.println(ta);
+
+
+
 
         //COde from limelight lib
 
