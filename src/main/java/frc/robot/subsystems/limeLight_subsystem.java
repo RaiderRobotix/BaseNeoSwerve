@@ -11,7 +11,9 @@ public class limeLight_subsystem {
     private double ta;
     private int tid;
     private NetworkTable table;
-    
+    private double LimeToTagDistance;
+
+
     public limeLight_subsystem(){
 
     table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -36,12 +38,20 @@ public class limeLight_subsystem {
         double AngleToTagRadians = AngleToTag * (3.14159 / 180);
 
         //distance of tag to lime
-        double LimeToTagDistance = (TagHeight - LimelightHeight) / Math.tan(AngleToTagRadians);
+        LimeToTagDistance = (TagHeight - LimelightHeight) / Math.tan(AngleToTagRadians);
 
 
         System.out.println(LimeToTagDistance);
 
-       
+
+
     }
+
+    public double getTagDistance(){
+    
+        return LimeToTagDistance;
+        
+        }
 }
+
 
